@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+  <title>My Website</title>
+  <!-- Dodaj linki do stylów CSS, skrypty JavaScript, metatagi, itp. -->
+</head>
+
+<body>
+<header>
+  <!-- Wstaw zawartość nagłówka -->
+  <div th:replace="fragments/header :: header"></div>
+</header>
+
+<main>
+  <!-- Wstaw zawartość główna widoku -->
+  <div layout:fragment="content"></div>
+</main>
+
+<footer>
+  <!-- Wstaw zawartość stopki -->
+  <div th:replace="fragments/footer :: footer"></div>
+</footer>
+
+<!-- Dodaj skrypty JavaScript, śledzenie analizy, itp. -->
+</body>
+
+</html>

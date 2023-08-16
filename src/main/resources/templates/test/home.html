@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Home</title>
+</head>
+<body>
+<div>
+    <span th:text="${#authentication == null ? 'authentNull' : 'authentNotNull'}"></span>
+    <span th:text="${#authorization == null ? 'authNull' : 'authNotNull'}"></span>
+    <span sec:authorization="isAnonymous()" th:text="${'anonymous'}">anonymous</span>
+    <span sec:authorization="isAuthenticated()" th:text="${'authenticated'}">authenticated</span>
+    <h1 th:text="${name}"></h1>
+</div>
+</body>
+</html>

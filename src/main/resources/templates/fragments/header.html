@@ -1,0 +1,8 @@
+<html xmlns:th="http://www.thymeleaf.org"
+            xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header>
+    <span th:text="${#authentication != null ? 'n' : 'g'}"></span>
+    <span th:text="${#authorization != null ? 'n' : 'g'}"></span>
+    <h1>Header</h1>
+</header>
+</html>
