@@ -1,7 +1,9 @@
-package pl.edziennik.edziennik.security;
+package pl.edziennik.edziennik.security.user;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.edziennik.edziennik.security.role.Role;
+import pl.edziennik.edziennik.security.role.RoleRepository;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -22,13 +24,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUserName(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username).get();
     }
     @Override
     public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(1);
-        Role userRole = roleRepository.findByName("ROLE_USER");
+        Role userRole = roleRepository.findByName("ROLE_USER").get();
         user.setRoles(new HashSet<>(Arrays.asList(userRole)));
         userRepository.save(user);
     }
