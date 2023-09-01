@@ -1,0 +1,60 @@
+body{
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.centerBlock{
+    margin-left: auto;
+    margin-right: auto;
+}
+table{
+    border-collapse: collapse;
+    width: 1000px;
+}
+table, th, td{
+    border: 1px solid black;
+}
+th, td{
+    padding: 3px;
+}
+td > a{
+    margin-right: 10px;
+}
+thead{
+    border: 1px solid black;
+    text-align: left;
+}
+#headerMainDiv, #footerMainDiv{
+    display: block;
+    font-weight: 900;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+}
+#headerMainDiv{
+    border-bottom: 1px solid black;
+}
+#footerMainDiv {
+    bottom: 0;
+    position: fixed;
+    left: 0;
+    border-top: 1px solid black;
+}
+.formTable{
+    width: auto;
+    border-collapse: collapse;
+    border: 0;
+}
+.formTable > tbody > tr > td {
+    border: 0;
+}
+.formTableNameCell{
+    text-align: right;
+    border: 0;
+}
+.formTableErrorCell{
+    word-wrap: break-word;
+}
+.formTableErrorRow{
+    border-bottom: 1px solid black;
+}

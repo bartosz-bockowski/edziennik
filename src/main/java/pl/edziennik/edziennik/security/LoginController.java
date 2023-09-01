@@ -13,10 +13,14 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(Model model){
-        System.out.println("test");
         User user = new User();
         model.addAttribute("user",user);
         model.addAttribute("loginPage",true);
         return "security/login";
+    }
+    @GetMapping("/logout")
+    public String logout(){
+        SecurityContextHolder.getContext().setAuthentication(null);
+        return "redirect:/login";
     }
 }

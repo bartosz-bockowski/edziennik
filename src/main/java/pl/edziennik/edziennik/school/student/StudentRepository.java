@@ -1,8 +1,8 @@
-package pl.edziennik.edziennik.sampleClass;
+package pl.edziennik.edziennik.school.student;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SampleClassRepository extends JpaRepository<SampleClass, Long> {
+public interface StudentRepository extends JpaRepository<Student, Long> {
 }

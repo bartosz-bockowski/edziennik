@@ -23,10 +23,16 @@ public class SecurityConfig{
         http
 
                 .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/login")).permitAll())
-                .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/WEB-INF/security/login.jsp")).permitAll())
-                .authorizeHttpRequests((auth) -> auth.anyRequest().authenticated())
+                .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/WEB-INF/views/security/login.jsp")).permitAll())
+                .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/resources/**")).permitAll())
+                .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll())
+                .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll())
+                .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/img/**")).permitAll())
+//                .authorizeHttpRequests((auth) -> auth.anyRequest().authenticated())
+                .authorizeHttpRequests((auth) -> auth.anyRequest().permitAll())
 
-                .formLogin((form) -> form.loginPage("/login").permitAll());
+                .logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/login"))
+                .formLogin((form) -> form.loginPage("/login").failureUrl("/login?error=true").permitAll());
         return http.build();
     }
     @Bean

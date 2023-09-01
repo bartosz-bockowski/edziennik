@@ -13,8 +13,6 @@ public class RoleNameValidator implements ConstraintValidator<RoleName, Role> {
     }
     @Override
     public boolean isValid(Role value, ConstraintValidatorContext context){
-        System.out.println("ID: " + value.getId());
-        System.out.println("NAZWA: " + value.getName());
         boolean result = true;
         if(value.getId() == null &&
                 value.getName() != null &&
@@ -30,7 +28,6 @@ public class RoleNameValidator implements ConstraintValidator<RoleName, Role> {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate()).addPropertyNode("name").addConstraintViolation();
         }
-        System.out.println(result);
         return result;
     }
 }

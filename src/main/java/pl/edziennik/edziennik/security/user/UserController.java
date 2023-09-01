@@ -4,32 +4,32 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import pl.edziennik.edziennik.school.subject.Subject;
+import pl.edziennik.edziennik.school.teacher.Teacher;
+import pl.edziennik.edziennik.security.role.RoleRepository;
 
-@RequestMapping("/user")
+import jakarta.servlet.http.HttpServletRequest;
+
+import javax.xml.stream.StreamFilter;
+import java.util.List;
+import java.util.stream.Stream;
+
+@RequestMapping("/admin/user")
 @Controller
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     public UserController(UserService userService,
-                          UserRepository userRepository) {
+                          UserRepository userRepository,
+                          RoleRepository roleRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
-    @GetMapping("/create-user")
-    @ResponseBody
-    public String createUser() {
-        User user = new User();
-        user.setUsername("admin");
-        user.setPassword("admin");
-        userService.saveUser(user);
-        return "admin";
-    }
     @GetMapping("/list")
     public String list(Model model){
         model.addAttribute("users",userRepository.findAll());
@@ -42,11 +42,30 @@ public class UserController {
         return "security/user/add";
     }
     @PostMapping("/add")
-    public String add(@Valid User user, BindingResult result){
+    public String add(@Valid User user, BindingResult result, Model model){
         if(result.hasErrors()){
-            System.out.println(result.getAllErrors());
+            model.addAttribute("user",user);
+            model.addAttribute("result",result);
+            return "security/user/add";
         }
         userService.saveUser(user);
-        return "redirect:/user/list";
+        return "redirect:/admin/user/list";
+    }
+    @GetMapping("/{id}/details")
+    public String details(@PathVariable Long id, Model model){
+        User user = userRepository.getOne(id);
+        model.addAttribute("user",user);
+        model.addAttribute("roles",roleRepository.findAll());
+        return "security/user/details";
+    }
+
+    @GetMapping("/{id}/setRoles")
+    public String setRoles(@PathVariable Long id, @RequestParam("roles") String roles){
+        User user = userRepository.getOne(id);
+        for(String x : roles.split(",")){
+            user.getRoles().add(roleRepository.getOne(Long.parseLong(x)));
+        }
+        userService.saveUser(user);
+        return "redirect:/admin/user/" + id + "/details";
     }
 }
