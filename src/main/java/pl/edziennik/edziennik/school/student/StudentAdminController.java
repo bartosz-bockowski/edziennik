@@ -10,15 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.edziennik.edziennik.school.parent.Parent;
 import pl.edziennik.edziennik.school.parent.ParentRepository;
 
 @Controller
 @RequestMapping("/admin/student")
-public class StudentController {
+public class StudentAdminController {
     private final StudentRepository studentRepository;
-    public StudentController(StudentRepository studentRepository,
-                             ParentRepository parentRepository){
+    public StudentAdminController(StudentRepository studentRepository,
+                                  ParentRepository parentRepository){
         this.studentRepository = studentRepository;
     }
 

@@ -5,22 +5,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.edziennik.edziennik.school.student.Student;
 import pl.edziennik.edziennik.school.student.StudentRepository;
 
 @Controller
 @RequestMapping("/admin/parent")
-public class ParentController {
+public class ParentAdminController {
     private final ParentRepository parentRepository;
     private final StudentRepository studentRepository;
-    public ParentController(ParentRepository parentRepository,
-                            StudentRepository studentRepository) {
+    public ParentAdminController(ParentRepository parentRepository,
+                                 StudentRepository studentRepository) {
         this.parentRepository = parentRepository;
         this.studentRepository = studentRepository;
     }

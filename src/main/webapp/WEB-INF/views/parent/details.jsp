@@ -17,7 +17,7 @@
 <div><spring:message code="parent.fullName"/>: <b>${parent.getFullName()}</b></div>
 <div><spring:message code="parent.students"/>:</div>
 <spring:message code="parent.confirmRemoveStudent" var="conRemStu"/>
-<input type="hidden" id="confirmRemoveStudent" msg="${conRemStu}"/>
+<input type="hidden" id="confirmRemoveStudent" value="${conRemStu}"/>
 <c:if test="${parent.students.size() == 0}">
     <div><spring:message code="parent.noStudents"/></div>
 </c:if>
@@ -27,6 +27,8 @@
 <div>
     <h2><spring:message code="parent.addStudent"/></h2>
     <form id="addStudentForm" action="/admin/parent/${parent.id}/addStudent" method="get">
+        <spring:message code="form.cantBeEmpty" var="cantBeEmpty"/>
+        <input type="hidden" id="cantBeEmpty" value="${cantBeEmpty}"/>
         <script src="${pageContext.request.contextPath}/js/parent/parent.js"></script>
         <spring:message code="parent.addStudent.nonExistsentStudent" var="nonExistent"/>
         <input type="hidden" id="nonExistentStudentMsg" value="${nonExistent}"/>

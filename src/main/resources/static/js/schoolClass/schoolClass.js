@@ -7,13 +7,15 @@ $(document).ready(() => {
             alert($("#cantBeEmpty").val())
             return;
         }
-        fetch("/admin/parent/" + idField.val() + "/checkIfStudentExists")
+        fetch("/admin/schoolclass/" + idField.val() + "/checkStudent")
             .then(res => res.json()).then(res => {
-            if (res) {
-                $(e.target).parent().submit()
-            } else {
-                alert($("#nonExistentStudentMsg").val())
-            }
+             if (res === "NO_CLASS") {
+                 $(e.target).parent().submit()
+             } else if (res === "NON_EXISTENT"){
+                 alert($("#nonExistentStudentMsg").val())
+             } else {
+                 alert($("#studentAlreadyHasClass").val())
+             }
         })
     })
     $(".confirmRemoveStudent").click((e) => {
