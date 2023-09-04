@@ -16,30 +16,30 @@
 <form:form action="/admin/user/add" method="post" modelAttribute="user">
     <table class="formTable centerBlock">
         <tr>
-            <td>
+            <td class="formTableNameCell">
                 <spring:message code="user.username"/>
             </td>
-            <td>
-                <form:input type="text" path="username"/>
+            <td class="${result.hasFieldErrors('username') ? 'backgroundRedError' : ''}">
+                <form:input type="text" path="username" disabled="true" value="${maxId}"/>
             </td>
         </tr>
-        <tr class="formTableErrorRow">
+        <tr>
             <td></td>
-            <td class="formTableErrorCell">
+            <td class="${result.hasFieldErrors('username') ? 'backgroundRedError' : ''}">
                 <spring:message code="${result.getFieldError('username').defaultMessage}"/>
             </td>
         </tr>
         <tr>
-            <td>
+            <td class="formTableNameCell">
                 <spring:message code="user.password"/>
             </td>
-            <td>
+            <td class="${result.hasFieldErrors('password') ? 'backgroundRedError' : ''}">
                 <form:input type="password" path="password"/>
             </td>
         </tr>
-        <tr class="formTableErrorRow">
+        <tr>
             <td></td>
-            <td class="formTableErrorCell">
+            <td class="${result.hasFieldErrors('password') ? 'backgroundRedError' : ''}">
                 <spring:message code="${result.getFieldError('password').defaultMessage}"/>
             </td>
         </tr>

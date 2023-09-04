@@ -41,9 +41,10 @@ thead{
     border-top: 1px solid black;
 }
 .formTable{
-    width: auto;
+    width: 360px;
     border-collapse: collapse;
     border: 0;
+    table-layout: fixed;
 }
 .formTable > tbody > tr > td {
     border: 0;
@@ -53,8 +54,14 @@ thead{
     border: 0;
 }
 .formTableErrorCell{
+    background: red;
     word-wrap: break-word;
 }
 .formTableErrorRow{
-    border-bottom: 1px solid black;
+}
+.backgroundRedError{
+    background: red;
+}
+.buttonA{
+    display: block;
 }

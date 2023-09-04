@@ -9,16 +9,24 @@
 <br/><br/>
 <table class="centerBlock">
     <thead>
+    <th><spring:message code="role.id"/></th>
     <th><spring:message code="role.name"/></th>
     <th><spring:message code="role.active"/></th>
     <th><spring:message code="actions"/></th>
     </thead>
     <tbody>
-<c:forEach items="${roles}" var="role">
+<c:forEach items="${page.content}" var="role">
     <tr>
+        <td>${role.id}</td>
         <td>${role.name}</td>
-        <td>${role.active}</td>
-        <td></td>
+        <td><spring:message code="${role.active}"/></td>
+        <td>
+            <a href="/admin/role/${role.id}/details"><spring:message code="role.details"/></a>
+            <spring:message code="role.switch.confirm" var="confirm"/>
+            <spring:message code="activate" var="activate"/>
+            <spring:message code="disactivate" var="disactivate"/>
+            <a msg="${confirm}" class="confirm" href="/admin/role/${role.id}/switch"><spring:message code="${role.active ? disactivate : activate}"/></a>
+        </td>
     </tr>
 </c:forEach>
     </tbody>

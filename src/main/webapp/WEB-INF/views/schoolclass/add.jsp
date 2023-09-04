@@ -11,14 +11,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
-<jsp:include page="../../layout/header.jsp"/>
-<a href="/admin/role/list"><spring:message code="role.list"/></a>
-<h1><spring:message code="role.add"/></h1>
-<form:form action="/admin/role/add" method="post" modelAttribute="role">
+<jsp:include page="../layout/header.jsp"/>
+<a href="/admin/schoolclass/list"><spring:message code="schoolClass.list"/></a>
+<h1><spring:message code="schoolClass.add"/></h1>
+<form:form action="/admin/schoolclass/add" method="post" modelAttribute="schoolclass">
     <table class="formTable centerBlock">
         <tr>
             <td class="formTableNameCell">
-                <spring:message code="role.name"/>
+                <spring:message code="schoolClass.name"/>
             </td>
             <td>
                 <form:input type="text" path="name"/>
@@ -35,6 +35,6 @@
     <input type="submit" value="${add}"/>
 </form:form>
 <script src="${pageContext.request.contextPath}/js/addForm.js"></script>
-<jsp:include page="../../layout/footer.jsp"/>
+<jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>

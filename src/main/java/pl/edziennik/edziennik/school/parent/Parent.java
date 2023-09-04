@@ -21,4 +21,8 @@ public class Parent {
     private List<Student> students;
     @OneToOne
     private User user;
+    private boolean active = true;
+    public String getFullName(){
+        return this.firstName.concat(" ").concat(this.lastName);
+    }
 }

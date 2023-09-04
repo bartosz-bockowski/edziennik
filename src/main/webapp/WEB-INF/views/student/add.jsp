@@ -11,13 +11,13 @@
 <html>
 <body>
 <jsp:include page="../layout/header.jsp"/>
-<a href="/admin/teacher/list"><spring:message code="teacher.list"/></a>
-<h1><spring:message code="teacher.add"/></h1>
-<form:form action="/admin/teacher/add" method="post" modelAttribute="teacher">
+<a href="/admin/student/list"><spring:message code="student.list"/></a>
+<h1><spring:message code="student.add"/></h1>
+<form:form action="/admin/student/add" method="post" modelAttribute="student">
     <table class="formTable centerBlock">
         <tr>
             <td class="formTableNameCell">
-                <spring:message code="teacher.firstName"/>
+                <spring:message code="student.firstName"/>
             </td>
             <td class="${result.hasFieldErrors('firstName') ? 'formTableErrorCell' : ''}">
                 <form:input type="text" path="firstName"/>
@@ -31,7 +31,7 @@
         </tr>
         <tr>
             <td class="formTableNameCell">
-                <spring:message code="teacher.lastName"/>
+                <spring:message code="student.lastName"/>
             </td>
             <td class="${result.hasFieldErrors('lastName') ? 'formTableErrorCell' : ''}">
                 <form:input type="text" path="lastName"/>

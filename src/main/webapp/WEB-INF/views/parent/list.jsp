@@ -11,28 +11,28 @@
 <html>
 <body>
 <jsp:include page="../layout/header.jsp"/>
-<h1><spring:message code="teacher.list"/></h1>
-<a href="/admin/teacher/add"><spring:message code="teacher.add"/></a>
+<h1><spring:message code="parent.list"/></h1>
+<a href="/admin/parent/add"><spring:message code="parent.add"/></a>
 <br/><br/>
 <table class="centerBlock">
     <thead>
-    <th><spring:message code="teacher.id"/></th>
-    <th><spring:message code="teacher.fullName"/></th>
-    <th><spring:message code="teacher.status"/></th>
+    <th><spring:message code="parent.id"/></th>
+    <th><spring:message code="parent.fullName"/></th>
+    <th><spring:message code="parent.active"/></th>
     <th><spring:message code="actions"/></th>
     </thead>
     <tbody>
-    <c:forEach items="${page.content}" var="teacher">
+    <c:forEach items="${page.content}" var="parent">
     <tr>
-        <td>${teacher.id}</td>
-        <td>${teacher.getFullName()}</td>
-        <td><spring:message code="${teacher.active}"/></td>
+        <td>${parent.id}</td>
+        <td>${parent.getFullName()}</td>
+        <td><spring:message code="${parent.active}"/></td>
         <td>
-            <a href="/admin/teacher/${teacher.id}/details"><spring:message code="teacher.details"/></a>
-            <spring:message code="teacher.switch.confirm" var="confirm"/>
+            <a href="/admin/parent/${parent.id}/details"><spring:message code="parent.details"/></a>
+            <spring:message code="parent.switch.confirm" var="confirm"/>
             <spring:message code="activate" var="activate"/>
             <spring:message code="disactivate" var="disactivate"/>
-            <a class="confirm" msg="${confirm}" href="/admin/teacher/${teacher.id}/switch"><spring:message code="${teacher.active ? disactivate : activate}"/></a>
+            <a msg="${confirm}" class="confirm" href="/admin/parent/${parent.id}/switch"><spring:message code="${parent.active ? disactivate : activate}"/></a>
         </td>
     </tr>
     </tbody>

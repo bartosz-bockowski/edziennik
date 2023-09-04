@@ -10,6 +10,12 @@
     <a href="/admin/role/list"><spring:message code="role.list"/></a>
     <br/><br/>
     <a href="/admin/teacher/list"><spring:message code="teacher.list"/></a>
+    <br/><br/>
+    <a href="/admin/schoolclass/list"><spring:message code="schoolClass.list"/></a>
+    <br/><br/>
+    <a href="/admin/student/list"><spring:message code="student.list"/></a>
+    <br/><br/>
+    <a href="/admin/parent/list"><spring:message code="parent.list"/></a>
     <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>

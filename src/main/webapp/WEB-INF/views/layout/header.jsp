@@ -8,6 +8,7 @@
     <title>E-dziennik</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/global.js"></script>
 </head>
 <body>
     <header>
