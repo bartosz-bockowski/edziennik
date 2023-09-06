@@ -21,4 +21,23 @@ $(document).ready(() => {
     $(".confirmRemoveStudent").click((e) => {
         return confirm($("#confirmRemoveStudent").val() + " (" + $(e.target).prev().text() + ")")
     })
+    $(".submitSubject").on("click",(e) => {
+        e.preventDefault()
+        let idField = $("#subjectId")
+        let val = $(idField).val()
+        if(val === ""){
+            alert($("#cantBeEmpty").val())
+            return;
+        }
+        fetch("/admin/subject/checkIfSubjectExists/" + val).then(res => res.json()).then(res => {
+            if(res){
+                $(e.target).parent().submit()
+            } else {
+                alert($("#nonExistentSubjectMsg").val())
+            }
+        })
+    })
+    $(".confirmRemoveSubject").click((e) => {
+        return confirm($("#confirmRemoveSubject").val() + " (" + $(e.target).prev().text() + ")")
+    })
 })

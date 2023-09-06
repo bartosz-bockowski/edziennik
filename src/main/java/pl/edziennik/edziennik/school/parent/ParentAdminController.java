@@ -66,7 +66,7 @@ public class ParentAdminController {
     }
     @GetMapping("/{id}/checkIfStudentExists")
     public ResponseEntity<Boolean> check(@PathVariable Long id){
-        boolean result = studentRepository.findOneById(id).isPresent();
+        boolean result = studentRepository.existsById(id);
         return new ResponseEntity<Boolean>(result, HttpStatus.OK);
     }
     @GetMapping("/{parentId}/removeStudent/{studentId}")

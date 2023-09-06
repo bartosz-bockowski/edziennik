@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,18 +13,20 @@ import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.school.student.Student;
 import pl.edziennik.edziennik.school.student.StudentRepository;
 import pl.edziennik.edziennik.school.student.StudentStatus;
-
-import java.util.Optional;
+import pl.edziennik.edziennik.school.subject.Subject;
+import pl.edziennik.edziennik.school.subject.SubjectRepository;
 
 @Controller
 @RequestMapping("/admin/schoolclass")
 public class SchoolClassAdminController {
     private final SchoolClassRepository schoolClassRepository;
     private final StudentRepository studentRepository;
+    private final SubjectRepository subjectRepository;
     public SchoolClassAdminController(SchoolClassRepository schoolClassRepository,
-                                      StudentRepository studentRepository){
+                                      StudentRepository studentRepository, SubjectRepository subjectRepository){
         this.schoolClassRepository = schoolClassRepository;
         this.studentRepository = studentRepository;
+        this.subjectRepository = subjectRepository;
     }
     @GetMapping("/list")
     public String list(Model model, @SortDefault("id") Pageable pageable){
@@ -60,11 +63,10 @@ public class SchoolClassAdminController {
     }
     @GetMapping("/{id}/checkStudent")
     public ResponseEntity<StudentStatus> checkStudent(@PathVariable Long id){
-        Optional<Student> studentOpt = studentRepository.findOneById(id);
-        if(studentOpt.isEmpty()){
+        if(!studentRepository.existsById(id)){
             return new ResponseEntity<StudentStatus>(StudentStatus.NON_EXISTENT, HttpStatus.OK);
         } else {
-            Student student = studentOpt.get();
+            Student student = studentRepository.getReferenceById(id);
             if(student.getSchoolClass() != null){
                 return new ResponseEntity<StudentStatus>(StudentStatus.HAS_CLASS, HttpStatus.OK);
             } else {
@@ -77,6 +79,31 @@ public class SchoolClassAdminController {
         Student student = studentRepository.getReferenceById(studentId);
         student.setSchoolClass(schoolClassRepository.getReferenceById(id));
         studentRepository.save(student);
+        return "redirect:/admin/schoolclass/" + id + "/details";
+    }
+    @GetMapping("/{id}/removeStudent/{studentId}")
+    public String removeStudent(@PathVariable Long id, @PathVariable Long studentId){
+        Student student = studentRepository.getReferenceById(studentId);
+        student.setSchoolClass(null);
+        studentRepository.save(student);
+        return "redirect:/admin/schoolclass/" + id + "/details";
+    }
+    @GetMapping("/{id}/addSubject")
+    public String addSubject(@PathVariable Long id, @RequestParam Long subjectId){
+        SchoolClass schoolClass = schoolClassRepository.getReferenceById(id);
+        Subject subject = subjectRepository.getReferenceById(subjectId);
+        if(!schoolClass.getSubjects().contains(subject)) {
+            schoolClass.getSubjects().add(subject);
+        }
+        schoolClassRepository.save(schoolClass);
+        return "redirect:/admin/schoolclass/" + id +"/details";
+    }
+    @GetMapping("{id}/removeSubject/{subjectId}")
+    public String removeSubject(@PathVariable Long id, @PathVariable Long subjectId){
+        SchoolClass schoolClass = schoolClassRepository.getReferenceById(id);
+        Subject subject = subjectRepository.getReferenceById(subjectId);
+        schoolClass.getSubjects().remove(subject);
+        schoolClassRepository.save(schoolClass);
         return "redirect:/admin/schoolclass/" + id + "/details";
     }
 }

@@ -1,15 +1,19 @@
 package pl.edziennik.edziennik.school.subject;
 
-import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.school.teacher.Teacher;
 import pl.edziennik.edziennik.school.teacher.TeacherRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/admin/subject")
@@ -61,5 +65,9 @@ public class SubjectAdminController {
         subject.getTeachers().remove(teacherRepository.getReferenceById(teacherId));
         subjectRepository.save(subject);
         return "redirect:/admin/subject/" + subjectId + "/details";
+    }
+    @GetMapping("/checkIfSubjectExists/{id}")
+    public ResponseEntity<Boolean> checkIfSubjectExists(@PathVariable Long id){
+        return new ResponseEntity<>(subjectRepository.existsById(id), HttpStatus.OK);
     }
 }

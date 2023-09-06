@@ -48,4 +48,9 @@ public class StudentAdminController {
         studentRepository.save(student);
         return "redirect:/admin/student/list";
     }
+    @GetMapping("/{id}/details")
+    public String details(@PathVariable Long id, Model model){
+        model.addAttribute("student",studentRepository.getReferenceById(id));
+        return "student/details";
+    }
 }

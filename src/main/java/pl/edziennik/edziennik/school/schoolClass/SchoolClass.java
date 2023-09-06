@@ -3,6 +3,7 @@ package pl.edziennik.edziennik.school.schoolClass;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
+import pl.edziennik.edziennik.school.subject.Subject;
 import pl.edziennik.edziennik.school.teacher.Teacher;
 
 import jakarta.persistence.*;
@@ -21,5 +22,7 @@ public class SchoolClass {
     private String name;
     @ManyToMany
     private List<Teacher> supervisingTeachers;
+    @ManyToMany
+    private List<Subject> subjects;
     private boolean active = true;
 }

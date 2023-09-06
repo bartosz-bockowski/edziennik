@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.edziennik.edziennik.school.subject.SubjectRepository;
 
 @Controller
 @RequestMapping("/admin/teacher")
 public class TeacherAdminController {
     private final TeacherRepository teacherRepository;
-    public TeacherAdminController(TeacherRepository teacherRepository){
+    private final SubjectRepository subjectRepository;
+    public TeacherAdminController(TeacherRepository teacherRepository, SubjectRepository subjectRepository){
         this.teacherRepository = teacherRepository;
+        this.subjectRepository = subjectRepository;
     }
     @GetMapping("/list")
     public String list(Model model, @SortDefault("id") Pageable pageable){
@@ -49,8 +52,15 @@ public class TeacherAdminController {
         teacherRepository.save(teacher);
         return "redirect:/admin/teacher/list";
     }
+    @GetMapping("{id}/details")
+    public String details(@PathVariable Long id, Model model){
+        Teacher teacher = teacherRepository.getReferenceById(id);
+        model.addAttribute("teacher",teacher);
+        model.addAttribute("subjects",subjectRepository.findAllWhichHaveTeacher(teacher));
+        return "teacher/details";
+    }
     @GetMapping("/checkIfTeacherExists/{id}")
     public ResponseEntity<Boolean> checkIfTeacherExists(@PathVariable Long id){
-        return new ResponseEntity<>(teacherRepository.findOneById(id).isPresent(), HttpStatus.OK);
+        return new ResponseEntity<>(teacherRepository.existsById(id), HttpStatus.OK);
     }
 }

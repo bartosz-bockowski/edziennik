@@ -18,6 +18,7 @@
     <thead>
     <th><spring:message code="student.id"/></th>
     <th><spring:message code="student.fullName"/></th>
+    <th><spring:message code="student.schoolClass"/></th>
     <th><spring:message code="student.active"/></th>
     <th><spring:message code="actions"/></th>
     </thead>
@@ -26,6 +27,8 @@
     <tr>
         <td>${student.id}</td>
         <td>${student.getFullName()}</td>
+        <spring:message code="student.nullClass" var="nullClass"/>
+        <td>${student.schoolClass.name != null ? student.schoolClass.name : nullClass}</td>
         <td><spring:message code="${student.active}"/></td>
         <td>
             <a href="/admin/student/${student.id}/details"><spring:message code="student.details"/></a>

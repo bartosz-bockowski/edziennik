@@ -15,6 +15,8 @@
 <a href="/admin/subject/list"><spring:message code="subject.list"/></a>
 <h1><spring:message code="subject.subjectDetails"/></h1>
 <div><spring:message code="subject.name"/>: <b>${subject.name}</b></div>
+<script src="${pageContext.request.contextPath}/js/subject/subjectDetails.js"></script>
+<!-- teachers -->
 <div><spring:message code="subject.teachers"/>:</div>
 <spring:message code="subject.confirmRemoveTeacher" var="conRemTea"/>
 <input type="hidden" id="confirmRemoveDetails" value="${conRemTea}"/>
@@ -29,7 +31,6 @@
     <form id="addTeacherForm" action="/admin/subject/${subject.id}/addTeacher" method="get">
         <spring:message code="form.cantBeEmpty" var="cantBeEmpty"/>
         <input type="hidden" id="cantBeEmpty" value="${cantBeEmpty}"/>
-        <script src="${pageContext.request.contextPath}/js/subject/subject.js"></script>
         <spring:message code="subject.addTeacher.nonExistsentTeacher" var="nonExistent"/>
         <input type="hidden" id="nonExistentTeacherMsg" value="${nonExistent}"/>
         <spring:message code="subject.insertTeacherId"/>
