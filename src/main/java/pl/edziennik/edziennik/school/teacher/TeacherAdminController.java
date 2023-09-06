@@ -3,6 +3,8 @@ package pl.edziennik.edziennik.school.teacher;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,5 +48,9 @@ public class TeacherAdminController {
         teacher.setActive(!teacher.isActive());
         teacherRepository.save(teacher);
         return "redirect:/admin/teacher/list";
+    }
+    @GetMapping("/checkIfTeacherExists/{id}")
+    public ResponseEntity<Boolean> checkIfTeacherExists(@PathVariable Long id){
+        return new ResponseEntity<>(teacherRepository.findOneById(id).isPresent(), HttpStatus.OK);
     }
 }

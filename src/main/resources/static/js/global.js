@@ -4,4 +4,7 @@ $(document).ready(() => {
         let msg = ""
         return confirm($(obj).attr("msg"))
     })
+    $(".confirmRemoveDetails").click((e) => {
+        return confirm($("#confirmRemoveDetails").val() + " (" + $(e.target).prev().text() + ")")
+    })
 })

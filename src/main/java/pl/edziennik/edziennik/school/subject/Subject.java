@@ -17,4 +17,5 @@ public class Subject {
     private String name;
     @ManyToMany
     private List<Teacher> teachers;
+    private boolean active = true;
 }

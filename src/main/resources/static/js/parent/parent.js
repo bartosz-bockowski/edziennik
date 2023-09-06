@@ -16,7 +16,7 @@ $(document).ready(() => {
             }
         })
     })
-    $(".confirmRemoveStudent").click((e) => {
-        return confirm($("#confirmRemoveStudent").val() + " (" + $(e.target).prev().text() + ")")
+    $(".confirmRemoveDetails").click((e) => {
+        return confirm($("#confirmRemoveDetails").val() + " (" + $(e.target).prev().text() + ")")
     })
 })

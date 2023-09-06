@@ -7,7 +7,7 @@ $(document).ready(() => {
             alert($("#cantBeEmpty").val())
             return;
         }
-        fetch("/admin/schoolclass/" + idField.val() + "/checkStudent")
+        fetch("/admin/schoolclass/" + val + "/checkStudent")
             .then(res => res.json()).then(res => {
              if (res === "NO_CLASS") {
                  $(e.target).parent().submit()

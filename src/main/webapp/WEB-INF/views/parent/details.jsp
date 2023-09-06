@@ -17,12 +17,12 @@
 <div><spring:message code="parent.fullName"/>: <b>${parent.getFullName()}</b></div>
 <div><spring:message code="parent.students"/>:</div>
 <spring:message code="parent.confirmRemoveStudent" var="conRemStu"/>
-<input type="hidden" id="confirmRemoveStudent" value="${conRemStu}"/>
+<input type="hidden" id="confirmRemoveDetails" value="${conRemStu}"/>
 <c:if test="${parent.students.size() == 0}">
     <div><spring:message code="parent.noStudents"/></div>
 </c:if>
 <c:forEach items="${parent.students}" var="student">
-    <div><span>${student.getFullName()}</span> <a class="confirmRemoveStudent" href="/admin/parent/${parent.id}/removeStudent/${student.id}"><spring:message code="parent.removeStudent"/></a></div>
+    <div><span>${student.getFullName()}</span> <a class="confirmRemoveDetails" href="/admin/parent/${parent.id}/removeStudent/${student.id}"><spring:message code="parent.removeStudent"/></a></div>
 </c:forEach>
 <div>
     <h2><spring:message code="parent.addStudent"/></h2>

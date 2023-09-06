@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import pl.edziennik.edziennik.enums.EmployeeType;
 import pl.edziennik.edziennik.security.user.User;
 
 import jakarta.persistence.*;
@@ -24,7 +23,6 @@ public class Teacher {
     @NotNull
     @NotEmpty(message = "validation.error.cannotBeEmpty")
     private String lastName;
-    private EmployeeType employeeType;
     private boolean active = true;
     public String getFullName(){
         return firstName + " " + lastName;
