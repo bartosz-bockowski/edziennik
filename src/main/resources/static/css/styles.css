@@ -2,8 +2,8 @@ body{
     text-align: center;
     margin: 0;
     padding: 0;
-    background: #232323;
-    color: white;
+    background: #232323 !important;
+    color: white !important;
 }
 a{
     color: white;
@@ -69,4 +69,7 @@ thead{
 }
 .buttonA{
     display: block;
+}
+.selectpickerButton{
+    color: black;
 }

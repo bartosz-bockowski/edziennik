@@ -7,4 +7,8 @@ $(document).ready(() => {
     $(".confirmRemoveDetails").click((e) => {
         return confirm($("#confirmRemoveDetails").val() + " (" + $(e.target).prev().text() + ")")
     })
+    $(".selectpicker").selectpicker()
+    $(".defaultConfirm").click((e) => {
+        return confirm($(e.target).attr("msg"));
+    })
 })

@@ -3,22 +3,24 @@ package pl.edziennik.edziennik.school.student;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.school.parent.ParentRepository;
+import pl.edziennik.edziennik.security.user.UserRepository;
 
 @Controller
 @RequestMapping("/admin/student")
 public class StudentAdminController {
     private final StudentRepository studentRepository;
+    private final UserRepository userRepository;
     public StudentAdminController(StudentRepository studentRepository,
-                                  ParentRepository parentRepository){
+                                  ParentRepository parentRepository,
+                                  UserRepository userRepository){
         this.studentRepository = studentRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/list")
@@ -51,6 +53,22 @@ public class StudentAdminController {
     @GetMapping("/{id}/details")
     public String details(@PathVariable Long id, Model model){
         model.addAttribute("student",studentRepository.getReferenceById(id));
+        model.addAttribute("users",userRepository.findAll());
         return "student/details";
+    }
+    @GetMapping("/{studentId}/setUser")
+    public String setUser(@PathVariable Long studentId, @RequestParam Long user){
+        System.out.println(studentId);
+        Student student = studentRepository.getReferenceById(studentId);
+        student.setUser(userRepository.getReferenceById(user));
+        studentRepository.save(student);
+        return "redirect:/admin/student/" + studentId + "/details";
+    }
+    @GetMapping("/{studentId}/clearUser")
+    public String clearUser(@PathVariable Long studentId){
+        Student student = studentRepository.getReferenceById(studentId);
+        student.setUser(null);
+        studentRepository.save(student);
+        return "redirect:/admin/student/" + studentId +"/details";
     }
 }
