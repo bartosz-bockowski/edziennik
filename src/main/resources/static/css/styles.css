@@ -70,6 +70,6 @@ thead{
 .buttonA{
     display: block;
 }
-.selectpickerButton{
+input[type="submit"],button{
     color: black;
 }

@@ -15,30 +15,28 @@
 <a href="/admin/subject/list"><spring:message code="subject.list"/></a>
 <h1><spring:message code="subject.subjectDetails"/></h1>
 <div><spring:message code="subject.name"/>: <b>${subject.name}</b></div>
-<script src="${pageContext.request.contextPath}/js/subject/subjectDetails.js"></script>
 <!-- teachers -->
-<div><spring:message code="subject.teachers"/>:</div>
-<spring:message code="subject.confirmRemoveTeacher" var="conRemTea"/>
-<input type="hidden" id="confirmRemoveDetails" value="${conRemTea}"/>
-<c:if test="${subject.teachers.size() == 0}">
-    <div><spring:message code="subject.noTeachers"/></div>
-</c:if>
-<c:forEach items="${subject.teachers}" var="teacher">
-    <div><span>${teacher.getFullName()}</span> <a class="confirmRemoveDetails" href="/admin/subject/${subject.id}/removeTeacher/${teacher.id}"><spring:message code="subject.removeTeacher"/></a></div>
-</c:forEach>
 <div>
     <h2><spring:message code="subject.addTeacher"/></h2>
     <form id="addTeacherForm" action="/admin/subject/${subject.id}/addTeacher" method="get">
-        <spring:message code="form.cantBeEmpty" var="cantBeEmpty"/>
-        <input type="hidden" id="cantBeEmpty" value="${cantBeEmpty}"/>
-        <spring:message code="subject.addTeacher.nonExistsentTeacher" var="nonExistent"/>
-        <input type="hidden" id="nonExistentTeacherMsg" value="${nonExistent}"/>
-        <spring:message code="subject.insertTeacherId"/>
-        <input type="number" name="teacherId" id="teacherId" required="required"/>
+        <select class="selectpicker" data-live-search="true" name="teacherId">
+            <c:forEach items="${teachers}" var="teacher">
+                <c:if test="${!subject.teachers.contains(teacher)}">
+                    <option value="${teacher.id}">${teacher.getFullName()} (ID: ${teacher.id})</option>
+                </c:if>
+            </c:forEach>
+        </select>
         <br/>
-        <spring:message code="add" var="add"/>
-        <input class="submit" type="submit" value="${add}"/>
+        <button type="submit" class="selectpickerButton"><spring:message code="subject.addT"/></button>
     </form>
+    <div><spring:message code="subject.teachers"/>:</div>
+    <spring:message code="subject.confirmRemoveTeacher" var="conRemTea"/>
+    <c:if test="${subject.teachers.size() == 0}">
+        <div><spring:message code="subject.noTeachers"/></div>
+    </c:if>
+    <c:forEach items="${subject.teachers}" var="teacher">
+        <div><span>${teacher.getFullName()}</span> <a msg="${conRemTea} (${teacher.getFullName()} ID: ${teacher.id})" class="confirm" href="/admin/subject/${subject.id}/removeTeacher/${teacher.id}"><spring:message code="subject.removeTeacher"/></a></div>
+    </c:forEach>
 </div>
 <jsp:include page="../layout/footer.jsp"/>
 </body>

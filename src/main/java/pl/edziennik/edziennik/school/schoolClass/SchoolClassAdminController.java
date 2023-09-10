@@ -59,20 +59,9 @@ public class SchoolClassAdminController {
     public String details(Model model, @PathVariable Long id){
         model.addAttribute("schoolClass",schoolClassRepository.getReferenceById(id));
         model.addAttribute("students",studentRepository.findAllBySchoolClassId(id));
+        model.addAttribute("allStudents",studentRepository.findAll());
+        model.addAttribute("subjects",subjectRepository.findAll());
         return "schoolclass/details";
-    }
-    @GetMapping("/{id}/checkStudent")
-    public ResponseEntity<StudentStatus> checkStudent(@PathVariable Long id){
-        if(!studentRepository.existsById(id)){
-            return new ResponseEntity<StudentStatus>(StudentStatus.NON_EXISTENT, HttpStatus.OK);
-        } else {
-            Student student = studentRepository.getReferenceById(id);
-            if(student.getSchoolClass() != null){
-                return new ResponseEntity<StudentStatus>(StudentStatus.HAS_CLASS, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<StudentStatus>(StudentStatus.NO_CLASS, HttpStatus.OK);
-            }
-        }
     }
     @GetMapping("/{id}/addStudent")
     public String addStudent(@PathVariable Long id, @RequestParam Long studentId){

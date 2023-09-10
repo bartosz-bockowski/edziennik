@@ -15,23 +15,31 @@
 <h1><spring:message code="student.studentDetails"/></h1>
 <h3>${student.getFullName()}</h3>
 <spring:message code="student.nullClass" var="nullClass"/>
-<spring:message code="student.schoolClass"/>: <b>${student.schoolClass.name != null ? student.schoolClass.name : nullClass}</b>
+<spring:message code="student.schoolClass"/>:
+<b>${student.schoolClass.name != null ? student.schoolClass.name : nullClass}</b>
 <br/>
-<h3><spring:message code="student.user"/></h3>
-<c:if test="${student.user == null}">
-    <form method="get" action="/admin/student/${student.id}/setUser">
-        <select class="selectpicker selectpickerCustom" data-live-search="true" name="user">
-            <c:forEach items="${users}" var="user">
+<h3><spring:message code="student.users"/></h3>
+<form method="get" action="/admin/student/${student.id}/addUser">
+    <select class="selectpicker" data-live-search="true" name="user">
+        <c:forEach items="${users}" var="user">
+            <c:if test="${!student.users.contains(user)}">
                 <option value="${user.id}">${user.username} (ID: ${user.id})</option>
-            </c:forEach>
-        </select>
-        <br/>
-        <button type="submit" class="selectpickerButton"><spring:message code="student.setUser"/></button>
-    </form>
+            </c:if>
+        </c:forEach>
+    </select>
+    <br/>
+    <button type="submit" class="selectpickerButton"><spring:message code="student.setUser"/></button>
+</form>
+<c:if test="${student.users.size() > 0}">
+    <spring:message code="student.confirmRemoveUser" var="confirmRemoveUser"/>
+    <c:forEach items="${student.users}" var="user">
+        ${user.username} (ID: ${user.id}) <a class="confirm" msg="${confirmRemoveUser} (${user.username} ID: ${user.id})" href="/admin/student/${student.id}/removeUser/${user.id}">
+        <spring:message code="student.removeUser"/>
+    </a><br/>
+    </c:forEach>
 </c:if>
-<c:if test="${student.user != null}">
-    <spring:message code="student.confirmClearUser" var="confirmClearUser"/>
-    ${student.user.username} (ID: ${student.user.id}) <a class="defaultConfirm" msg="${confirmClearUser}" href="/admin/student/${student.id}/clearUser"><spring:message code="student.clearUser"/></a>
+<c:if test="${student.users.size() == 0}">
+    <spring:message code="student.noUsers"/>
 </c:if>
 <jsp:include page="../layout/footer.jsp"/>
 </body>

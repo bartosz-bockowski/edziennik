@@ -47,6 +47,7 @@ public class SubjectAdminController {
     @GetMapping("/{id}/details")
     public String details(Model model, @PathVariable Long id){
         model.addAttribute("subject",subjectRepository.getReferenceById(id));
+        model.addAttribute("teachers",teacherRepository.findAll());
         return "subject/details";
     }
     @GetMapping("/{subjectId}/addTeacher")

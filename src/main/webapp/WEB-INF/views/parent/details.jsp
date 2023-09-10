@@ -17,28 +17,49 @@
 <div><spring:message code="parent.fullName"/>: <b>${parent.getFullName()}</b></div>
 <div><spring:message code="parent.students"/>:</div>
 <spring:message code="parent.confirmRemoveStudent" var="conRemStu"/>
-<input type="hidden" id="confirmRemoveDetails" value="${conRemStu}"/>
 <c:if test="${parent.students.size() == 0}">
     <div><spring:message code="parent.noStudents"/></div>
 </c:if>
 <c:forEach items="${parent.students}" var="student">
-    <div><span>${student.getFullName()}</span> <a class="confirmRemoveDetails" href="/admin/parent/${parent.id}/removeStudent/${student.id}"><spring:message code="parent.removeStudent"/></a></div>
+    <div><span>${student.getFullName()}</span> <a class="confirm" msg="${conRemStu} (${student.getFullName()} ID: ${student.id})" href="/admin/parent/${parent.id}/removeStudent/${student.id}"><spring:message code="parent.removeStudent"/></a></div>
 </c:forEach>
 <div>
     <h2><spring:message code="parent.addStudent"/></h2>
     <form id="addStudentForm" action="/admin/parent/${parent.id}/addStudent" method="get">
-        <spring:message code="form.cantBeEmpty" var="cantBeEmpty"/>
-        <input type="hidden" id="cantBeEmpty" value="${cantBeEmpty}"/>
-        <script src="${pageContext.request.contextPath}/js/parent/parent.js"></script>
-        <spring:message code="parent.addStudent.nonExistsentStudent" var="nonExistent"/>
-        <input type="hidden" id="nonExistentStudentMsg" value="${nonExistent}"/>
-        <spring:message code="parent.insertStudentId"/>
-        <input type="number" name="studentId" id="studentId" required="required"/>
+        <select class="selectpicker" data-live-search="true" name="studentId">
+            <c:forEach items="${students}" var="student">
+                <c:if test="${!parent.students.contains(student)}">
+                    <option value="${student.id}">${student.getFullName()} (ID: ${student.id})</option>
+                </c:if>
+            </c:forEach>
+        </select>
         <br/>
-        <spring:message code="add" var="add"/>
-        <input class="submit" type="submit" value="${add}"/>
+        <button type="submit" class="selectpickerButton"><spring:message code="parent.addUser"/></button>
     </form>
 </div>
+<h3><spring:message code="parent.users"/></h3>
+<form method="get" action="/admin/parent/${parent.id}/addUser">
+    <select class="selectpicker" data-live-search="true" name="user">
+        <c:forEach items="${users}" var="user">
+            <c:if test="${!parent.users.contains(user)}">
+                <option value="${user.id}">${user.username} (ID: ${user.id})</option>
+            </c:if>
+        </c:forEach>
+    </select>
+    <br/>
+    <button type="submit" class="selectpickerButton"><spring:message code="parent.setUser"/></button>
+</form>
+<c:if test="${parent.users.size() > 0}">
+    <spring:message code="parent.confirmRemoveUser" var="confirmRemoveUser"/>
+    <c:forEach items="${parent.users}" var="user">
+        ${user.username} (ID: ${user.id}) <a class="confirm" msg="${confirmRemoveUser} (${user.username} ID: ${user.id})" href="/admin/parent/${parent.id}/removeUser/${user.id}">
+        <spring:message code="parent.removeUser"/>
+    </a><br/>
+    </c:forEach>
+</c:if>
+<c:if test="${parent.users.size() == 0}">
+    <spring:message code="parent.noUsers"/>
+</c:if>
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>

@@ -11,16 +11,24 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.school.student.Student;
 import pl.edziennik.edziennik.school.student.StudentRepository;
+import pl.edziennik.edziennik.school.teacher.Teacher;
+import pl.edziennik.edziennik.security.user.User;
+import pl.edziennik.edziennik.security.user.UserRepository;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/parent")
 public class ParentAdminController {
     private final ParentRepository parentRepository;
     private final StudentRepository studentRepository;
+    private final UserRepository userRepository;
     public ParentAdminController(ParentRepository parentRepository,
-                                 StudentRepository studentRepository) {
+                                 StudentRepository studentRepository,
+                                 UserRepository userRepository) {
         this.parentRepository = parentRepository;
         this.studentRepository = studentRepository;
+        this.userRepository = userRepository;
     }
     @GetMapping("/list")
     public String list(Model model, @SortDefault("id") Pageable pageable){
@@ -52,6 +60,8 @@ public class ParentAdminController {
     @GetMapping("/{id}/details")
     public String details(Model model, @PathVariable Long id){
         model.addAttribute("parent",parentRepository.getReferenceById(id));
+        model.addAttribute("students",studentRepository.findAll());
+        model.addAttribute("users",userRepository.findAll());
         return "parent/details";
     }
     @GetMapping("/{parentId}/addStudent")
@@ -75,5 +85,24 @@ public class ParentAdminController {
         parent.getStudents().remove(studentRepository.getReferenceById(studentId));
         parentRepository.save(parent);
         return "redirect:/admin/parent/" + parentId + "/details";
+    }
+    @GetMapping("/{parentId}/addUser")
+    public String setUser(@PathVariable Long parentId, @RequestParam Long user){
+        Parent parent = parentRepository.getReferenceById(parentId);
+        User userObj = userRepository.getReferenceById(user);
+        List<User> users = parent.getUsers();
+        if(!users.contains(userObj)){
+            users.add(userObj);
+        }
+        parentRepository.save(parent);
+        return "redirect:/admin/parent/" + parentId + "/details";
+    }
+    @GetMapping("/{parentId}/removeUser/{userId}")
+    public String clearUser(@PathVariable Long parentId, @PathVariable Long userId){
+        Parent parent = parentRepository.getReferenceById(parentId);
+        User user = userRepository.getReferenceById(userId);
+        parent.getUsers().remove(user);
+        parentRepository.save(parent);
+        return "redirect:/admin/parent/" + parentId +"/details";
     }
 }

@@ -18,52 +18,48 @@
 <script src="${pageContext.request.contextPath}/js/schoolClass/schoolClassDetails.js"></script>
 <!-- students -->
 <div><spring:message code="schoolClass.students"/>:</div>
-<spring:message code="schoolClass.studentAlreadyHasClass" var="stuAlrHasCla"/>
-<input type="hidden" id="studentAlreadyHasClass" value="${stuAlrHasCla}"/>
 <spring:message code="schoolClass.confirmRemoveStudent" var="conRemStu"/>
-<input type="hidden" id="confirmRemoveStudent" value="${conRemStu}"/>
 <c:if test="${students.size() == 0}">
     <div><spring:message code="schoolClass.noStudents"/></div>
 </c:if>
 <c:forEach items="${students}" var="student">
-    <div><span>${student.getFullName()}</span> <a class="confirmRemoveStudent" href="/admin/schoolclass/${schoolClass.id}/removeStudent/${student.id}"><spring:message code="schoolClass.removeStudent"/></a></div>
+    <div><span>${student.getFullName()}</span> <a msg="${conRemStu} (${student.getFullName()} ID: ${student.id})" class="confirm" href="/admin/schoolclass/${schoolClass.id}/removeStudent/${student.id}"><spring:message code="schoolClass.removeStudent"/></a></div>
 </c:forEach>
 <div>
     <h2><spring:message code="schoolClass.addStudent"/></h2>
     <form id="addStudentForm" action="/admin/schoolclass/${schoolClass.id}/addStudent" method="get">
-        <spring:message code="form.cantBeEmpty" var="cantBeEmpty"/>
-        <input type="hidden" id="cantBeEmpty" value="${cantBeEmpty}"/>
-        <spring:message code="schoolClass.addStudent.nonExistentStudent" var="nonExistent"/>
-        <input type="hidden" id="nonExistentStudentMsg" value="${nonExistent}"/>
-        <spring:message code="schoolClass.insertStudentId"/>
-        <input type="number" name="studentId" id="studentId" required="required"/>
+        <select class="selectpicker" data-live-search="true" name="studentId">
+            <c:forEach items="${allStudents}" var="allStudent">
+                <c:if test="${!students.contains(allStudent)}">
+                    <option value="${allStudent.id}">${allStudent.getFullName()} (ID: ${allStudent.id})</option>
+                </c:if>
+            </c:forEach>
+        </select>
         <br/>
-        <spring:message code="add" var="add"/>
-        <input class="submit" type="submit" value="${add}"/>
+        <button type="submit" class="selectpickerButton"><spring:message code="schoolClass.setUser"/></button>
     </form>
 </div>
 <!-- subjects -->
 <div><spring:message code="schoolClass.subjects"/>:</div>
 <spring:message code="schoolClass.confirmRemoveSubject" var="conRemSub"/>
-<input type="hidden" id="confirmRemoveSubject" value="${conRemSub}"/>
 <c:if test="${schoolClass.subjects.size() == 0}">
     <div><spring:message code="schoolClass.noSubjects"/></div>
 </c:if>
 <c:forEach items="${schoolClass.subjects}" var="subject">
-    <div><span>${subject.name}</span> <a class="confirmRemoveSubject" href="/admin/schoolclass/${schoolClass.id}/removeSubject/${subject.id}"><spring:message code="schoolClass.removeSubject"/></a></div>
+    <div><span>${subject.name}</span> <a class="confirm" msg="${conRemSub} (${subject.name} ID: ${subject.id})" href="/admin/schoolclass/${schoolClass.id}/removeSubject/${subject.id}"><spring:message code="schoolClass.removeSubject"/></a></div>
 </c:forEach>
 <div>
     <h2><spring:message code="schoolClass.addSubject"/></h2>
     <form id="addSubjectForm" action="/admin/schoolclass/${schoolClass.id}/addSubject" method="get">
-        <spring:message code="form.cantBeEmpty" var="cantBeEmpty"/>
-        <input type="hidden" id="cantBeEmpty" value="${cantBeEmpty}"/>
-        <spring:message code="schoolClass.addSubject.nonExistentSubject" var="nonExistent"/>
-        <input type="hidden" id="nonExistentSubjectMsg" value="${nonExistent}"/>
-        <spring:message code="schoolClass.insertSubjectId"/>
-        <input type="number" name="subjectId" id="subjectId" required="required"/>
+        <select class="selectpicker" data-live-search="true" name="subjectId">
+            <c:forEach items="${subjects}" var="subject">
+                <c:if test="${!schoolClass.subjects.contains(subject)}">
+                    <option value="${subject.id}">${subject.name} (ID: ${subject.id})</option>
+                </c:if>
+            </c:forEach>
+        </select>
         <br/>
-        <spring:message code="add" var="add"/>
-        <input class="submitSubject" type="submit" value="${add}"/>
+        <button type="submit" class="selectpickerButton"><spring:message code="schoolClass.saveSubject"/></button>
     </form>
 </div>
 <jsp:include page="../layout/footer.jsp"/>

@@ -9,7 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.school.parent.ParentRepository;
+import pl.edziennik.edziennik.security.user.User;
 import pl.edziennik.edziennik.security.user.UserRepository;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/student")
@@ -56,18 +59,22 @@ public class StudentAdminController {
         model.addAttribute("users",userRepository.findAll());
         return "student/details";
     }
-    @GetMapping("/{studentId}/setUser")
+    @GetMapping("/{studentId}/addUser")
     public String setUser(@PathVariable Long studentId, @RequestParam Long user){
-        System.out.println(studentId);
         Student student = studentRepository.getReferenceById(studentId);
-        student.setUser(userRepository.getReferenceById(user));
+        User userObj = userRepository.getReferenceById(user);
+        List<User> users = student.getUsers();
+        if(!users.contains(userObj)){
+            users.add(userObj);
+        }
         studentRepository.save(student);
         return "redirect:/admin/student/" + studentId + "/details";
     }
-    @GetMapping("/{studentId}/clearUser")
-    public String clearUser(@PathVariable Long studentId){
+    @GetMapping("/{studentId}/removeUser/{userId}")
+    public String clearUser(@PathVariable Long studentId, @PathVariable Long userId){
         Student student = studentRepository.getReferenceById(studentId);
-        student.setUser(null);
+        User user = userRepository.getReferenceById(userId);
+        student.getUsers().remove(user);
         studentRepository.save(student);
         return "redirect:/admin/student/" + studentId +"/details";
     }

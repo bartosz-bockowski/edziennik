@@ -8,6 +8,8 @@ import pl.edziennik.edziennik.security.user.User;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -15,8 +17,8 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    private User user;
+    @ManyToMany
+    private List<User> users;
     @NotNull
     @NotEmpty(message = "validation.error.cannotBeEmpty")
     private String firstName;

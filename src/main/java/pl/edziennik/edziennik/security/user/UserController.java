@@ -1,23 +1,16 @@
 package pl.edziennik.edziennik.security.user;
 
-import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.edziennik.edziennik.school.subject.Subject;
-import pl.edziennik.edziennik.school.teacher.Teacher;
+import pl.edziennik.edziennik.school.parent.ParentRepository;
+import pl.edziennik.edziennik.school.student.StudentRepository;
+import pl.edziennik.edziennik.school.teacher.TeacherRepository;
 import pl.edziennik.edziennik.security.role.RoleRepository;
 
-import jakarta.servlet.http.HttpServletRequest;
-
-import javax.xml.stream.StreamFilter;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Stream;
 
 @RequestMapping("/admin/user")
 @Controller
@@ -25,13 +18,22 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
+    private final ParentRepository parentRepository;
 
     public UserController(UserService userService,
                           UserRepository userRepository,
-                          RoleRepository roleRepository) {
+                          RoleRepository roleRepository,
+                          StudentRepository studentRepository,
+                          TeacherRepository teacherRepository,
+                          ParentRepository parentRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.studentRepository = studentRepository;
+        this.teacherRepository = teacherRepository;
+        this.parentRepository = parentRepository;
     }
 
     @GetMapping("/list")
@@ -85,6 +87,9 @@ public class UserController {
         User user = userRepository.getOne(id);
         model.addAttribute("user",user);
         model.addAttribute("roles",roleRepository.findAll());
+        model.addAttribute("students",studentRepository.findAllWhichHaveUser(user));
+        model.addAttribute("teachers",teacherRepository.findAllWhichHaveUser(user));
+        model.addAttribute("parents",parentRepository.findAllWhichHaveUser(user));
         return "security/user/details";
     }
 
