@@ -18,6 +18,8 @@
     <a href="/admin/parent/list"><spring:message code="parent.list"/></a>
     <br/><br/>
     <a href="/admin/subject/list"><spring:message code="subject.list"/></a>
+    <br/><br/>
+    <a href="/admin/lessonHour/list"><spring:message code="lessonHour.list"/></a>
     <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>

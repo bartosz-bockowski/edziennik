@@ -5,12 +5,14 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.edziennik.edziennik.school.parent.ParentRepository;
-import pl.edziennik.edziennik.school.student.StudentRepository;
-import pl.edziennik.edziennik.school.teacher.TeacherRepository;
+import pl.edziennik.edziennik.parent.ParentRepository;
+import pl.edziennik.edziennik.student.StudentRepository;
+import pl.edziennik.edziennik.teacher.TeacherRepository;
 import pl.edziennik.edziennik.security.role.RoleRepository;
+import pl.edziennik.edziennik.security.role.Role;
 
 import java.util.Random;
+import java.util.Set;
 
 @RequestMapping("/admin/user")
 @Controller
@@ -94,10 +96,17 @@ public class UserController {
     }
 
     @GetMapping("/{id}/setRoles")
-    public String setRoles(@PathVariable Long id, @RequestParam("roles") String roles){
-        User user = userRepository.getOne(id);
-        for(String x : roles.split(",")){
-            user.getRoles().add(roleRepository.getOne(Long.parseLong(x)));
+    public String setRoles(@PathVariable Long id, @RequestParam(value = "roles", required = false) String roles){
+        User user = userRepository.getReferenceById(id);
+        Set<Role> roleList = user.getRoles();
+        if(roles == null){
+            for(Role role : roleList){
+                roleList.remove(role);
+            }
+        } else {
+            for(String x : roles.split(",")){
+                user.getRoles().add(roleRepository.getReferenceById(Long.parseLong(x)));
+            }
         }
         userService.saveUser(user);
         return "redirect:/admin/user/" + id + "/details";

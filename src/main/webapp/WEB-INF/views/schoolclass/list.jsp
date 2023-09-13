@@ -33,6 +33,7 @@
             <spring:message code="activate" var="activate"/>
             <spring:message code="disactivate" var="disactivate"/>
             <a msg="${confirm}" class="confirm" href="/admin/schoolclass/${schoolclass.id}/switch"><spring:message code="${schoolclass.active ? disactivate : activate}"/></a>
+            <a href="/schoolclass/${schoolclass.id}/lessonPlan"><spring:message code="lessonPlan"/></a>
         </td>
     </tr>
     </tbody>

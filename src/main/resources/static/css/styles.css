@@ -70,6 +70,9 @@ thead{
 .buttonA{
     display: block;
 }
-input[type="submit"],button{
-    color: black;
+input,button{
+    color: black !important;
+}
+.lessonPlanTable td{
+    text-align: center;
 }
