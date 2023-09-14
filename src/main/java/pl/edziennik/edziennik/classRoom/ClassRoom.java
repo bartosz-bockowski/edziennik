@@ -18,4 +18,5 @@ public class ClassRoom {
     private Long id;
     @NotEmpty
     private String name;
+    private boolean active;
 }

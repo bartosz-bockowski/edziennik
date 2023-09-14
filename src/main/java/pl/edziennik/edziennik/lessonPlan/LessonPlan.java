@@ -6,6 +6,7 @@ import lombok.Setter;
 import pl.edziennik.edziennik.classRoom.ClassRoom;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.schoolClass.SchoolClass;
+import pl.edziennik.edziennik.subject.Subject;
 import pl.edziennik.edziennik.teacher.Teacher;
 
 import java.time.LocalDate;
@@ -26,4 +27,6 @@ public class LessonPlan {
     private LocalDate date;
     @ManyToOne
     private SchoolClass schoolClass;
+    @ManyToOne
+    private Subject subject;
 }

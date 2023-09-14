@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface LessonHourRepository extends JpaRepository<LessonHour, Long> {
-    List<LessonHour> findAllByOrderByStartAsc();
+    List<LessonHour> findAllByActiveTrueOrderByStartAsc();
 }

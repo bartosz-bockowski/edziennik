@@ -75,4 +75,11 @@ input,button{
 }
 .lessonPlanTable td{
     text-align: center;
+    padding: 10px;
+}
+.nullLessonTd{
+    background: orange;
+}
+.presentLessonTd{
+    background: green;
 }
