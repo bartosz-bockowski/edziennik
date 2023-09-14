@@ -113,8 +113,8 @@ public class SchoolClassAdminController {
         return "redirect:/admin/schoolclass/" + id + "/details";
     }
     @GetMapping("/{classId}/lessonPlan")
-    public String lessonPlan(@PathVariable Long classId){
-        return "redirect:/schoolclass/" + classId + "/lessonPlan";
+    public String lessonPlan(@PathVariable Long classId, @RequestParam(required = false) LocalDate date){
+        return "redirect:/schoolclass/" + classId + "/lessonPlan?date=" + date;
     }
     @GetMapping("/updateLesson")
     public String updateLesson(@RequestParam(required = false) Long classId,
@@ -137,13 +137,13 @@ public class SchoolClassAdminController {
         lesson.setLessonHour(lessonHourRepository.getReferenceById(lessonHour));
         lesson.setDate(date);
         lessonPlanRepository.save(lesson);
-        return "redirect:/admin/schoolclass/" + lesson.getSchoolClass().getId() +"/lessonPlan";
+        return "redirect:/admin/schoolclass/" + lesson.getSchoolClass().getId() +"/lessonPlan?date=" + date;
     }
     @GetMapping("/{id}/removeLesson")
-    public String removeLesson(@PathVariable Long id){
+    public String removeLesson(@PathVariable Long id, @RequestParam(required = false) LocalDate date){
         LessonPlan lesson = lessonPlanRepository.getReferenceById(id);
         Long classId = lesson.getSchoolClass().getId();
         lessonPlanRepository.delete(lesson);
-        return "redirect:/admin/schoolclass/" + classId + "/lessonPlan";
+        return "redirect:/admin/schoolclass/" + classId + "/lessonPlan?date=" + date;
     }
 }

@@ -17,11 +17,39 @@
     <thead>
         <tr>
             <td></td>
-            <td><spring:message code="monday"/></td>
-            <td><spring:message code="tuesday"/></td>
-            <td><spring:message code="wednesday"/></td>
-            <td><spring:message code="thursday"/></td>
-            <td><spring:message code="friday"/></td>
+            <td><a href="?date=${date.minusDays(7)}"><<< <spring:message code="lessonPlan.previousWeek"/></a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a href="?date=${date.plusDays(7)}"><spring:message code="lessonPlan.nextWeek"/> >>></a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <spring:message code="monday"/>
+                <br/>
+                ${date.format(dateFormatter)}
+            </td>
+            <td>
+                <spring:message code="tuesday"/>
+                <br/>
+                ${date.plusDays(1).format(dateFormatter)}
+            </td>
+            <td>
+                <spring:message code="wednesday"/>
+                <br/>
+                ${date.plusDays(2).format(dateFormatter)}
+            </td>
+            <td>
+                <spring:message code="thursday"/>
+                <br/>
+                ${date.plusDays(3).format(dateFormatter)}
+            </td>
+            <td>
+                <spring:message code="friday"/>
+                <br/>
+                ${date.plusDays(4).format(dateFormatter)}
+            </td>
         </tr>
     </thead>
     <tbody>
@@ -31,7 +59,7 @@
                 <c:forEach items="${hour}" var="lesson" varStatus="hourLoop">
                     <td class="${lesson == null ? 'null' : 'present'}LessonTd">
                         <br/>
-                        <form method="get" action="/admin/schoolclass/updateLesson">
+                        <form method="get" action="/admin/schoolclass/updateLesson?date=${date}">
                             <input type="hidden" name="id" value="${lesson.id}"/>
                             <input type="hidden" name="classId" value="${schoolClass.id}"/>
                             <input type="hidden" name="lessonHour" value="${hours.get(loop.index).id}"/>
@@ -58,7 +86,7 @@
                             <button type="submit"><spring:message code="save"/></button>
                         </form>
                         <c:if test="${lesson != null}">
-                            <form method="get" action="/admin/schoolclass/${lesson.id}/removeLesson">
+                            <form method="get" action="/admin/schoolclass/${lesson.id}/removeLesson?date=${date}">
                                 <button type="submit"><spring:message code="remove"/></button>
                             </form>
                         </c:if>

@@ -14,7 +14,9 @@ import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 import pl.edziennik.edziennik.teacher.TeacherRepository;
 
+import javax.swing.text.DateFormatter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +48,8 @@ public class SchoolClassController {
         model.addAttribute("schoolClass",schoolClassRepository.getReferenceById(classId));
         if(date == null){
             date = LocalDate.now().minusDays(LocalDate.now().getDayOfWeek().getValue() - 1);
+        } else {
+            date = date.minusDays(date.getDayOfWeek().getValue() - 1);
         }
         List<LocalDate> dates = new ArrayList<>();
         dates.add(date);
@@ -77,7 +81,7 @@ public class SchoolClassController {
         model.addAttribute("plan",plan);
         model.addAttribute("hours",hours);
         model.addAttribute("date",date);
-
+        model.addAttribute("dateFormatter", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         //if admin
         model.addAttribute("subjects",subjectRepository.findAll());
         model.addAttribute("teachers",teacherRepository.findAll());
