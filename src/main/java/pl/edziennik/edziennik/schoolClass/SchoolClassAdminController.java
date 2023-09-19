@@ -1,7 +1,10 @@
 package pl.edziennik.edziennik.schoolClass;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.SortDefault;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
@@ -46,8 +49,13 @@ public class SchoolClassAdminController {
         this.classRoomRepository = classRoomRepository;
     }
     @GetMapping("/list")
-    public String list(Model model, @SortDefault("id") Pageable pageable){
-        model.addAttribute("page",schoolClassRepository.findAll(pageable));
+    public String list(Model model, @SortDefault("id") Pageable pageable,
+                       @QuerydslPredicate(root = SchoolClass.class) Predicate predicate){
+        QSchoolClass qSchoolClass = QSchoolClass.schoolClass;
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(qSchoolClass.active.eq(true));
+        builder.and(predicate);
+        model.addAttribute("page",schoolClassRepository.findAll(builder,pageable));
         return "schoolclass/list";
     }
     @GetMapping("/add")
