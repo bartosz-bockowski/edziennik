@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 import pl.edziennik.edziennik.lessonPlan.LessonPlan;
+import pl.edziennik.edziennik.student.Student;
 import pl.edziennik.edziennik.subject.Subject;
 import pl.edziennik.edziennik.teacher.Teacher;
 
@@ -25,5 +26,7 @@ public class SchoolClass {
     private List<Teacher> supervisingTeachers;
     @ManyToMany
     private List<Subject> subjects;
+    @OneToMany(mappedBy = "schoolClass")
+    private List<Student> students;
     private boolean active = true;
 }

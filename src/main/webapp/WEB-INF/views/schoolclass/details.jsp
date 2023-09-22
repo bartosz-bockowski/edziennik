@@ -46,7 +46,10 @@
     <div><spring:message code="schoolClass.noSubjects"/></div>
 </c:if>
 <c:forEach items="${schoolClass.subjects}" var="subject">
-    <div><span>${subject.name}</span> <a class="confirm" msg="${conRemSub} (${subject.name} ID: ${subject.id})" href="/admin/schoolclass/${schoolClass.id}/removeSubject/${subject.id}"><spring:message code="schoolClass.removeSubject"/></a></div>
+    <div><span>${subject.name}</span>
+        <a class="confirm" msg="${conRemSub} (${subject.name} ID: ${subject.id})" href="/admin/schoolclass/${schoolClass.id}/removeSubject/${subject.id}"><spring:message code="schoolClass.removeSubject"/></a>
+        <a href="/schoolclass/${schoolClass.id}/marks/${subject.id}"><spring:message code="schoolClass.marks"/></a>
+    </div>
 </c:forEach>
 <div>
     <h2><spring:message code="schoolClass.addSubject"/></h2>

@@ -2,19 +2,17 @@ package pl.edziennik.edziennik.schoolClass;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.classRoom.ClassRoomRepository;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.lessonHour.LessonHourRepository;
 import pl.edziennik.edziennik.lessonPlan.LessonPlanRepository;
 import pl.edziennik.edziennik.lessonPlan.LessonPlan;
+import pl.edziennik.edziennik.mark.category.MarkCategory;
+import pl.edziennik.edziennik.mark.category.MarkCategoryRepository;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 import pl.edziennik.edziennik.teacher.TeacherRepository;
 
-import javax.swing.text.DateFormatter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -29,18 +27,21 @@ public class SchoolClassController {
     private final ClassRoomRepository classRoomRepository;
     private final TeacherRepository teacherRepository;
     private final SubjectRepository subjectRepository;
+    private final MarkCategoryRepository markCategoryRepository;
     public SchoolClassController(SchoolClassRepository schoolClassRepository,
                                  LessonPlanRepository lessonPlanRepository,
                                  LessonHourRepository lessonHourRepository,
                                  ClassRoomRepository classRoomRepository,
                                  TeacherRepository teacherRepository,
-                                 SubjectRepository subjectRepository) {
+                                 SubjectRepository subjectRepository,
+                                 MarkCategoryRepository markCategoryRepository) {
         this.schoolClassRepository = schoolClassRepository;
         this.lessonPlanRepository = lessonPlanRepository;
         this.lessonHourRepository = lessonHourRepository;
         this.classRoomRepository = classRoomRepository;
         this.teacherRepository = teacherRepository;
         this.subjectRepository = subjectRepository;
+        this.markCategoryRepository = markCategoryRepository;
     }
 
     @GetMapping("/{classId}/lessonPlan")
@@ -89,5 +90,13 @@ public class SchoolClassController {
         return "schoolclass/lessonPlanAdmin";
         //koniec if admin
         //return "schoolclass/lessonPlan";
+    }
+    @GetMapping("/{classId}/marks/{subjectId}")
+    public String marks(@PathVariable Long classId, @PathVariable Long subjectId, Model model){
+        model.addAttribute("schoolClass",schoolClassRepository.getReferenceById(classId));
+        model.addAttribute("markCategories",markCategoryRepository.findAllBySchoolClassIdAndSubjectId(classId, subjectId));
+        model.addAttribute("subject",subjectRepository.getReferenceById(subjectId));
+        model.addAttribute("markCategory",new MarkCategory());
+        return "schoolclass/marks";
     }
 }

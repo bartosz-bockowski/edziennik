@@ -83,3 +83,6 @@ input,button{
 .presentLessonTd{
     background: green;
 }
+.marksTable{
+    overflow: scroll;
+}
