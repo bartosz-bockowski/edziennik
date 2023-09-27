@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.SortDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,8 @@ import pl.edziennik.edziennik.subject.Subject;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 import pl.edziennik.edziennik.teacher.TeacherRepository;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 @Controller
@@ -87,6 +91,12 @@ public class SchoolClassAdminController {
         model.addAttribute("allStudents",studentRepository.findAll());
         model.addAttribute("subjects",subjectRepository.findAll());
         return "schoolclass/details";
+    }
+    @GetMapping("/{schoolClassId}/getAverageMarkBySubjectId/{subjectId}")
+    public ResponseEntity<String> getAvMark(@PathVariable Long schoolClassId, @PathVariable Long subjectId){
+        BigDecimal val = schoolClassRepository.getReferenceById(schoolClassId).getAverageMarkBySubjectId(subjectId);
+        String result = val.setScale(2, RoundingMode.DOWN).toString();
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
     @GetMapping("/{id}/addStudent")
     public String addStudent(@PathVariable Long id, @RequestParam Long studentId){

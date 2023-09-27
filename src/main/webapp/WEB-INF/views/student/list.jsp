@@ -31,7 +31,8 @@
         <td>${student.schoolClass.name != null ? student.schoolClass.name : nullClass}</td>
         <td><spring:message code="${student.active}"/></td>
         <td>
-            <a href="/admin/student/${student.id}/details"><spring:message code="student.details"/></a>
+            <a href="/admin/student/${student.id}/adminDetails"><spring:message code="student.details"/></a>
+            <a href="/student/${student.id}/marks"><spring:message code="student.marks"/></a>
             <spring:message code="student.switch.confirm" var="confirm"/>
             <spring:message code="activate" var="activate"/>
             <spring:message code="disactivate" var="disactivate"/>

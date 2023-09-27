@@ -52,11 +52,11 @@ public class StudentAdminController {
         studentRepository.save(student);
         return "redirect:/admin/student/list";
     }
-    @GetMapping("/{id}/details")
+    @GetMapping("/{id}/adminDetails")
     public String details(@PathVariable Long id, Model model){
         model.addAttribute("student",studentRepository.getReferenceById(id));
         model.addAttribute("users",userRepository.findAll());
-        return "student/details";
+        return "student/adminDetails";
     }
     @GetMapping("/{studentId}/addUser")
     public String setUser(@PathVariable Long studentId, @RequestParam Long user){
@@ -67,7 +67,7 @@ public class StudentAdminController {
             users.add(userObj);
         }
         studentRepository.save(student);
-        return "redirect:/admin/student/" + studentId + "/details";
+        return "redirect:/admin/student/" + studentId + "/adminDetails";
     }
     @GetMapping("/{studentId}/removeUser/{userId}")
     public String clearUser(@PathVariable Long studentId, @PathVariable Long userId){
@@ -75,6 +75,6 @@ public class StudentAdminController {
         User user = userRepository.getReferenceById(userId);
         student.getUsers().remove(user);
         studentRepository.save(student);
-        return "redirect:/admin/student/" + studentId +"/details";
+        return "redirect:/admin/student/" + studentId +"/adminDetails";
     }
 }

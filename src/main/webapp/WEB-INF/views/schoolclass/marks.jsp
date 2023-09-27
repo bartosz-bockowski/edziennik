@@ -14,7 +14,7 @@
 <jsp:include page="../layout/header.jsp"/>
 <a href="/admin/schoolclass/${schoolClass.id}/details"><spring:message code="schoolClass.schoolClassDetails"/></a>
 <h1><spring:message code="schoolClass.marks"/> ${schoolClass.name}</h1>
-<h3><spring:message code="subject.subject"/>: ${subject.name}</h3>
+<h3><spring:message code="subject"/>: ${subject.name}</h3>
 <spring:message code="schoolClass.marks.addCategory"/><br/>
 <form:form action="/markCategory/create" method="post" modelAttribute="markCategory">
     <form:input type="hidden" path="schoolClass" value="${schoolClass.id}"/>
@@ -23,9 +23,9 @@
     <form:input type="number" path="weight" step="1"/>
     <button type="submit"><spring:message code="add"/></button>
 </form:form>
-<a href="/admin/schoolclass/${schoolClass.id}/details"><spring:message code="schoolClass.schoolClassDetails"/></a>
 <br/>
 <br/>
+<spring:message code="mark.average"/>: <span class="subjectClassAverage">${schoolClass.getAverageMarkBySubjectId(subject.id)}</span>
 <table class="centerBlock marksTable">
     <thead>
     <tr>
@@ -48,6 +48,8 @@
                         <input type="hidden" class="markId" value="${student.getMarkByMarkCategoryId(category.id) == null ? 'null' : student.getMarkByMarkCategoryId(category.id).id}"/>
                         <input type="hidden" class="student" name="student" value="${student.id}"/>
                         <input type="hidden" class="markCategory" name="markCategory" value="${category.id}"/>
+                        <input type="hidden" class="subject" name="subject" value="${subject.id}"/>
+                        <input type="hidden" class="schoolClass" name="schoolClass" value="${schoolClass.id}"/>
                         <input type="text" class="mark" name="mark"
                                value="${student.getMarkByMarkCategoryId(category.id) == null ? '' : student.getMarkByMarkCategoryId(category.id).mark}"/>
                         <button class="markFormSubmit" type="submit"><spring:message code="save"/></button>

@@ -8,7 +8,10 @@ import pl.edziennik.edziennik.security.user.User;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -37,5 +40,8 @@ public class Student {
             mark = list.get(0);
         }
         return mark;
+    }
+    public List<Mark> getMarksBySubjectId(Long subjectId){
+        return this.marks.stream().filter(p -> Objects.equals(p.getMarkCategory().getSubject().getId(), subjectId)).toList();
     }
 }
