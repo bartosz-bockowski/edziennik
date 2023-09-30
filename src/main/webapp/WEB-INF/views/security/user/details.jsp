@@ -24,26 +24,17 @@
     <spring:message code="user.saveRoles" var="save"/>
     <input type="submit" value="${save}"/>
 </form>
-<h1><spring:message code="user.students"/></h1>
-<c:forEach items="${user.students}" var="student">
-    ${student.getFullName()} (ID: ${student.id})<br/>
-</c:forEach>
-<c:if test="${user.students.size() == 0}">
-    <spring:message code="user.noStudents"/>
+<c:if test="${user.student != null}">
+    <h1><spring:message code="user.student"/></h1>
+    ${user.student.fullNameWithId}
 </c:if>
-<h1><spring:message code="user.teachers"/></h1>
-<c:forEach items="${user.teachers}" var="teacher">
-    ${teacher.getFullName() } (ID: ${teacher.id})<br/>
-</c:forEach>
-<c:if test="${user.teachers.size() == 0}">
-    <spring:message code="user.noTeachers"/>
+<c:if test="${user.teacher != null}">
+    <h1><spring:message code="user.teacher"/></h1>
+    ${user.teacher.fullNameWithId}
 </c:if>
-<h1><spring:message code="user.parents"/></h1>
-<c:forEach items="${user.parents}" var="parent">
-    ${parent.getFullName()} (ID: ${parent.id})<br/>
-</c:forEach>
-<c:if test="${user.parents.size() == 0}">
-    <spring:message code="user.noParents"/>
+<c:if test="${user.parent != null}">
+    <h1><spring:message code="user.parent"/></h1>
+    ${user.parent.fullNameWithId}
 </c:if>
 <jsp:include page="../../layout/footer.jsp"/>
 </body>

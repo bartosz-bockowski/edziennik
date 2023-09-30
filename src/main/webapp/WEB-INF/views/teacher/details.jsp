@@ -18,28 +18,25 @@
 <c:forEach items="${subjects}" var="subject">
     <div>${subject.name}</div>
 </c:forEach>
-<h3><spring:message code="teacher.users"/></h3>
-<form method="get" action="/admin/teacher/${teacher.id}/addUser">
-    <select class="selectpicker" data-live-search="true" name="user">
-        <c:forEach items="${users}" var="user">
-            <c:if test="${!teacher.users.contains(user)}">
-                <option value="${user.id}">${user.username} (ID: ${user.id})</option>
-            </c:if>
-        </c:forEach>
-    </select>
-    <br/>
-    <button type="submit" class="selectpickerButton"><spring:message code="teacher.setUser"/></button>
-</form>
-<c:if test="${teacher.users.size() > 0}">
+<h3><spring:message code="teacher.user"/></h3>
+<c:if test="${teacher.user != null}">
     <spring:message code="teacher.confirmRemoveUser" var="confirmRemoveUser"/>
-    <c:forEach items="${teacher.users}" var="user">
-        ${user.username} (ID: ${user.id}) <a class="confirm" msg="${confirmRemoveUser} (${user.username} ID: ${user.id})" href="/admin/teacher/${teacher.id}/removeUser/${user.id}">
+        ${teacher.user.username}<a class="confirm" msg="${confirmRemoveUser}" href="/admin/teacher/${teacher.id}/removeUser">
         <spring:message code="teacher.removeUser"/>
-    </a><br/>
-    </c:forEach>
+    </a>
 </c:if>
-<c:if test="${teacher.users.size() == 0}">
-    <spring:message code="teacher.noUsers"/>
+<c:if test="${teacher.user == null}">
+    <div><spring:message code="teacher.noUser"/></div>
+    <div><spring:message code="user.add"/></div>
+    <form method="get" action="/admin/teacher/${teacher.id}/setUser">
+        <select class="selectpicker" data-live-search="true" name="user">
+            <c:forEach items="${freeUsers}" var="user">
+                <option value="${user.id}">${user.username} (ID: ${user.id})</option>
+            </c:forEach>
+        </select>
+        <br/>
+        <button type="submit" class="selectpickerButton"><spring:message code="teacher.setUser"/></button>
+    </form>
 </c:if>
 <h3><spring:message code="teacher.supervisedClasses"/></h3>
 <form method="get" action="/admin/teacher/${teacher.id}/addSupervisedClass">

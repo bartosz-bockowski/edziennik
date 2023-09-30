@@ -24,18 +24,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @OneToOne(mappedBy = "user")
+    private Student student;
+    @OneToOne(mappedBy = "user")
+    private Teacher teacher;
+    @OneToOne(mappedBy = "user")
+    private Parent parent;
     @Column(nullable = false, unique = true, length = 60)
     @Length(min = 6)
     private String username;
     @Length(min = 3)
     @NotNull
     private String password;
-    @ManyToMany(mappedBy = "users")
-    private List<Student> students = new ArrayList<>();
-    @ManyToMany(mappedBy = "users")
-    private List<Teacher> teachers = new ArrayList<>();
-    @ManyToMany(mappedBy = "users")
-    private List<Parent> parents = new ArrayList<>();
     private boolean active = true;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),

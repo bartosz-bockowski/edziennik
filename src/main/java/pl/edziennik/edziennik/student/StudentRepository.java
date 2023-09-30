@@ -12,6 +12,5 @@ import java.util.Optional;
 public interface StudentRepository extends JpaRepository<Student, Long> {
     Optional<Student> findOneById(Long id);
     List<Student> findAllBySchoolClassId(Long id);
-    @Query("SELECT e FROM Student e WHERE :user MEMBER OF e.users")
-    List<Student> findAllWhichHaveUser(User user);
+    List<Student> findAllByUser(User user);
 }

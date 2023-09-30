@@ -61,25 +61,24 @@ public class StudentAdminController {
     public String details(@PathVariable Long id, Model model){
         model.addAttribute("student",studentRepository.getReferenceById(id));
         model.addAttribute("users",userRepository.findAll());
+        model.addAttribute("freeUsers",userRepository.findAllByStudentIsNullAndTeacherIsNullAndParentIsNull());
         model.addAttribute("schoolClasses",schoolClassRepository.findAll());
         return "student/adminDetails";
     }
-    @GetMapping("/{studentId}/addUser")
+    @GetMapping("/{studentId}/setUser")
     public String setUser(@PathVariable Long studentId, @RequestParam Long user){
         Student student = studentRepository.getReferenceById(studentId);
-        User userObj = userRepository.getReferenceById(user);
-        List<User> users = student.getUsers();
-        if(!users.contains(userObj)){
-            users.add(userObj);
+        if(student.getUser() == null) {
+            User userObj = userRepository.getReferenceById(user);
+            student.setUser(userObj);
+            studentRepository.save(student);
         }
-        studentRepository.save(student);
         return "redirect:/admin/student/" + studentId + "/adminDetails";
     }
-    @GetMapping("/{studentId}/removeUser/{userId}")
-    public String clearUser(@PathVariable Long studentId, @PathVariable Long userId){
+    @GetMapping("/{studentId}/removeUser")
+    public String clearUser(@PathVariable Long studentId){
         Student student = studentRepository.getReferenceById(studentId);
-        User user = userRepository.getReferenceById(userId);
-        student.getUsers().remove(user);
+        student.setUser(null);
         studentRepository.save(student);
         return "redirect:/admin/student/" + studentId +"/adminDetails";
     }

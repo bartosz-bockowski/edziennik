@@ -75,26 +75,24 @@ public class TeacherAdminController {
         builder.and(predicate);
         model.addAttribute("classes",schoolClassRepository.findAll(builder));
         model.addAttribute("teacher",teacher);
-        model.addAttribute("users",userRepository.findAll());
+        model.addAttribute("freeUsers",userRepository.findAllByStudentIsNullAndTeacherIsNullAndParentIsNull());
         model.addAttribute("subjects",subjectRepository.findAllWhichHaveTeacher(teacher));
         return "teacher/details";
     }
-    @GetMapping("/{teacherId}/addUser")
+    @GetMapping("/{teacherId}/setUser")
     public String setUser(@PathVariable Long teacherId, @RequestParam Long user){
         Teacher teacher = teacherRepository.getReferenceById(teacherId);
-        User userObj = userRepository.getReferenceById(user);
-        List<User> users = teacher.getUsers();
-        if(!users.contains(userObj)){
-            users.add(userObj);
+        if(teacher.getUser() == null) {
+            User userObj = userRepository.getReferenceById(user);
+            teacher.setUser(userObj);
+            teacherRepository.save(teacher);
         }
-        teacherRepository.save(teacher);
         return "redirect:/admin/teacher/" + teacherId + "/details";
     }
-    @GetMapping("/{teacherId}/removeUser/{userId}")
-    public String clearUser(@PathVariable Long teacherId, @PathVariable Long userId){
+    @GetMapping("/{teacherId}/removeUser")
+    public String clearUser(@PathVariable Long teacherId){
         Teacher teacher = teacherRepository.getReferenceById(teacherId);
-        User user = userRepository.getReferenceById(userId);
-        teacher.getUsers().remove(user);
+        teacher.setUser(null);
         teacherRepository.save(teacher);
         return "redirect:/admin/teacher/" + teacherId +"/details";
     }

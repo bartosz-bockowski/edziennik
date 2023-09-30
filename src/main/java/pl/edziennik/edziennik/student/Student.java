@@ -20,8 +20,8 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToMany
-    private List<User> users;
+    @OneToOne
+    private User user;
     private String firstName;
     private String lastName;
     private boolean active = true;

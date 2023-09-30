@@ -9,6 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ParentRepository extends JpaRepository<Parent, Long> {
-    @Query("SELECT e FROM Parent e WHERE :user MEMBER OF e.users")
-    List<Parent> findAllWhichHaveUser(User user);
+    List<Parent> findAllByUser(User user);
 }

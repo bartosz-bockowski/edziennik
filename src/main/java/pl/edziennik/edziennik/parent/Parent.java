@@ -19,8 +19,8 @@ public class Parent {
     private String lastName;
     @ManyToMany
     private List<Student> students;
-    @ManyToMany
-    private List<User> users;
+    @OneToOne
+    private User user;
     private boolean active = true;
     public String getFullName(){
         return this.firstName.concat(" ").concat(this.lastName);

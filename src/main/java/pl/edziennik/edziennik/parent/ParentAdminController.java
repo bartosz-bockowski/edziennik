@@ -61,6 +61,7 @@ public class ParentAdminController {
         model.addAttribute("parent",parentRepository.getReferenceById(id));
         model.addAttribute("students",studentRepository.findAll());
         model.addAttribute("users",userRepository.findAll());
+        model.addAttribute("freeUsers",userRepository.findAllByStudentIsNullAndTeacherIsNullAndParentIsNull());
         return "parent/details";
     }
     @GetMapping("/{parentId}/addStudent")
@@ -85,22 +86,20 @@ public class ParentAdminController {
         parentRepository.save(parent);
         return "redirect:/admin/parent/" + parentId + "/details";
     }
-    @GetMapping("/{parentId}/addUser")
+    @GetMapping("/{parentId}/setUser")
     public String setUser(@PathVariable Long parentId, @RequestParam Long user){
         Parent parent = parentRepository.getReferenceById(parentId);
-        User userObj = userRepository.getReferenceById(user);
-        List<User> users = parent.getUsers();
-        if(!users.contains(userObj)){
-            users.add(userObj);
+        if(parent.getUser() == null) {
+            User userObj = userRepository.getReferenceById(user);
+            parent.setUser(userObj);
+            parentRepository.save(parent);
         }
-        parentRepository.save(parent);
         return "redirect:/admin/parent/" + parentId + "/details";
     }
-    @GetMapping("/{parentId}/removeUser/{userId}")
-    public String clearUser(@PathVariable Long parentId, @PathVariable Long userId){
+    @GetMapping("/{parentId}/removeUser")
+    public String clearUser(@PathVariable Long parentId){
         Parent parent = parentRepository.getReferenceById(parentId);
-        User user = userRepository.getReferenceById(userId);
-        parent.getUsers().remove(user);
+        parent.setUser(null);
         parentRepository.save(parent);
         return "redirect:/admin/parent/" + parentId +"/details";
     }

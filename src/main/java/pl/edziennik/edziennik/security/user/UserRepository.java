@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @EnableJpaRepositories
@@ -15,4 +16,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Long countAllByUsername(String username);
     @Query("SELECT max(id) FROM User")
     Long getMaxId();
+    List<User> findAllByStudentIsNullAndTeacherIsNullAndParentIsNull();
 }

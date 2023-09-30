@@ -27,28 +27,25 @@
     <button type="submit" class="selectpickerButton"><spring:message code="student.setClass"/></button>
 </form>
 <br/>
-<h3><spring:message code="student.users"/></h3>
-<form method="get" action="/admin/student/${student.id}/addUser">
-    <select class="selectpicker" data-live-search="true" name="user">
-        <c:forEach items="${users}" var="user">
-            <c:if test="${!student.users.contains(user)}">
-                <option value="${user.id}">${user.username} (ID: ${user.id})</option>
-            </c:if>
-        </c:forEach>
-    </select>
-    <br/>
-    <button type="submit" class="selectpickerButton"><spring:message code="student.setUser"/></button>
-</form>
-<c:if test="${student.users.size() > 0}">
+<h3><spring:message code="student.user"/></h3>
+<c:if test="${student.user != null}">
     <spring:message code="student.confirmRemoveUser" var="confirmRemoveUser"/>
-    <c:forEach items="${student.users}" var="user">
-        ${user.username} (ID: ${user.id}) <a class="confirm" msg="${confirmRemoveUser} (${user.username} ID: ${user.id})" href="/admin/student/${student.id}/removeUser/${user.id}">
+        ${student.user.username} (ID: ${student.user.id}) <a class="confirm" msg="${confirmRemoveUser}" href="/admin/student/${student.id}/removeUser">
         <spring:message code="student.removeUser"/>
     </a><br/>
-    </c:forEach>
 </c:if>
-<c:if test="${student.users.size() == 0}">
-    <spring:message code="student.noUsers"/>
+<c:if test="${student.user == null}">
+    <div><spring:message code="student.noUser"/></div>
+    <div><spring:message code="user.add"/></div>
+    <form method="get" action="/admin/student/${student.id}/setUser">
+        <select class="selectpicker" data-live-search="true" name="user">
+            <c:forEach items="${freeUsers}" var="user">
+                <option value="${user.id}">${user.username} (ID: ${user.id})</option>
+            </c:forEach>
+        </select>
+        <br/>
+        <button type="submit" class="selectpickerButton"><spring:message code="student.setUser"/></button>
+    </form>
 </c:if>
 <jsp:include page="../layout/footer.jsp"/>
 </body>

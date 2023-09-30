@@ -21,7 +21,10 @@
     <div><spring:message code="parent.noStudents"/></div>
 </c:if>
 <c:forEach items="${parent.students}" var="student">
-    <div><span>${student.getFullName()}</span> <a class="confirm" msg="${conRemStu} (${student.getFullName()} ID: ${student.id})" href="/admin/parent/${parent.id}/removeStudent/${student.id}"><spring:message code="parent.removeStudent"/></a></div>
+    <div><span>${student.getFullName()}</span> <a class="confirm"
+                                                  msg="${conRemStu} (${student.getFullName()} ID: ${student.id})"
+                                                  href="/admin/parent/${parent.id}/removeStudent/${student.id}"><spring:message
+            code="parent.removeStudent"/></a></div>
 </c:forEach>
 <div>
     <h2><spring:message code="parent.addStudent"/></h2>
@@ -37,28 +40,26 @@
         <button type="submit" class="selectpickerButton"><spring:message code="parent.addUser"/></button>
     </form>
 </div>
-<h3><spring:message code="parent.users"/></h3>
-<form method="get" action="/admin/parent/${parent.id}/addUser">
-    <select class="selectpicker" data-live-search="true" name="user">
-        <c:forEach items="${users}" var="user">
-            <c:if test="${!parent.users.contains(user)}">
-                <option value="${user.id}">${user.username} (ID: ${user.id})</option>
-            </c:if>
-        </c:forEach>
-    </select>
-    <br/>
-    <button type="submit" class="selectpickerButton"><spring:message code="parent.setUser"/></button>
-</form>
-<c:if test="${parent.users.size() > 0}">
+<h3><spring:message code="parent.user"/></h3>
+<c:if test="${parent.user != null}">
     <spring:message code="parent.confirmRemoveUser" var="confirmRemoveUser"/>
-    <c:forEach items="${parent.users}" var="user">
-        ${user.username} (ID: ${user.id}) <a class="confirm" msg="${confirmRemoveUser} (${user.username} ID: ${user.id})" href="/admin/parent/${parent.id}/removeUser/${user.id}">
-        <spring:message code="parent.removeUser"/>
-    </a><br/>
-    </c:forEach>
+    ${parent.user.username} (ID: ${parent.user.id}) <a class="confirm" msg="${confirmRemoveUser}"
+                                                       href="/admin/parent/${parent.id}/removeUser">
+    <spring:message code="parent.removeUser"/>
+</a><br/>
 </c:if>
-<c:if test="${parent.users.size() == 0}">
-    <spring:message code="parent.noUsers"/>
+<c:if test="${parent.user == null}">
+    <div><spring:message code="parent.noUser"/></div>
+    <div><spring:message code="user.add"/></div>
+    <form method="get" action="/admin/parent/${parent.id}/setUser">
+        <select class="selectpicker" data-live-search="true" name="user">
+            <c:forEach items="${freeUsers}" var="user">
+                <option value="${user.id}">${user.username} (ID: ${user.id})</option>
+            </c:forEach>
+        </select>
+        <br/>
+        <button type="submit" class="selectpickerButton"><spring:message code="parent.setUser"/></button>
+    </form>
 </c:if>
 <jsp:include page="../layout/footer.jsp"/>
 </body>

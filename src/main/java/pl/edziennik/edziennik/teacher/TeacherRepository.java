@@ -16,6 +16,5 @@ import java.util.Optional;
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long>, QuerydslPredicateExecutor<Teacher> {
     Optional<Teacher> findOneById(Long id);
-    @Query("SELECT e FROM Teacher e WHERE :user MEMBER OF e.users")
-    List<Teacher> findAllWhichHaveUser(User user);
+    List<Teacher> findAllByUser(User user);
 }

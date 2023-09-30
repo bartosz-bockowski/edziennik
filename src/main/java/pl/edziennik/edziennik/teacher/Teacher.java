@@ -20,9 +20,8 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToMany
-//    @JoinTable(name = "teacher_users", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users;
+    @OneToOne
+    private User user;
     @NotNull
     @NotEmpty(message = "validation.error.cannotBeEmpty")
     private String firstName;
