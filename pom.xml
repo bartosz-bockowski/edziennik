@@ -116,6 +116,11 @@
 			<version>${querydsl.version}</version>
 			<classifier>jakarta</classifier>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-envers</artifactId>
+			<version>6.3.1.Final</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

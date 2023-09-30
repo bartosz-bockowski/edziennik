@@ -15,7 +15,6 @@ a:hover{
 }
 table{
     border-collapse: collapse;
-    width: 1000px;
 }
 table, th, td{
     border: 1px solid black;
@@ -36,7 +35,7 @@ thead{
 .mainTable td, .mainTable th{
     padding: 5px;
 }
-.mainTable a{
+.basicListTable a{
     display: block;
     float: left;
     height: 100%;
@@ -45,31 +44,10 @@ thead{
     color: white;
     border-radius: 3px;
 }
-.mainTable a:hover{
+.basicListTable a:hover{
     text-decoration: none;
     color: white;
     background: #1373cc;
-}
-.marksTable tbody td{
-    position: relative;
-    height: 60px;
-}
-.marksTable .markSwitch{
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 59px;
-    width: 25px;
-    line-height: 59px;
-    text-align: center;
-    background: #eaeaea;
-    color: red;
-}
-.marksTable .markSwitch:hover{
-    color: darkred;
-    background: grey;
-    cursor: pointer;
-    user-select: none;
 }
 #headerMainDiv, #footerMainDiv{
     display: block;
@@ -150,6 +128,44 @@ input,button{
 .presentLessonTd{
     background: green;
 }
-.marksTable{
-    overflow: scroll;
+.marksTable tbody td{
+    position: relative;
+    height: 60px;
+    width: 20%;
+    min-width: 400px;
+}
+.marksTable .markSwitch, .marksTable .markHistory{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 59px;
+    width: 25px;
+    line-height: 59px;
+    text-align: center;
+    background: #eaeaea;
+    color: red;
+}
+.marksTable .markSwitch:hover, .marksTable .markHistory:hover{
+    background: grey;
+    cursor: pointer;
+    user-select: none;
+}
+.marksTable .markHistory{
+    color: blue;
+    right: 25px;
+    border-right: 1px solid black;
+}
+.marksTableDiv{
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+}
+.noBorderTable{
+    border: 0;
+}
+.noBorderTable *{
+    border: 0;
+}
+.paddingTable *{
+    padding: 3px;
 }
