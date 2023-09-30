@@ -23,15 +23,13 @@
     <form:input type="number" path="weight" step="1"/>
     <button type="submit"><spring:message code="add"/></button>
 </form:form>
-<br/>
-<br/>
 <spring:message code="mark.average"/>: <span class="subjectClassAverage">${schoolClass.getAverageMarkBySubjectId(subject.id)}</span>
-<table class="centerBlock marksTable">
+<table class="centerBlock mainTable marksTable">
     <thead>
     <tr>
-        <td><spring:message code="schoolClass.marks.student"/></td>
+        <th><spring:message code="schoolClass.marks.student"/></th>
         <c:forEach items="${markCategories}" var="category">
-            <td>${category.name}</td>
+            <th>${category.name}</th>
         </c:forEach>
     </tr>
     </thead>
@@ -54,7 +52,7 @@
                                value="${student.getMarkByMarkCategoryId(category.id) == null ? '' : student.getMarkByMarkCategoryId(category.id).mark}"/>
                         <button class="markFormSubmit" type="submit"><spring:message code="save"/></button>
                     </form>
-                    <button class="markSwitch">sss</button>
+                    <div class="markSwitch">X</div>
                 </td>
             </c:forEach>
         </tr>

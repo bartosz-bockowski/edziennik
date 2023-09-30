@@ -10,6 +10,7 @@ import pl.edziennik.edziennik.lessonPlan.LessonPlanRepository;
 import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 import pl.edziennik.edziennik.mark.category.MarkCategory;
 import pl.edziennik.edziennik.mark.category.MarkCategoryRepository;
+import pl.edziennik.edziennik.security.LoggedUser;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 import pl.edziennik.edziennik.teacher.TeacherRepository;
 
@@ -28,13 +29,15 @@ public class SchoolClassController {
     private final TeacherRepository teacherRepository;
     private final SubjectRepository subjectRepository;
     private final MarkCategoryRepository markCategoryRepository;
+    private final LoggedUser loggedUser;
     public SchoolClassController(SchoolClassRepository schoolClassRepository,
                                  LessonPlanRepository lessonPlanRepository,
                                  LessonHourRepository lessonHourRepository,
                                  ClassRoomRepository classRoomRepository,
                                  TeacherRepository teacherRepository,
                                  SubjectRepository subjectRepository,
-                                 MarkCategoryRepository markCategoryRepository) {
+                                 MarkCategoryRepository markCategoryRepository,
+                                 LoggedUser loggedUser) {
         this.schoolClassRepository = schoolClassRepository;
         this.lessonPlanRepository = lessonPlanRepository;
         this.lessonHourRepository = lessonHourRepository;
@@ -42,11 +45,15 @@ public class SchoolClassController {
         this.teacherRepository = teacherRepository;
         this.subjectRepository = subjectRepository;
         this.markCategoryRepository = markCategoryRepository;
+        this.loggedUser = loggedUser;
     }
 
     @GetMapping("/{classId}/lessonPlan")
     public String lessonPlan(Model model, @RequestParam(value = "date", required = false) LocalDate date, @PathVariable Long classId){
         model.addAttribute("schoolClass",schoolClassRepository.getReferenceById(classId));
+        if(!loggedUser.hasAccessToSchoolClass(classId)){
+            return "error/403";
+        }
         if(date == null){
             date = LocalDate.now().minusDays(LocalDate.now().getDayOfWeek().getValue() - 1);
         } else {
@@ -83,13 +90,13 @@ public class SchoolClassController {
         model.addAttribute("hours",hours);
         model.addAttribute("date",date);
         model.addAttribute("dateFormatter", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        //if admin
-        model.addAttribute("subjects",subjectRepository.findAll());
-        model.addAttribute("teachers",teacherRepository.findAll());
-        model.addAttribute("classRooms",classRoomRepository.findAll());
-        return "schoolclass/lessonPlanAdmin";
-        //koniec if admin
-        //return "schoolclass/lessonPlan";
+        if(LoggedUser.isAdmin()){
+            model.addAttribute("subjects",subjectRepository.findAll());
+            model.addAttribute("teachers",teacherRepository.findAll());
+            model.addAttribute("classRooms",classRoomRepository.findAll());
+            return "schoolclass/lessonPlanAdmin";
+        }
+        return "schoolclass/lessonPlan";
     }
     @GetMapping("/{classId}/marks/{subjectId}")
     public String marks(@PathVariable Long classId, @PathVariable Long subjectId, Model model){

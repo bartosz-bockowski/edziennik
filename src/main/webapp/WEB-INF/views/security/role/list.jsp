@@ -6,8 +6,7 @@
 <jsp:include page="../../layout/header.jsp"/>
 <h1><spring:message code="role.list"/></h1>
 <a href="/admin/role/add"><spring:message code="role.add"/></a>
-<br/><br/>
-<table class="centerBlock">
+<table class="centerBlock mainTable">
     <thead>
     <th><spring:message code="role.id"/></th>
     <th><spring:message code="role.name"/></th>

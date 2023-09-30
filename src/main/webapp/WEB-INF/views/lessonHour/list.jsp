@@ -13,11 +13,27 @@
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="lessonHour.list"/></h1>
 <a href="/admin/lessonHour/add"><spring:message code="lessonHour.add"/></a>
-<br/>
+<table class="centerBlock mainTable">
+    <thead>
+        <th><spring:message code="lessonHour.id"/></th>
+        <th><spring:message code="lessonHour.start"/></th>
+        <th><spring:message code="lessonHour.end"/></th>
+        <th><spring:message code="lessonHour.active"/></th>
+        <th><spring:message code="actions"/></th>
+    </thead>
+    <tbody>
 <c:forEach items="${hours}" var="hour">
-    <spring:message code="lessonHour.confirmSwitch" var="confirmSwitch"/>
-    ${hour.start} - ${hour.end} <a class="confirm" msg="${confirmSwitch}" href="/admin/lessonHour/${hour.id}/switch"><spring:message code="${hour.active ? 'disactivate' : 'activate'}"/></a><br/>
+    <tr>
+        <td>${hour.id}</td>
+        <td>${hour.start}</td>
+        <td>${hour.end}</td>
+        <td><spring:message code="${hour.active}"/></td>
+        <td></td>
+    </tr>
 </c:forEach>
+    </tbody>
+</table>
+
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>

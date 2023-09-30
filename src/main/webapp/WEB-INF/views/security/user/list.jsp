@@ -14,8 +14,7 @@
 <h1><spring:message code="user.list"/></h1>
 <spring:message code="user.add.confirm" var="userConfirm"/>
 <a class="confirm" msg="${userConfirm}" href="/admin/user/add"><spring:message code="user.add"/></a>
-<br/><br/>
-<table class="centerBlock">
+<table class="centerBlock mainTable">
     <thead>
     <th><spring:message code="user.id"/></th>
     <th><spring:message code="user.username"/></th>

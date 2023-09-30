@@ -41,6 +41,27 @@
 <c:if test="${teacher.users.size() == 0}">
     <spring:message code="teacher.noUsers"/>
 </c:if>
+<h3><spring:message code="teacher.supervisedClasses"/></h3>
+<form method="get" action="/admin/teacher/${teacher.id}/addSupervisedClass">
+    <select class="selectpicker" data-live-search="true" name="schoolClass">
+        <c:forEach items="${classes}" var="schoolClass">
+            <option value="${schoolClass.id}">${schoolClass.name} (ID: ${schoolClass.id})</option>
+        </c:forEach>
+    </select>
+    <br/>
+    <button type="submit" class="selectpickerButton"><spring:message code="teacher.setUser"/></button>
+</form>
+<c:if test="${teacher.supervisedClasses.size() > 0}">
+    <spring:message code="teacher.confirmRemoveClass" var="confirmRemoveClass"/>
+    <c:forEach items="${teacher.supervisedClasses}" var="schoolClass">
+        ${schoolClass.name} (ID: ${schoolClass.id}) <a class="confirm" msg="${confirmRemoveClass} (${schoolClass.name} ID: ${schoolClass.id})" href="/admin/teacher/${teacher.id}/removeSupervisedClass/${schoolClass.id}">
+        <spring:message code="teacher.removeSupervisedClass"/>
+    </a><br/>
+    </c:forEach>
+</c:if>
+<c:if test="${teacher.supervisedClasses.size() == 0}">
+    <spring:message code="teacher.noSupervisedClasse"/>
+</c:if>
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>

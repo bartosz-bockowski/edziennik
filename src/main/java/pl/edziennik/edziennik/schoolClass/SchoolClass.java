@@ -13,6 +13,7 @@ import pl.edziennik.edziennik.teacher.Teacher;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,11 +27,13 @@ public class SchoolClass {
     @NotEmpty
     private String name;
     @ManyToMany
-    private List<Teacher> supervisingTeachers;
+    private List<Teacher> supervisingTeachers = new ArrayList<>();
     @ManyToMany
     private List<Subject> subjects;
     @OneToMany(mappedBy = "schoolClass")
     private List<Student> students;
+    @OneToMany(mappedBy = "schoolClass")
+    private List<LessonPlan> lessonPlan;
     private boolean active = true;
     public BigDecimal getAverageMarkBySubjectId(Long subjectId){
         List<Mark> marks = this.students.stream().flatMap(student -> student.getMarks().stream()).filter(f -> f.getMarkCategory().getSubject().getId().equals(subjectId)).toList();

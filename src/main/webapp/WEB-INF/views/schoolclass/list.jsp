@@ -13,8 +13,7 @@
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="schoolClass.list"/></h1>
 <a href="/admin/schoolclass/add"><spring:message code="schoolClass.add"/></a>
-<br/><br/>
-<table class="centerBlock">
+<table class="centerBlock mainTable">
     <thead>
     <th><spring:message code="schoolClass.id"/></th>
     <th><spring:message code="schoolClass.name"/></th>
@@ -28,7 +27,7 @@
         <td>${schoolclass.name}</td>
         <td><spring:message code="${schoolclass.active}"/></td>
         <td>
-            <a href="/admin/schoolclass/${schoolclass.id}/details"><spring:message code="schoolClass.details"/></a>
+            <a href="/admin/schoolclass/${schoolclass.id}/adminDetails"><spring:message code="schoolClass.details"/></a>
             <spring:message code="schoolClass.switch.confirm" var="confirm"/>
             <spring:message code="activate" var="activate"/>
             <spring:message code="disactivate" var="disactivate"/>

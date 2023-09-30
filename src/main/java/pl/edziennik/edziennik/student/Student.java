@@ -31,7 +31,10 @@ public class Student {
     @OneToMany(mappedBy = "student")
     private List<Mark> marks;
     public String getFullName(){
-        return this.firstName.concat(" ").concat(this.lastName);
+        return this.firstName + " " + this.lastName;
+    }
+    public String getFullNameWithId(){
+        return firstName + " " + lastName + " (ID: " + id + ")";
     }
     public Mark getMarkByMarkCategoryId(Long markCategoryId){
         Mark mark = null;

@@ -25,4 +25,7 @@ public class Parent {
     public String getFullName(){
         return this.firstName.concat(" ").concat(this.lastName);
     }
+    public String getFullNameWithId(){
+        return firstName + " " + lastName + " (ID: " + id + ")";
+    }
 }

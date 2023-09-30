@@ -7,8 +7,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import pl.edziennik.edziennik.parent.Parent;
 import pl.edziennik.edziennik.security.role.Role;
+import pl.edziennik.edziennik.student.Student;
+import pl.edziennik.edziennik.teacher.Teacher;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -25,6 +30,12 @@ public class User {
     @Length(min = 3)
     @NotNull
     private String password;
+    @ManyToMany(mappedBy = "users")
+    private List<Student> students = new ArrayList<>();
+    @ManyToMany(mappedBy = "users")
+    private List<Teacher> teachers = new ArrayList<>();
+    @ManyToMany(mappedBy = "users")
+    private List<Parent> parents = new ArrayList<>();
     private boolean active = true;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),

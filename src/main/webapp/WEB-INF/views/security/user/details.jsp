@@ -25,24 +25,24 @@
     <input type="submit" value="${save}"/>
 </form>
 <h1><spring:message code="user.students"/></h1>
-<c:forEach items="${students}" var="student">
+<c:forEach items="${user.students}" var="student">
     ${student.getFullName()} (ID: ${student.id})<br/>
 </c:forEach>
-<c:if test="${students.size() == 0}">
+<c:if test="${user.students.size() == 0}">
     <spring:message code="user.noStudents"/>
 </c:if>
 <h1><spring:message code="user.teachers"/></h1>
-<c:forEach items="${teachers}" var="teacher">
+<c:forEach items="${user.teachers}" var="teacher">
     ${teacher.getFullName() } (ID: ${teacher.id})<br/>
 </c:forEach>
-<c:if test="${teachers.size() == 0}">
+<c:if test="${user.teachers.size() == 0}">
     <spring:message code="user.noTeachers"/>
 </c:if>
 <h1><spring:message code="user.parents"/></h1>
-<c:forEach items="${parents}" var="parent">
+<c:forEach items="${user.parents}" var="parent">
     ${parent.getFullName()} (ID: ${parent.id})<br/>
 </c:forEach>
-<c:if test="${parents.size() == 0}">
+<c:if test="${user.parents.size() == 0}">
     <spring:message code="user.noParents"/>
 </c:if>
 <jsp:include page="../../layout/footer.jsp"/>

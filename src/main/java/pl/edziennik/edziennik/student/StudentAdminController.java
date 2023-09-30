@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.parent.ParentRepository;
+import pl.edziennik.edziennik.schoolClass.SchoolClass;
+import pl.edziennik.edziennik.schoolClass.SchoolClassRepository;
 import pl.edziennik.edziennik.security.user.User;
 import pl.edziennik.edziennik.security.user.UserRepository;
 
@@ -18,11 +20,14 @@ import java.util.List;
 public class StudentAdminController {
     private final StudentRepository studentRepository;
     private final UserRepository userRepository;
+    private final SchoolClassRepository schoolClassRepository;
     public StudentAdminController(StudentRepository studentRepository,
                                   ParentRepository parentRepository,
-                                  UserRepository userRepository){
+                                  UserRepository userRepository,
+                                  SchoolClassRepository schoolClassRepository){
         this.studentRepository = studentRepository;
         this.userRepository = userRepository;
+        this.schoolClassRepository = schoolClassRepository;
     }
 
     @GetMapping("/list")
@@ -47,7 +52,7 @@ public class StudentAdminController {
     }
     @GetMapping("/{id}/switch")
     public String switch_(@PathVariable Long id){
-        Student student = studentRepository.getOne(id);
+        Student student = studentRepository.getReferenceById(id);
         student.setActive(!student.isActive());
         studentRepository.save(student);
         return "redirect:/admin/student/list";
@@ -56,6 +61,7 @@ public class StudentAdminController {
     public String details(@PathVariable Long id, Model model){
         model.addAttribute("student",studentRepository.getReferenceById(id));
         model.addAttribute("users",userRepository.findAll());
+        model.addAttribute("schoolClasses",schoolClassRepository.findAll());
         return "student/adminDetails";
     }
     @GetMapping("/{studentId}/addUser")
@@ -76,5 +82,12 @@ public class StudentAdminController {
         student.getUsers().remove(user);
         studentRepository.save(student);
         return "redirect:/admin/student/" + studentId +"/adminDetails";
+    }
+    @GetMapping("/{studentId}/setClass")
+    public String setClass(@PathVariable Long studentId, @RequestParam Long classId){
+        Student student = studentRepository.getReferenceById(studentId);
+        student.setSchoolClass(schoolClassRepository.getReferenceById(classId));
+        studentRepository.save(student);
+        return "redirect:/admin/student/" + student.getId() + "/adminDetails";
     }
 }

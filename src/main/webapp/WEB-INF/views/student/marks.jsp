@@ -14,7 +14,7 @@
 <h3><spring:message code="student.markList"/> ${student.fullName}</h3>
 <a href="/admin/student/list"><spring:message code="student.list"/></a>
 <br/><br/>
-<table class="centerBlock">
+<table class="centerBlock mainTable">
     <thead>
         <tr>
             <th><spring:message code="subject"/></th>

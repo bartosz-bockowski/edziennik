@@ -79,18 +79,18 @@ public class SchoolClassAdminController {
     }
     @GetMapping("/{id}/switch")
     public String switch_(@PathVariable Long id) {
-        SchoolClass schoolClass = schoolClassRepository.getOne(id);
+        SchoolClass schoolClass = schoolClassRepository.getReferenceById(id);
         schoolClass.setActive(!schoolClass.isActive());
         schoolClassRepository.save(schoolClass);
         return "redirect:/admin/schoolclass/list";
     }
-    @GetMapping("/{id}/details")
+    @GetMapping("/{id}/adminDetails")
     public String details(Model model, @PathVariable Long id){
         model.addAttribute("schoolClass",schoolClassRepository.getReferenceById(id));
         model.addAttribute("students",studentRepository.findAllBySchoolClassId(id));
         model.addAttribute("allStudents",studentRepository.findAll());
         model.addAttribute("subjects",subjectRepository.findAll());
-        return "schoolclass/details";
+        return "schoolclass/adminDetails";
     }
     @GetMapping("/{schoolClassId}/getAverageMarkBySubjectId/{subjectId}")
     public ResponseEntity<String> getAvMark(@PathVariable Long schoolClassId, @PathVariable Long subjectId){
@@ -103,14 +103,14 @@ public class SchoolClassAdminController {
         Student student = studentRepository.getReferenceById(studentId);
         student.setSchoolClass(schoolClassRepository.getReferenceById(id));
         studentRepository.save(student);
-        return "redirect:/admin/schoolclass/" + id + "/details";
+        return "redirect:/admin/schoolclass/" + id + "/adminDetails";
     }
     @GetMapping("/{id}/removeStudent/{studentId}")
     public String removeStudent(@PathVariable Long id, @PathVariable Long studentId){
         Student student = studentRepository.getReferenceById(studentId);
         student.setSchoolClass(null);
         studentRepository.save(student);
-        return "redirect:/admin/schoolclass/" + id + "/details";
+        return "redirect:/admin/schoolclass/" + id + "/adminDetails";
     }
     @GetMapping("/{id}/addSubject")
     public String addSubject(@PathVariable Long id, @RequestParam Long subjectId){
@@ -120,7 +120,7 @@ public class SchoolClassAdminController {
             schoolClass.getSubjects().add(subject);
         }
         schoolClassRepository.save(schoolClass);
-        return "redirect:/admin/schoolclass/" + id +"/details";
+        return "redirect:/admin/schoolclass/" + id +"/adminDetails";
     }
     @GetMapping("{id}/removeSubject/{subjectId}")
     public String removeSubject(@PathVariable Long id, @PathVariable Long subjectId){
@@ -128,7 +128,7 @@ public class SchoolClassAdminController {
         Subject subject = subjectRepository.getReferenceById(subjectId);
         schoolClass.getSubjects().remove(subject);
         schoolClassRepository.save(schoolClass);
-        return "redirect:/admin/schoolclass/" + id + "/details";
+        return "redirect:/admin/schoolclass/" + id + "/adminDetails";
     }
     @GetMapping("/{classId}/lessonPlan")
     public String lessonPlan(@PathVariable Long classId, @RequestParam(required = false) LocalDate date){
@@ -163,5 +163,12 @@ public class SchoolClassAdminController {
         Long classId = lesson.getSchoolClass().getId();
         lessonPlanRepository.delete(lesson);
         return "redirect:/admin/schoolclass/" + classId + "/lessonPlan?date=" + date;
+    }
+    @GetMapping("/{classId}/setSupervisingTeacher/{teacherId}")
+    public String setSupervisingTeacher(@PathVariable Long classId, @PathVariable Long teacherId){
+        SchoolClass schoolClass = schoolClassRepository.getReferenceById(classId);
+        schoolClass.getSupervisingTeachers().add(teacherRepository.getReferenceById(teacherId));
+        schoolClassRepository.save(schoolClass);
+        return "redirect:/admin/schoolclass/" + schoolClass.getId() + "/adminDetails";
     }
 }

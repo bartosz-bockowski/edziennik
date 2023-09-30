@@ -1,16 +1,23 @@
 package pl.edziennik.edziennik.teacher;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.edziennik.edziennik.schoolClass.QSchoolClass;
+import pl.edziennik.edziennik.schoolClass.SchoolClass;
+import pl.edziennik.edziennik.schoolClass.SchoolClassRepository;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 import pl.edziennik.edziennik.security.user.User;
 import pl.edziennik.edziennik.security.user.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -19,12 +26,15 @@ public class TeacherAdminController {
     private final TeacherRepository teacherRepository;
     private final SubjectRepository subjectRepository;
     private final UserRepository userRepository;
+    private final SchoolClassRepository schoolClassRepository;
     public TeacherAdminController(TeacherRepository teacherRepository,
                                   SubjectRepository subjectRepository,
-                                  UserRepository userRepository){
+                                  UserRepository userRepository,
+                                  SchoolClassRepository schoolClassRepository){
         this.teacherRepository = teacherRepository;
         this.subjectRepository = subjectRepository;
         this.userRepository = userRepository;
+        this.schoolClassRepository = schoolClassRepository;
     }
     @GetMapping("/list")
     public String list(Model model, @SortDefault("id") Pageable pageable){
@@ -50,14 +60,20 @@ public class TeacherAdminController {
     }
     @GetMapping("/{id}/switch")
     public String switch_(@PathVariable Long id){
-        Teacher teacher = teacherRepository.getOne(id);
+        Teacher teacher = teacherRepository.getReferenceById(id);
         teacher.setActive(!teacher.isActive());
         teacherRepository.save(teacher);
         return "redirect:/admin/teacher/list";
     }
     @GetMapping("{id}/details")
-    public String details(@PathVariable Long id, Model model){
+    public String details(@PathVariable Long id, Model model,@SortDefault("id") Pageable pageable,
+                          @QuerydslPredicate(root = Teacher.class) Predicate predicate){
         Teacher teacher = teacherRepository.getReferenceById(id);
+        BooleanBuilder builder = new BooleanBuilder();
+        QSchoolClass qSchoolClass = QSchoolClass.schoolClass;
+        builder.and(qSchoolClass.supervisingTeachers.contains(teacher).not());
+        builder.and(predicate);
+        model.addAttribute("classes",schoolClassRepository.findAll(builder));
         model.addAttribute("teacher",teacher);
         model.addAttribute("users",userRepository.findAll());
         model.addAttribute("subjects",subjectRepository.findAllWhichHaveTeacher(teacher));
@@ -81,5 +97,19 @@ public class TeacherAdminController {
         teacher.getUsers().remove(user);
         teacherRepository.save(teacher);
         return "redirect:/admin/teacher/" + teacherId +"/details";
+    }
+    @GetMapping("/{teacherId}/addSupervisedClass")
+    public String addSupervisedClass(@PathVariable Long teacherId, @RequestParam Long schoolClass){
+        Teacher teacher = teacherRepository.getReferenceById(teacherId);
+        teacher.getSupervisedClasses().add(schoolClassRepository.getReferenceById(schoolClass));
+        teacherRepository.save(teacher);
+        return "redirect:/admin/teacher/" + teacherId + "/details";
+    }
+    @GetMapping("/{teacherId}/removeSupervisedClass/{classId}")
+    public String removeSupervisedClass(@PathVariable Long teacherId, @PathVariable Long classId){
+        Teacher teacher = teacherRepository.getReferenceById(teacherId);
+        teacher.removeSupervisedSchoolClass(schoolClassRepository.getReferenceById(classId));
+        teacherRepository.save(teacher);
+        return "redirect:/admin/teacher/" + teacherId + "/details";
     }
 }

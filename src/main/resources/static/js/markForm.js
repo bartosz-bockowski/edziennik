@@ -1,8 +1,8 @@
 $(".markSwitch").click((e) => {
-    click($(e.target))
+    markClick($(e.target))
 })
 
-function click(e, m) {
+function markClick(e, m) {
     let parent = $(e).parent()
     let form = $(parent).find(".markForm")
     let span = $(parent).find(".markSpan")
@@ -25,7 +25,7 @@ $(".markFormSubmit").click((e) => {
     let schoolClassId = form.find(".schoolClass").val()
     let subjetId = form.find(".subject").val()
     fetch("/mark/add/" + mark + "/" + studentId + "/" + markCategoryId + "/" + markId).then((response) => {
-        click($(e.target).parent(), mark)
+        markClick($(e.target).parent(), mark)
         if(response.status === 200){
             let url = "/admin/schoolclass/" + schoolClassId + "/getAverageMarkBySubjectId/" + subjetId
             fetch(url).then(response2 => {

@@ -28,8 +28,8 @@ public class SecurityConfig{
                 .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll())
                 .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll())
                 .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/img/**")).permitAll())
-//                .authorizeHttpRequests((auth) -> auth.anyRequest().authenticated())
-                .authorizeHttpRequests((auth) -> auth.anyRequest().permitAll())
+                .authorizeHttpRequests((auth) -> auth.anyRequest().authenticated())
+//                .authorizeHttpRequests((auth) -> auth.anyRequest().permitAll())
 
                 .logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/login"))
                 .formLogin((form) -> form.loginPage("/login").failureUrl("/login?error=true").permitAll());

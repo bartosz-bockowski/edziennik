@@ -68,30 +68,15 @@ public class UserController {
     public String add(){
         User user = new User();
         user.setUsername(getNextId());
-        user.setPassword(generatePassword());
-        System.out.println(user.getPassword());
+        user.setPassword("123");
         userService.saveUser(user);
         return "redirect:/admin/user/" + user.getId() + "/details";
     }
-//    @PostMapping("/add")
-//    public String add(@Valid User user, BindingResult result, Model model){
-//        if(result.hasErrors()){
-//            model.addAttribute("maxId", getNextId());
-//            model.addAttribute("user",user);
-//            model.addAttribute("result",result);
-//            return "security/user/add";
-//        }
-//        userService.saveUser(user);
-//        return "redirect:/admin/user/list";
-//    }
     @GetMapping("/{id}/details")
     public String details(@PathVariable Long id, Model model){
-        User user = userRepository.getOne(id);
+        User user = userRepository.getReferenceById(id);
         model.addAttribute("user",user);
         model.addAttribute("roles",roleRepository.findAll());
-        model.addAttribute("students",studentRepository.findAllWhichHaveUser(user));
-        model.addAttribute("teachers",teacherRepository.findAllWhichHaveUser(user));
-        model.addAttribute("parents",parentRepository.findAllWhichHaveUser(user));
         return "security/user/details";
     }
 
@@ -114,7 +99,7 @@ public class UserController {
 
     @GetMapping("/{id}/switch")
     public String switch_(@PathVariable Long id){
-        User user = userRepository.getOne(id);
+        User user = userRepository.getReferenceById(id);
         user.setActive(!user.isActive());
         userRepository.save(user);
         return "redirect:/admin/user/list";

@@ -17,6 +17,15 @@
 <spring:message code="student.nullClass" var="nullClass"/>
 <spring:message code="student.schoolClass"/>:
 <b>${student.schoolClass.name != null ? student.schoolClass.name : nullClass}</b>
+<form method="get" action="/admin/student/${student.id}/setClass">
+    <select class="selectpicker" data-live-search="true" name="classId">
+        <c:forEach items="${schoolClasses}" var="schoolClass">
+            <option ${(student.schoolClass != null && student.schoolClass.id == schoolClass.id) ? 'selected' : ''} value="${schoolClass.id}">${schoolClass.name} (ID: ${schoolClass.id})</option>
+        </c:forEach>
+    </select>
+    <br/>
+    <button type="submit" class="selectpickerButton"><spring:message code="student.setClass"/></button>
+</form>
 <br/>
 <h3><spring:message code="student.users"/></h3>
 <form method="get" action="/admin/student/${student.id}/addUser">

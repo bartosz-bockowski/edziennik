@@ -3,6 +3,8 @@ package pl.edziennik.edziennik.teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.stereotype.Repository;
 import pl.edziennik.edziennik.security.user.User;
 
@@ -12,7 +14,7 @@ import java.util.Optional;
 
 @EnableJpaRepositories
 @Repository
-public interface TeacherRepository extends JpaRepository<Teacher, Long> {
+public interface TeacherRepository extends JpaRepository<Teacher, Long>, QuerydslPredicateExecutor<Teacher> {
     Optional<Teacher> findOneById(Long id);
     @Query("SELECT e FROM Teacher e WHERE :user MEMBER OF e.users")
     List<Teacher> findAllWhichHaveUser(User user);

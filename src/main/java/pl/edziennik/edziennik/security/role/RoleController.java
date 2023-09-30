@@ -44,7 +44,7 @@ public class RoleController {
     }
     @GetMapping("/{id}/switch")
     public String switch_(@PathVariable Long id){
-        Role role = roleRepository.getOne(id);
+        Role role = roleRepository.getReferenceById(id);
         role.setActive(!role.isActive());
         roleRepository.save(role);
         return "redirect:/admin/role/list";

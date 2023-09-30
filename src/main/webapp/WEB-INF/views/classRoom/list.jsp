@@ -13,8 +13,7 @@
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="classRoom.list"/></h1>
 <a href="/admin/classRoom/add"><spring:message code="classRoom.add"/></a>
-<br/><br/>
-<table class="centerBlock">
+<table class="centerBlock mainTable">
     <thead>
     <th><spring:message code="classRoom.id"/></th>
     <th><spring:message code="classRoom.name"/></th>
