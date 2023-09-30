@@ -15,6 +15,12 @@
 <a href="/admin/schoolclass/list"><spring:message code="schoolClass.list"/></a>
 <h1><spring:message code="schoolClass.schoolClassDetails"/></h1>
 <div><spring:message code="schoolClass.name"/>: <b>${schoolClass.name}</b></div>
+<br/>
+<spring:message code="schoolClass.supervisingTeachers"/>:
+<c:forEach items="${schoolClass.supervisingTeachers}" var="t">
+    <div>${t.fullNameWithId}</div>
+</c:forEach>
+<br/>
 <script src="${pageContext.request.contextPath}/js/schoolClass/schoolClassDetails.js"></script>
 <!-- students -->
 <div><spring:message code="schoolClass.students"/>:</div>
