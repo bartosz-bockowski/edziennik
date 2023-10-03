@@ -28,10 +28,10 @@
             <td>${subject.name}</td>
             <td>
                 <c:set var="subjectMarks" value="${student.getMarksBySubjectId(subject.id)}"/>
-                <a href="student/${student.id}/subjectMarks/${subject.id}">
+                <a href="/student/${student.id}/subjectMarks/${subject.id}">
                     <div class="subjectStudentMarksDiv">
                         <c:forEach items="${subjectMarks}" var="mark">
-                            ${mark.mark.intValue()}${mark.mark.remainder(1) == '0.50' ? '+' : ''}
+                            ${mark.getMarkString()}
                         </c:forEach>
                         <c:if test="${subjectMarks.size() == 0}">
                             <spring:message code="student.noMarks"/>

@@ -12,7 +12,6 @@
 <body>
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="mark.history"/></h1>
-<a href="/schoolclass/${markCategory.schoolClass.id}/marks/${markCategory.subject.id}"><spring:message code="back"/></a>
 <table class="centerBlock noBorderTable paddingTable">
     <tr>
         <td><spring:message code="mark.student"/></td>

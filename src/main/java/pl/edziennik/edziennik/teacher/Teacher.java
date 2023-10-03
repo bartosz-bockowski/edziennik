@@ -9,6 +9,7 @@ import pl.edziennik.edziennik.schoolClass.SchoolClass;
 import pl.edziennik.edziennik.security.user.User;
 
 import jakarta.persistence.*;
+import pl.edziennik.edziennik.subject.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,8 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher")
     private List<LessonPlan> lessons;
     private boolean active = true;
+    @ManyToMany(mappedBy = "teachers")
+    List<Subject> subjects;
     public String getFullName(){
         return firstName + " " + lastName;
     }

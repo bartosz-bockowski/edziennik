@@ -169,3 +169,25 @@ input,button{
 .paddingTable *{
     padding: 3px;
 }
+.markDiv{
+    width: 600px;
+    height: 80px;
+    line-height: 50px;
+    background: #1373cc;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    padding: 15px 15px 15px 40px;
+    font-size: 50px;
+    color: white;
+    margin-top: 10px;
+}
+.markDiv span{
+    float: right;
+    font-size: 18px;
+    margin-right: 40px;
+}
+.markHref:hover{
+    text-decoration: none;
+}

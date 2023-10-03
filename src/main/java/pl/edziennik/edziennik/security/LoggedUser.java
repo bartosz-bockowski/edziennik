@@ -8,6 +8,7 @@ import pl.edziennik.edziennik.schoolClass.SchoolClass;
 import pl.edziennik.edziennik.security.user.User;
 import pl.edziennik.edziennik.security.user.UserRepository;
 import pl.edziennik.edziennik.student.Student;
+import pl.edziennik.edziennik.subject.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,16 @@ public class LoggedUser {
         }
         boolean studentCondition = !students.isEmpty() && students.stream().map(Student::getSchoolClass).map(SchoolClass::getId).toList().contains(id);
         boolean teacherCondition = getUser().getTeacher() != null && getUser().getTeacher().getSupervisedClasses().stream().map(SchoolClass::getId).toList().contains(id);
-        boolean adminCondition = isAdmin();
-        return studentCondition || teacherCondition || adminCondition;
+        return studentCondition || teacherCondition || isAdmin();
+    }
+    public Boolean hasAccessToStudent(Long id){
+        boolean studentCondition = getUser().getStudent() != null && getUser().getStudent().getId().equals(id);
+        boolean parentCondition = getUser().getParent() != null && getUser().getParent().getStudents().stream().map(Student::getId).toList().contains(id);
+        boolean teacherCondition = getUser().getTeacher() != null && getUser().getTeacher().getSupervisedClasses().stream().flatMap(schoolClass -> schoolClass.getStudents().stream()).map(Student::getId).toList().contains(id);
+        return studentCondition || parentCondition || teacherCondition || isAdmin();
+    }
+    public Boolean hasAccessToStudentMarks(Long studentId, Long subjectId){
+        return hasAccessToStudent(studentId) || getUser().getTeacher() != null && getUser().getTeacher().getSubjects().stream().map(Subject::getId).toList().contains(subjectId);
     }
     public static Boolean isAdmin(){
         return SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("admin"));
