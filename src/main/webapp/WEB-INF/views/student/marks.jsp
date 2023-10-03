@@ -16,11 +16,11 @@
 <br/><br/>
 <table class="centerBlock mainTable basicListTable">
     <thead>
-        <tr>
-            <th><spring:message code="subject"/></th>
-            <th><spring:message code="marks"/></th>
-            <th><spring:message code="mark.average"/></th>
-        </tr>
+    <tr>
+        <th><spring:message code="subject"/></th>
+        <th><spring:message code="marks"/></th>
+        <th><spring:message code="mark.average"/></th>
+    </tr>
     </thead>
     <tbody>
     <c:forEach items="${student.schoolClass.subjects}" var="subject">
@@ -28,9 +28,16 @@
             <td>${subject.name}</td>
             <td>
                 <c:set var="subjectMarks" value="${student.getMarksBySubjectId(subject.id)}"/>
-                <c:forEach items="${subjectMarks}" var="mark">
-                    ${mark.mark}  (${mark.markCategory.weight}) -
-                </c:forEach>
+                <a href="student/${student.id}/subjectMarks/${subject.id}">
+                    <div class="subjectStudentMarksDiv">
+                        <c:forEach items="${subjectMarks}" var="mark">
+                            ${mark.mark.intValue()}${mark.mark.remainder(1) == '0.50' ? '+' : ''}
+                        </c:forEach>
+                        <c:if test="${subjectMarks.size() == 0}">
+                            <spring:message code="student.noMarks"/>
+                        </c:if>
+                    </div>
+                </a>
             </td>
             <td>${markUtils.countAverageOfMarks(subjectMarks)}</td>
         </tr>

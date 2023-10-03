@@ -54,16 +54,6 @@ public class UserController {
         sb.append(strMaxId);
         return sb.toString();
     }
-    public String generatePassword(){
-        String AlphaNumericStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz0123456789";
-        int len = AlphaNumericStr.length();
-        StringBuilder passwordSB = new StringBuilder();
-        Random random = new Random();
-        for(int i = 0; i < 20; i++){
-            passwordSB.append(AlphaNumericStr.charAt(Math.abs(random.nextInt()) % len));
-        }
-        return passwordSB.toString();
-    }
     @GetMapping("/add")
     public String add(){
         User user = new User();
