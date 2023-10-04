@@ -14,10 +14,17 @@
         </div>
     </c:if>
     <c:if test="${loggedUser.parent != null}">
-        <div class="mainPageUser">
-            <span class="mainPageUserHeader"><spring:message code="user.parent"/></span>
-            <span class="mainPageUserInfo">${loggedUser.parent.fullNameWithId}</span>
-        </div>
+        <h1><spring:message code="parent.students"/></h1>
+        <c:if test="${loggedUser.parent.students.size() == 0}">
+            <spring:message code="parent.noStudents"/>
+        </c:if>
+        <c:forEach items="${loggedUser.parent.students}" var="student">
+            <div class="mainPageUser">
+                <span class="mainPageUserHeader"><spring:message code="user.student"/></span>
+                <span class="mainPageUserInfo">${loggedUser.student.fullNameWithId}</span>
+                <a href="/student/${loggedUser.student.id}/marks"><spring:message code="student.marks"/></a>
+            </div>
+        </c:forEach>
     </c:if>
     <c:if test="${loggedUser.teacher != null}">
         <div class="mainPageUser">
