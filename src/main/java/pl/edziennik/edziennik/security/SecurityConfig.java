@@ -28,6 +28,7 @@ public class SecurityConfig{
                 .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll())
                 .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll())
                 .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/img/**")).permitAll())
+                .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("admin"))
                 .authorizeHttpRequests((auth) -> auth.anyRequest().authenticated())
 //                .authorizeHttpRequests((auth) -> auth.anyRequest().permitAll())
 
