@@ -73,12 +73,6 @@ public class TeacherController {
         model.addAttribute("plan",plan);
         model.addAttribute("date",date);
         model.addAttribute("dateFormatter", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        if(LoggedUser.isAdmin()){
-            model.addAttribute("subjects",subjectRepository.findAll());
-            model.addAttribute("schoolClasses",schoolClassRepository.findAll());
-            model.addAttribute("classRooms",classRoomRepository.findAll());
-            return "teacher/lessonPlanAdmin";
-        }
         return "teacher/lessonPlan";
     }
 }

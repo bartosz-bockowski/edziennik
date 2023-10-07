@@ -12,28 +12,7 @@
 <body>
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="lessonPlan.ofClass"/> ${schoolClass.name}</h1>
-<table class="lessonPlanTable centerBlock">
-    <thead>
-    <tr>
-        <td></td>
-        <td><spring:message code="monday"/></td>
-        <td><spring:message code="tuesday"/></td>
-        <td><spring:message code="wednesday"/></td>
-        <td><spring:message code="thursday"/></td>
-        <td><spring:message code="friday"/></td>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${plan}" var="hour" varStatus="loop">
-        <tr>
-            <td>${hours.get(loop.index).start} - ${hours.get(loop.index).end}</td>
-            <c:forEach items="${hour}" var="lesson">
-                <td>${lesson == null ? "lesson" : lesson}</td>
-            </c:forEach>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
+<jsp:include page="../utils/lessonPlan.jsp"/>
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>

@@ -65,25 +65,27 @@
                             <input type="hidden" name="classId" value="${schoolClass.id}"/>
                             <input type="hidden" name="lessonHour" value="${hours.get(loop.index).id}"/>
                             <input type="hidden" name="date" value="${date.plusDays(hourLoop.index)}"/>
-                            Przedmiot
+                            <spring:message code="subject"/><br/>
                             <spring:message code="none" var="none"/>
                             <select ${lesson == null ? 'title="'.concat(none).concat('" ') : ''}class="selectpicker" data-live-search="true" name="subject">
                                 <c:forEach items="${subjects}" var="subject">
                                     <option value="${subject.id}"${subject.id == lesson.subject.id ? ' selected' : ''}>${subject.name}</option>
                                 </c:forEach>
                             </select>
-                            Nauczyciel
+                            <br/>
+                            <spring:message code="teacher"/><br/>
                             <select ${lesson == null ? 'title="'.concat(none).concat('" ') : ''}class="selectpicker" data-live-search="true" name="teacher">
                                 <c:forEach items="${teachers}" var="teacher">
                                     <option value="${teacher.id}"${teacher.id == lesson.teacher.id ? ' selected' : ''}>${teacher.getFullName()}</option>
                                 </c:forEach>
                             </select>
-                            Sala
+                            <br/>
+                            <spring:message code="classRoom"/><br/>
                             <select ${lesson == null ? 'title="'.concat(none).concat('" ') : ''}class="selectpicker" data-live-search="true" name="classRoom">
                                 <c:forEach items="${classRooms}" var="classRoom">
                                     <option value="${classRoom.id}"${classRoom.id == lesson.classRoom.id ? ' selected' : ''}>${classRoom.name}</option>
                                 </c:forEach>
-                            </select>
+                            </select><br/>
                             <button type="submit"><spring:message code="save"/></button>
                         </form>
                         <c:if test="${lesson != null}">
