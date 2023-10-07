@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface LessonPlanRepository extends JpaRepository<LessonPlan, Long> {
     List<LessonPlan> getAllBySchoolClassIdAndDateIn(Long classId, List<LocalDate> dates);
+    List<LessonPlan> getAllByTeacherIdAndDateIn(Long teacherId, List<LocalDate> dates);
 }

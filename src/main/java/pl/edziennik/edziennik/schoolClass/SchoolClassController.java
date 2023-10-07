@@ -8,6 +8,7 @@ import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.lessonHour.LessonHourRepository;
 import pl.edziennik.edziennik.lessonPlan.LessonPlanRepository;
 import pl.edziennik.edziennik.lessonPlan.LessonPlan;
+import pl.edziennik.edziennik.lessonPlan.LessonPlanService;
 import pl.edziennik.edziennik.mark.category.MarkCategory;
 import pl.edziennik.edziennik.mark.category.MarkCategoryRepository;
 import pl.edziennik.edziennik.security.LoggedUser;
@@ -30,6 +31,7 @@ public class SchoolClassController {
     private final SubjectRepository subjectRepository;
     private final MarkCategoryRepository markCategoryRepository;
     private final LoggedUser loggedUser;
+    private final LessonPlanService lessonPlanService;
     public SchoolClassController(SchoolClassRepository schoolClassRepository,
                                  LessonPlanRepository lessonPlanRepository,
                                  LessonHourRepository lessonHourRepository,
@@ -37,7 +39,8 @@ public class SchoolClassController {
                                  TeacherRepository teacherRepository,
                                  SubjectRepository subjectRepository,
                                  MarkCategoryRepository markCategoryRepository,
-                                 LoggedUser loggedUser) {
+                                 LoggedUser loggedUser,
+                                 LessonPlanService lessonPlanService) {
         this.schoolClassRepository = schoolClassRepository;
         this.lessonPlanRepository = lessonPlanRepository;
         this.lessonHourRepository = lessonHourRepository;
@@ -46,6 +49,7 @@ public class SchoolClassController {
         this.subjectRepository = subjectRepository;
         this.markCategoryRepository = markCategoryRepository;
         this.loggedUser = loggedUser;
+        this.lessonPlanService = lessonPlanService;
     }
 
     @GetMapping("/{classId}/lessonPlan")
@@ -68,26 +72,8 @@ public class SchoolClassController {
         model.addAttribute("lessons",lessons);
         List<LessonHour> hours = lessonHourRepository.findAllByActiveTrueOrderByStartAsc();
         model.addAttribute("hours",hours);
-        List<List<LessonPlan>> plan = new ArrayList<>();
-        for(LessonHour hour : hours){
-            List<LessonPlan> day = new ArrayList<>();
-            for(int j = 0; j < 5; j++){
-                boolean flag = true;
-                for(LessonPlan lesson : lessons){
-                    if(lesson.getDate().equals(date.plusDays(j)) && lesson.getLessonHour().equals(hour)){
-                        flag = false;
-                        day.add(lesson);
-                        break;
-                    }
-                }
-                if(flag){
-                    day.add(null);
-                }
-            }
-            plan.add(day);
-        }
+        List<List<LessonPlan>> plan = lessonPlanService.getPlan(hours,lessons,date);
         model.addAttribute("plan",plan);
-        model.addAttribute("hours",hours);
         model.addAttribute("date",date);
         model.addAttribute("dateFormatter", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         if(LoggedUser.isAdmin()){

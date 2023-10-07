@@ -54,4 +54,7 @@ public class LoggedUser {
     public static Boolean isAdmin(){
         return SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("admin"));
     }
+    public Boolean hasAccessToTeacher(Long id){
+        return (getUser().getTeacher() != null && getUser().getTeacher().getId().equals(id)) || isAdmin();
+    }
 }

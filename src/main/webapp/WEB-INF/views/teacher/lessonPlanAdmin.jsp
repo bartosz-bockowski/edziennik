@@ -12,7 +12,7 @@
 <html>
 <body>
 <jsp:include page="../layout/header.jsp"/>
-<h1><spring:message code="lessonPlan.ofClass"/> ${schoolClass.name}</h1>
+<h1><spring:message code="lessonPlan.ofTeacher"/> ${teacher.fullNameWithId}</h1>
 <table class="lessonPlanTable centerBlock">
     <thead>
         <tr>
@@ -60,9 +60,9 @@
                     <td class="${lesson == null ? 'null' : 'present'}LessonTd">
                         <br/>
                         <form method="get" action="/admin/lessonplan/updateLesson?date=${date}">
-                            <input type="hidden" name="redirect" value="schoolclass"/>
+                            <input type="hidden" name="redirect" value="teacher"/>
                             <input type="hidden" name="id" value="${lesson.id}"/>
-                            <input type="hidden" name="classId" value="${schoolClass.id}"/>
+                            <input type="hidden" name="teacher" value="${teacher.id}"/>
                             <input type="hidden" name="lessonHour" value="${hours.get(loop.index).id}"/>
                             <input type="hidden" name="date" value="${date.plusDays(hourLoop.index)}"/>
                             Przedmiot
@@ -73,9 +73,9 @@
                                 </c:forEach>
                             </select>
                             Nauczyciel
-                            <select ${lesson == null ? 'title="'.concat(none).concat('" ') : ''}class="selectpicker" data-live-search="true" name="teacher">
-                                <c:forEach items="${teachers}" var="teacher">
-                                    <option value="${teacher.id}"${teacher.id == lesson.teacher.id ? ' selected' : ''}>${teacher.getFullName()}</option>
+                            <select ${lesson == null ? 'title="'.concat(none).concat('" ') : ''}class="selectpicker" data-live-search="true" name="classId">
+                                <c:forEach items="${schoolClasses}" var="schoolClass">
+                                    <option value="${schoolClass.id}"${schoolClass.id == lesson.schoolClass.id ? ' selected' : ''}>${schoolClass.name}</option>
                                 </c:forEach>
                             </select>
                             Sala
