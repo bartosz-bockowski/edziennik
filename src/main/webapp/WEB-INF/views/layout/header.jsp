@@ -37,9 +37,17 @@
                 <a class="headerOption" href="/admin/classRoom/list"><spring:message code="classRoom.list"/></a>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <form action="${pageContext.request.contextPath}/logout" method="get">
-                    <button type="submit"><spring:message code="logout"/></button>
-                </form>
+                <div id="rightDiv">
+                    <div class="notificationsButtonParent">
+                        <div class="notificationsButton">
+                        </div>
+                        <div class="notificationsList">
+                        </div>
+                    </div>
+                    <form action="${pageContext.request.contextPath}/logout" method="get">
+                        <button type="submit"><spring:message code="logout"/></button>
+                    </form>
+                </div>
             </sec:authorize>
         </div>
     </header>

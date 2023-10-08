@@ -3,6 +3,7 @@ package pl.edziennik.edziennik.student;
 import lombok.Getter;
 import lombok.Setter;
 import pl.edziennik.edziennik.mark.Mark;
+import pl.edziennik.edziennik.parent.Parent;
 import pl.edziennik.edziennik.schoolClass.SchoolClass;
 import pl.edziennik.edziennik.security.user.User;
 
@@ -10,6 +11,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +26,8 @@ public class Student {
     private User user;
     private String firstName;
     private String lastName;
+    @ManyToMany(mappedBy = "students")
+    private List<Parent> parents = new ArrayList<>();
     private boolean active = true;
     @ManyToOne
     private SchoolClass schoolClass;

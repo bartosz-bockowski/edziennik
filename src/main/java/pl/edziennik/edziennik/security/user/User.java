@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import pl.edziennik.edziennik.notification.Notification;
 import pl.edziennik.edziennik.parent.Parent;
 import pl.edziennik.edziennik.security.role.Role;
 import pl.edziennik.edziennik.student.Student;
@@ -44,4 +45,6 @@ public class User {
     @Email
     private String email;
     private String phoneNumber;
+    @OneToMany(mappedBy = "addressee")
+    private List<Notification> notifications;
 }

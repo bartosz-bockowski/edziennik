@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.edziennik.edziennik.mark.category.MarkCategory;
 import pl.edziennik.edziennik.mark.category.MarkCategoryRepository;
+import pl.edziennik.edziennik.notification.NotificationService;
+import pl.edziennik.edziennik.notification.NotificationType;
 import pl.edziennik.edziennik.student.Student;
 import pl.edziennik.edziennik.student.StudentRepository;
 import pl.edziennik.edziennik.teacher.TeacherRepository;
@@ -23,7 +25,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/mark")
@@ -34,16 +35,19 @@ public class MarkController {
     private final TeacherRepository teacherRepository;
     @Autowired
     private final EntityManager entityManager;
+    private final NotificationService notificationService;
     public MarkController(MarkRepository markRepository,
                           StudentRepository studentRepository,
                           MarkCategoryRepository markCategoryRepository,
                           TeacherRepository teacherRepository,
-                          EntityManager entityManager) {
+                          EntityManager entityManager,
+                          NotificationService notificationService) {
         this.markRepository = markRepository;
         this.studentRepository = studentRepository;
         this.markCategoryRepository = markCategoryRepository;
         this.teacherRepository = teacherRepository;
         this.entityManager = entityManager;
+        this.notificationService = notificationService;
     }
     @ResponseBody
     @GetMapping("/add/{mark}/{studentId}/{markCategoryId}/{markId}")
@@ -60,6 +64,7 @@ public class MarkController {
             markObj.setId(Long.parseLong(markId));
         }
         markRepository.save(markObj);
+        notificationService.createAndSend(markObj.getStudent(), markObj, NotificationType.NEW_MARK);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
     @GetMapping("/history/{categoryId}/{studentId}")

@@ -59,8 +59,11 @@ thead{
 #headerMainDiv{
     border-bottom: 1px solid black;
 }
-#headerMainDiv form{
+#headerMainDiv #rightDiv{
     float: right;
+}
+#headerMainDiv #rightDiv *{
+    float: left;
 }
 #headerMainDiv form button {
     height: 100%;
@@ -190,4 +193,26 @@ input,button{
 }
 .markHref:hover{
     text-decoration: none;
+}
+.notificationsButtonParent{
+    position: relative;
+    margin-right: 5px;
+}
+.notificationsButton{
+    height: 100%;
+    width: 50px;
+    background: #d9d9d9;
+}
+.notificationsButton:hover{
+    cursor: pointer;
+}
+.notificationsList{
+    width: 230px;
+    height: 400px;
+    position: absolute;
+    display: none;
+    right: 0;
+    top: 50px;
+    background: #d9d9d9;
+    box-shadow: 0 0 3px 0 black;
 }
