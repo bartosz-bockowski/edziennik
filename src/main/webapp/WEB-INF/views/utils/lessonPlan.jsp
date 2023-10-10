@@ -52,6 +52,9 @@
                             ${lesson.subject.name}<br>
                             ${lesson.classRoom.name}<br>
                             ${teacher == null ? lesson.teacher.fullNameWithId : lesson.schoolClass.name}
+                        <c:if test="${isTeacher}">
+                            <a href="/exam/newExam/${lesson.id}"><spring:message code="exam.addExam"/></a>
+                        </c:if>
                     </td>
                 </c:if>
             </c:forEach>
