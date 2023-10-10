@@ -1,14 +1,13 @@
 package pl.edziennik.edziennik.exam;
 
 import jakarta.validation.Valid;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.lessonPlan.LessonPlanRepository;
 
-import jakarta.servlet.http.HttpServletRequest;
+import pl.edziennik.edziennik.notification.NotificationService;
 
 import java.time.LocalDateTime;
 
@@ -17,11 +16,14 @@ import java.time.LocalDateTime;
 public class ExamController {
     private final ExamRepository examRepository;
     private final LessonPlanRepository lessonPlanRepository;
+    private final NotificationService notificationService;
 
     public ExamController(ExamRepository examRepository,
-                          LessonPlanRepository lessonPlanRepository) {
+                          LessonPlanRepository lessonPlanRepository,
+                          NotificationService notificationService) {
         this.examRepository = examRepository;
         this.lessonPlanRepository = lessonPlanRepository;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/add/{lessonId}")
@@ -42,6 +44,7 @@ public class ExamController {
         }
         exam.setCreated(LocalDateTime.now());
         examRepository.save(exam);
+        notificationService.createAndSendNewExam(exam);
         return "redirect:/teacher/" + teacherId + "/lessonPlan?date=" + date;
     }
 
