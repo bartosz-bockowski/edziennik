@@ -207,7 +207,7 @@ input,button{
     cursor: pointer;
 }
 .notificationsList{
-    overflow-y: hidden;
+    overflow-y: scroll;
     width: 230px;
     height: 400px;
     position: absolute;

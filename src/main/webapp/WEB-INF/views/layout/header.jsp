@@ -25,7 +25,7 @@
     <header>
         <div id="headerMainDiv">
             <a class="headerOption mainHeaderOption" href="/"><spring:message code="mainPage"/></a>
-            <sec:authorize access="hasAuthority('admin')">
+<%--            <sec:authorize access="hasAuthority('admin')">--%>
                 <a class="headerOption" href="/admin/user/list"><spring:message code="user.list"/></a>
                 <a class="headerOption" href="/admin/role/list"><spring:message code="role.list"/></a>
                 <a class="headerOption" href="/admin/teacher/list"><spring:message code="teacher.list"/></a>
@@ -35,7 +35,7 @@
                 <a class="headerOption" href="/admin/subject/list"><spring:message code="subject.list"/></a>
                 <a class="headerOption" href="/admin/lessonHour/list"><spring:message code="lessonHour.list"/></a>
                 <a class="headerOption" href="/admin/classRoom/list"><spring:message code="classRoom.list"/></a>
-            </sec:authorize>
+<%--            </sec:authorize>--%>
             <sec:authorize access="isAuthenticated()">
                 <div id="rightDiv">
                     <div class="notificationsButtonParent">

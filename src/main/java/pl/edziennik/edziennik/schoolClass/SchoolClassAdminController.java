@@ -92,12 +92,6 @@ public class SchoolClassAdminController {
         model.addAttribute("subjects",subjectRepository.findAll());
         return "schoolclass/adminDetails";
     }
-    @GetMapping("/{schoolClassId}/getAverageMarkBySubjectId/{subjectId}")
-    public ResponseEntity<String> getAvMark(@PathVariable Long schoolClassId, @PathVariable Long subjectId){
-        BigDecimal val = schoolClassRepository.getReferenceById(schoolClassId).getAverageMarkBySubjectId(subjectId);
-        String result = val.setScale(2, RoundingMode.DOWN).toString();
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
     @GetMapping("/{id}/addStudent")
     public String addStudent(@PathVariable Long id, @RequestParam Long studentId){
         Student student = studentRepository.getReferenceById(studentId);

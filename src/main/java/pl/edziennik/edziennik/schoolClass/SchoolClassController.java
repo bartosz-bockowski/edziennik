@@ -1,5 +1,7 @@
 package pl.edziennik.edziennik.schoolClass;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import pl.edziennik.edziennik.security.LoggedUser;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 import pl.edziennik.edziennik.teacher.TeacherRepository;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -91,5 +95,11 @@ public class SchoolClassController {
         model.addAttribute("subject",subjectRepository.getReferenceById(subjectId));
         model.addAttribute("markCategory",new MarkCategory());
         return "schoolclass/marks";
+    }
+    @GetMapping("/{schoolClassId}/getAverageMarkBySubjectId/{subjectId}")
+    public ResponseEntity<String> getAvMark(@PathVariable Long schoolClassId, @PathVariable Long subjectId){
+        BigDecimal val = schoolClassRepository.getReferenceById(schoolClassId).getAverageMarkBySubjectId(subjectId);
+        String result = val.setScale(2, RoundingMode.DOWN).toString();
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

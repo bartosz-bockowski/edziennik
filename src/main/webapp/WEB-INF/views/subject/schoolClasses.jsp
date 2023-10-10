@@ -12,7 +12,6 @@
 <body>
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="schoolClass.list"/></h1>
-<a href="/admin/schoolclass/add"><spring:message code="schoolClass.add"/></a>
 <table class="centerBlock mainTable basicListTable">
     <thead>
     <tr>
@@ -23,19 +22,14 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${page.content}" var="schoolclass">
+    <c:forEach items="${subject.schoolClasses}" var="schoolclass">
     <tr>
         <td>${schoolclass.id}</td>
         <td>${schoolclass.name}</td>
         <td><spring:message code="${schoolclass.active}"/></td>
         <td>
-            <a href="/admin/schoolclass/${schoolclass.id}/adminDetails"><spring:message code="schoolClass.details"/></a>
-            <spring:message code="schoolClass.switch.confirm" var="confirm"/>
-            <spring:message code="activate" var="activate"/>
-            <spring:message code="disactivate" var="disactivate"/>
-            <a msg="${confirm}" class="confirm" href="/admin/schoolclass/${schoolclass.id}/switch"><spring:message
-                    code="${schoolclass.active ? disactivate : activate}"/></a>
             <a href="/schoolclass/${schoolclass.id}/lessonPlan"><spring:message code="lessonPlan"/></a>
+            <a href="/schoolclass/${schoolclass.id}/marks/${subject.id}"><spring:message code="schoolClass.marks"/></a>
         </td>
     </tr>
     </tbody>

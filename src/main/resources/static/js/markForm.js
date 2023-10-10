@@ -27,7 +27,7 @@ $(".markFormSubmit").click((e) => {
     fetch("/mark/add/" + mark + "/" + studentId + "/" + markCategoryId + "/" + markId).then((response) => {
         markClick($(e.target).parent(), mark)
         if(response.status === 200){
-            let url = "/admin/schoolclass/" + schoolClassId + "/getAverageMarkBySubjectId/" + subjetId
+            let url = "/schoolclass/" + schoolClassId + "/getAverageMarkBySubjectId/" + subjetId
             fetch(url).then(response2 => {
                 response2.text().then(response2 => {
                     alert("dodano ocene")

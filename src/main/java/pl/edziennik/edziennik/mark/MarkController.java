@@ -62,9 +62,10 @@ public class MarkController {
         markObj.setChanged(LocalDateTime.now());
         if(!markId.equals("null")){
             markObj.setId(Long.parseLong(markId));
+        } else {
+            notificationService.createAndSend(markObj.getStudent(), markObj, NotificationType.NEW_MARK);
         }
         markRepository.save(markObj);
-        notificationService.createAndSend(markObj.getStudent(), markObj, NotificationType.NEW_MARK);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
     @GetMapping("/history/{categoryId}/{studentId}")

@@ -75,4 +75,14 @@ public class TeacherController {
         model.addAttribute("dateFormatter", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         return "teacher/lessonPlan";
     }
+    @GetMapping("/{teacherId}/supervisedClasses")
+    public String supervisedClasses(@PathVariable Long teacherId, Model model){
+        model.addAttribute("teacher",teacherRepository.getReferenceById(teacherId));
+        return "teacher/supervisedClasses";
+    }
+    @GetMapping("/{teacherId}/subjects")
+    public String subjects(@PathVariable Long teacherId, Model model){
+        model.addAttribute("teacher",teacherRepository.getReferenceById(teacherId));
+        return "teacher/subjects";
+    }
 }

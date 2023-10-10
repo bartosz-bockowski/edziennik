@@ -4,11 +4,39 @@
     <thead>
     <tr>
         <td></td>
-        <td><spring:message code="monday"/></td>
-        <td><spring:message code="tuesday"/></td>
-        <td><spring:message code="wednesday"/></td>
-        <td><spring:message code="thursday"/></td>
-        <td><spring:message code="friday"/></td>
+        <td><a href="?date=${date.minusDays(7)}"><<< <spring:message code="lessonPlan.previousWeek"/></a></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><a href="?date=${date.plusDays(7)}"><spring:message code="lessonPlan.nextWeek"/> >>></a></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <spring:message code="monday"/>
+            <br/>
+            ${date.format(dateFormatter)}
+        </td>
+        <td>
+            <spring:message code="tuesday"/>
+            <br/>
+            ${date.plusDays(1).format(dateFormatter)}
+        </td>
+        <td>
+            <spring:message code="wednesday"/>
+            <br/>
+            ${date.plusDays(2).format(dateFormatter)}
+        </td>
+        <td>
+            <spring:message code="thursday"/>
+            <br/>
+            ${date.plusDays(3).format(dateFormatter)}
+        </td>
+        <td>
+            <spring:message code="friday"/>
+            <br/>
+            ${date.plusDays(4).format(dateFormatter)}
+        </td>
     </tr>
     </thead>
     <tbody>
@@ -21,9 +49,9 @@
                 </c:if>
                 <c:if test="${lesson != null}">
                     <td>
-                        ${lesson.subject.name}<br>
-                        ${lesson.classRoom.name}<br>
-                        ${teacher == null ? lesson.teacher.fullNameWithId : lesson.schoolClass.name}
+                            ${lesson.subject.name}<br>
+                            ${lesson.classRoom.name}<br>
+                            ${teacher == null ? lesson.teacher.fullNameWithId : lesson.schoolClass.name}
                     </td>
                 </c:if>
             </c:forEach>
