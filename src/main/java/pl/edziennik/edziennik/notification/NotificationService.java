@@ -46,7 +46,8 @@ public class NotificationService {
         }
     }
 
-    public void createAndSendNewMark(Student student, Mark mark) {
+    public void createAndSendNewMark(Mark mark, NotificationType type) {
+        Student student = mark.getStudent();
         List<User> addressees = new ArrayList<>();
         addressees.add(student.getUser());
         addressees.addAll(student.getParents().stream().map(Parent::getUser).toList());
@@ -56,7 +57,7 @@ public class NotificationService {
             notification.setSent(LocalDateTime.now());
             notification.setSeen(false);
             notification.setAddressee(addressee);
-            notification.setType(NotificationType.NEW_MARK);
+            notification.setType(type);
             notification.setMark(mark);
             notificationRepository.save(notification);
         }

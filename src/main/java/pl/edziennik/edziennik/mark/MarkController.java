@@ -65,9 +65,9 @@ public class MarkController {
         markObj.setChanged(LocalDateTime.now());
         if (!markId.equals("null")) {
             markObj.setId(Long.parseLong(markId));
-            //@TODO - edit notification
+            notificationService.createAndSendNewMark(markObj, NotificationType.EDITTED_MARK);
         } else {
-            notificationService.createAndSendNewMark(markObj.getStudent(), markObj);
+            notificationService.createAndSendNewMark(markObj, NotificationType.NEW_MARK);
         }
         markRepository.save(markObj);
         return new ResponseEntity<>(true, HttpStatus.OK);
