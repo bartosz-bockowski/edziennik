@@ -11,10 +11,12 @@ import pl.edziennik.edziennik.security.LoggedUser;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Controller
 public class NotificationController {
     private final LoggedUser loggedUser;
     private final MessageSource messageSource;
+
     public NotificationController(LoggedUser loggedUser,
                                   MessageSource messageSource) {
         this.loggedUser = loggedUser;
@@ -23,16 +25,28 @@ public class NotificationController {
 
     @ResponseBody
     @GetMapping("/getNotifications")
-    public List getNotifications(){
+    public List getNotifications() {
         List<Notification> notifications = loggedUser.getUser().getNotifications();
         List<SimpleNotification> result = new ArrayList<>();
-        for(Notification notification : notifications){
+        for (Notification notification : notifications) {
             SimpleNotification simpleNotification = new SimpleNotification();
             switch (notification.getType()) {
                 case NEW_MARK -> {
                     Mark mark = notification.getMark();
-                    simpleNotification.setTitle(messageSource.getMessage("notification.newMark.title",null, LocaleContextHolder.getLocale()));
+                    simpleNotification.setTitle(messageSource.getMessage("notification.newMark.title", null, LocaleContextHolder.getLocale()));
                     simpleNotification.setMessage(messageSource.getMessage("notification.newMark.message", new Object[]{
+                            mark.getTeacher().getFullName(),
+                            mark.getStudent().getFullName(),
+                            mark.getMarkString(),
+                            mark.getMarkCategory().getSubject().getName(),
+                            mark.getMarkCategory().getName()
+                    }, LocaleContextHolder.getLocale()));
+                    simpleNotification.setHref("/mark/history/" + mark.getMarkCategory().getId() + "/" + mark.getStudent().getId());
+                }
+                case EDITTED_MARK -> {
+                    Mark mark = notification.getMark();
+                    simpleNotification.setTitle(messageSource.getMessage("notification.newMark.title", null, LocaleContextHolder.getLocale()));
+                    simpleNotification.setMessage(messageSource.getMessage("notification.edittedMark.message", new Object[]{
                             mark.getTeacher().getFullName(),
                             mark.getStudent().getFullName(),
                             mark.getMarkString(),
