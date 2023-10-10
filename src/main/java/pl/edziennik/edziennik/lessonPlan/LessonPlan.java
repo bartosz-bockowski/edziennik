@@ -30,4 +30,6 @@ public class LessonPlan {
     private SchoolClass schoolClass;
     @ManyToOne
     private Subject subject;
+    @OneToOne(mappedBy = "lesson")
+    private Exam exam;
 }

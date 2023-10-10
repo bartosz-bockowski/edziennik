@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -13,6 +15,8 @@ public class Exam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private LocalDateTime created;
     @OneToOne
     private LessonPlan lesson;
 }

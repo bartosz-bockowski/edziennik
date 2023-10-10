@@ -51,9 +51,18 @@
                     <td>
                             ${lesson.subject.name}<br>
                             ${lesson.classRoom.name}<br>
-                            ${teacher == null ? lesson.teacher.fullNameWithId : lesson.schoolClass.name}
+                            ${teacher == null ? lesson.teacher.fullNameWithId : lesson.schoolClass.name}<br>
                         <c:if test="${isTeacher}">
-                            <a href="/exam/newExam/${lesson.id}"><spring:message code="exam.addExam"/></a>
+                            <c:if test="${lesson.exam == null}">
+                                <a href="/exam/add/${lesson.id}?teacherId=${teacher.id}&date=${date}"><spring:message
+                                        code="exam.addExam"/></a>
+                            </c:if>
+                            <c:if test="${lesson.exam != null}">
+                                <spring:message code="exam.delete.confiramtion" var="confirmation"/>
+                                ${lesson.exam.name} <a class="confirm" msg="${confirmation}"
+                                                       href="/exam/delete/${lesson.exam.id}?teacherId=${teacher.id}&date=${date}"><spring:message
+                                    code="delete"/></a>
+                            </c:if>
                         </c:if>
                     </td>
                 </c:if>
