@@ -17,7 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig{
+public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -29,6 +29,7 @@ public class SecurityConfig{
                 .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll())
                 .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/img/**")).permitAll())
                 .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("admin"))
+                .authorizeHttpRequests((auth) -> auth.requestMatchers(new AntPathRequestMatcher("/exam/**")).hasAuthority("teacher"))
                 .authorizeHttpRequests((auth) -> auth.anyRequest().authenticated())
 //                .authorizeHttpRequests((auth) -> auth.anyRequest().permitAll())
 
@@ -36,6 +37,7 @@ public class SecurityConfig{
                 .formLogin((form) -> form.loginPage("/login").failureUrl("/login?error=true").permitAll());
         return http.build();
     }
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
