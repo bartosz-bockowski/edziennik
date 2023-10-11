@@ -13,6 +13,7 @@ import pl.edziennik.edziennik.teacher.Teacher;
 
 
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -35,9 +36,11 @@ public class Mark {
     @ManyToOne
     private MarkCategory markCategory;
     private LocalDateTime changed;
-    public String getMarkString(){
+    private Boolean active = true;
+
+    public String getMarkString() {
         String result = String.valueOf(this.mark.intValue());
-        if(!this.mark.remainder(new BigDecimal(1)).equals(new BigDecimal("0.00"))){
+        if (!this.mark.remainder(new BigDecimal(1)).equals(new BigDecimal("0.00"))) {
             return result.concat("+");
         }
         return result;

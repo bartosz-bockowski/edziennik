@@ -35,8 +35,9 @@ public class SchoolClass {
     @OneToMany(mappedBy = "schoolClass")
     private List<LessonPlan> lessonPlan;
     private boolean active = true;
-    public BigDecimal getAverageMarkBySubjectId(Long subjectId){
-        List<Mark> marks = this.students.stream().flatMap(student -> student.getMarks().stream()).filter(f -> f.getMarkCategory().getSubject().getId().equals(subjectId)).toList();
+
+    public BigDecimal getAverageMarkBySubjectId(Long subjectId) {
+        List<Mark> marks = this.students.stream().flatMap(student -> student.getMarks().stream()).filter(f -> f.getMarkCategory().getSubject().getId().equals(subjectId) && f.getActive()).toList();
         return new MarkUtils().countAverageOfMarks(marks);
     }
 }

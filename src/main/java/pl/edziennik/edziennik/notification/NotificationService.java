@@ -46,7 +46,7 @@ public class NotificationService {
         }
     }
 
-    public void createAndSendNewMark(Mark mark, NotificationType type) {
+    public void createAndSendNewMark(Mark mark, NotificationType type, String oldMark) {
         Student student = mark.getStudent();
         List<User> addressees = new ArrayList<>();
         addressees.add(student.getUser());
@@ -59,6 +59,9 @@ public class NotificationService {
             notification.setAddressee(addressee);
             notification.setType(type);
             notification.setMark(mark);
+            if (oldMark != null) {
+                notification.setOldMark(oldMark);
+            }
             notificationRepository.save(notification);
         }
     }

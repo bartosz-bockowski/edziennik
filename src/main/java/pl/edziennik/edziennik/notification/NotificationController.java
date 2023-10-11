@@ -49,9 +49,10 @@ public class NotificationController {
                     simpleNotification.setMessage(messageSource.getMessage("notification.edittedMark.message", new Object[]{
                             mark.getTeacher().getFullName(),
                             mark.getStudent().getFullName(),
-                            mark.getMarkString(),
                             mark.getMarkCategory().getSubject().getName(),
-                            mark.getMarkCategory().getName()
+                            mark.getMarkCategory().getName(),
+                            notification.getOldMark(),
+                            notification.getNewMark()
                     }, LocaleContextHolder.getLocale()));
                     simpleNotification.setHref("/mark/history/" + mark.getMarkCategory().getId() + "/" + mark.getStudent().getId());
                 }

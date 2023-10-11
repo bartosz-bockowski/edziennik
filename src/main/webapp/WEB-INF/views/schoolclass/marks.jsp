@@ -11,6 +11,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
+<spring:message code="mark.addedMark" var="addedMark"/>
+<input type="hidden" id="addedMark" value="${addedMark}"/>
+<spring:message code="mark.deleteConfirm" var="removeMarkConfirm"/>
+<input type="hidden" id="removeMarkConfirm" value="${removeMarkConfirm}"/>
 <jsp:include page="../layout/header.jsp"/>
 <a href="/admin/schoolclass/${schoolClass.id}/adminDetails"><spring:message code="schoolClass.schoolClassDetails"/></a>
 <h1><spring:message code="schoolClass.marks"/> ${schoolClass.name}</h1>
@@ -32,7 +36,7 @@
             <th><spring:message code="schoolClass.marks.student"/></th>
             <c:forEach items="${markCategories}" var="category">
                 <th class="marksTableCategoryName">
-                    ${category.name}
+                        ${category.name}
                 </th>
             </c:forEach>
         </tr>
@@ -43,9 +47,9 @@
                 <td>${student.fullName}</td>
                 <c:forEach items="${markCategories}" var="category">
                     <td>
-                    <span ${student.getMarkByMarkCategoryId(category.id) == null ? 'style="display: none;"' : ''}
-                            class="markSpan">${student.getMarkByMarkCategoryId(category.id) == null ? '' : student.getMarkByMarkCategoryId(category.id).mark}</span>
-                        <form ${student.getMarkByMarkCategoryId(category.id) == null ? '' : 'style="display: none;"'}
+                        <span ${!student.checkMark(category.id) ? 'style="display: none;"' : ''}
+                                class="markSpan">${student.checkMark(markCategory.id) ? '' : student.getMarkByMarkCategoryId(category.id).mark}</span>
+                        <form ${!student.checkMark(category.id) ? '' : 'style="display: none;"'}
                                 class="markForm">
                             <input type="hidden" class="markId"
                                    value="${student.getMarkByMarkCategoryId(category.id) == null ? 'null' : student.getMarkByMarkCategoryId(category.id).id}"/>
@@ -54,11 +58,20 @@
                             <input type="hidden" class="subject" name="subject" value="${subject.id}"/>
                             <input type="hidden" class="schoolClass" name="schoolClass" value="${schoolClass.id}"/>
                             <input type="text" class="mark" name="mark"
-                                   value="${student.getMarkByMarkCategoryId(category.id) == null ? '' : student.getMarkByMarkCategoryId(category.id).mark}"/>
+                                   value="${!student.checkMark(category.id) ? '' : student.getMarkByMarkCategoryId(category.id).mark}"/>
                             <button class="markFormSubmit" type="submit"><spring:message code="save"/></button>
                         </form>
                         <div class="markSwitch">X</div>
-                            <a target="_blank" href="/mark/history/${category.id}/${student.id}"><div class="markHistory">X</div></a>
+                        <a target="_blank" href="/mark/history/${category.id}/${student.id}">
+                            <div class="markHistory">X</div>
+                        </a>
+                        <form class="markDeleteForm" method="post">
+                            <input type="hidden" class="schoolClassId" value="${schoolClass.id}"/>
+                            <input type="hidden" class="subjectId" value="${subject.id}"/>
+                            <input type="hidden" class="category" value="${category.id}"/>
+                            <input type="hidden" class="student" value="${student.id}"/>
+                            <button type="submit" class="markHistory deleteButton">D</button>
+                        </form>
                     </td>
                 </c:forEach>
             </tr>

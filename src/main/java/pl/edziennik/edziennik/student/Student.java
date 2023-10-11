@@ -34,21 +34,34 @@ public class Student {
     private int groupInClass;
     @OneToMany(mappedBy = "student")
     private List<Mark> marks;
-    public String getFullName(){
+
+    public String getFullName() {
         return this.firstName + " " + this.lastName;
     }
-    public String getFullNameWithId(){
+
+    public String getFullNameWithId() {
         return firstName + " " + lastName + " (ID: " + id + ")";
     }
-    public Mark getMarkByMarkCategoryId(Long markCategoryId){
+
+    public Mark getMarkByMarkCategoryId(Long markCategoryId) {
         Mark mark = null;
         List<Mark> list = this.marks.stream().filter(p -> p.getMarkCategory().getId().equals(markCategoryId)).toList();
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             mark = list.get(0);
         }
         return mark;
     }
-    public List<Mark> getMarksBySubjectId(Long subjectId){
+
+    public Boolean checkMark(Long markCategoryId) {
+        Mark mark = null;
+        List<Mark> list = this.marks.stream().filter(p -> p.getMarkCategory().getId().equals(markCategoryId)).toList();
+        if (!list.isEmpty()) {
+            mark = list.get(0);
+        }
+        return mark != null && mark.getActive();
+    }
+
+    public List<Mark> getMarksBySubjectId(Long subjectId) {
         return this.marks.stream().filter(p -> Objects.equals(p.getMarkCategory().getSubject().getId(), subjectId)).toList();
     }
 }

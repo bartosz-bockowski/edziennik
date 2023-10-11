@@ -30,4 +30,6 @@ public class Notification {
     private Mark mark;
     @ManyToOne
     private Exam exam;
+    private String newMark;
+    private String oldMark;
 }
