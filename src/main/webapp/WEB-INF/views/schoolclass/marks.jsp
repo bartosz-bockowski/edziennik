@@ -11,6 +11,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
+<input type="hidden" id="schoolClass" value="${schoolClass.id}"/>
+<input type="hidden" id="subject" value="${subject.id}"/>
 <spring:message code="mark.addedMark" var="addedMark"/>
 <input type="hidden" id="addedMark" value="${addedMark}"/>
 <spring:message code="mark.deleteConfirm" var="removeMarkConfirm"/>
@@ -44,6 +46,7 @@
         <tbody>
         <c:forEach items="${schoolClass.students}" var="student">
             <tr>
+                <input type="hidden" id="student" value="${student.id}"/>
                 <td>${student.fullName}</td>
                 <c:forEach items="${markCategories}" var="category">
                     <td>
@@ -53,10 +56,7 @@
                                 class="markForm">
                             <input type="hidden" class="markId"
                                    value="${student.getMarkByMarkCategoryId(category.id) == null ? 'null' : student.getMarkByMarkCategoryId(category.id).id}"/>
-                            <input type="hidden" class="student" name="student" value="${student.id}"/>
                             <input type="hidden" class="markCategory" name="markCategory" value="${category.id}"/>
-                            <input type="hidden" class="subject" name="subject" value="${subject.id}"/>
-                            <input type="hidden" class="schoolClass" name="schoolClass" value="${schoolClass.id}"/>
                             <input type="text" class="mark" name="mark"
                                    value="${!student.checkMark(category.id) ? '' : student.getMarkByMarkCategoryId(category.id).mark}"
                                    required/>
@@ -67,10 +67,7 @@
                             <div class="markHistory">X</div>
                         </a>
                         <form class="markDeleteForm" method="post">
-                            <input type="hidden" class="schoolClassId" value="${schoolClass.id}"/>
-                            <input type="hidden" class="subjectId" value="${subject.id}"/>
                             <input type="hidden" class="category" value="${category.id}"/>
-                            <input type="hidden" class="student" value="${student.id}"/>
                             <button type="submit" class="markHistory deleteButton">D</button>
                         </form>
                     </td>

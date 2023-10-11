@@ -30,12 +30,12 @@ function loadAverage(classId, subjectId) {
 $(".markForm").submit((e) => {
     e.preventDefault()
     let form = $(e.target)
-    let studentId = form.find(".student").val()
+    let studentId = form.parent().parent().find("#student").val()
     let markCategoryId = form.find(".markCategory").val()
     let mark = form.find(".mark").val()
     let markId = form.find(".markId").val()
-    let schoolClassId = form.find(".schoolClass").val()
-    let subjectId = form.find(".subject").val()
+    let schoolClassId = $("#schoolClass").val()
+    let subjectId = $("#subject").val()
     fetch("/mark/add/" + mark + "/" + studentId + "/" + markCategoryId + "/" + markId).then((response) => {
         markClick($(e.target), mark)
         if (response.status === 200) {
@@ -49,9 +49,9 @@ $(".markDeleteForm").submit((e) => {
     e.preventDefault()
     let target = $(e.target)
     if (confirm($("#removeMarkConfirm").val())) {
-        fetch("/mark/delete/" + target.find(".category").val() + "/" + target.find(".student").val()).then(() => {
+        fetch("/mark/delete/" + target.find(".category").val() + "/" + target.parent().parent().find("#student").val()).then(() => {
             markClick(target, "0")
-            loadAverage(target.find(".schoolClassId").val(), target.find(".subjectId").val())
+            loadAverage($("#schoolClass").val(), $("#subject").val())
         })
     }
 })
