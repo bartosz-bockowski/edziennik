@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 import pl.edziennik.edziennik.schoolClass.SchoolClass;
 import pl.edziennik.edziennik.security.user.User;
@@ -11,6 +12,7 @@ import pl.edziennik.edziennik.security.user.User;
 import jakarta.persistence.*;
 import pl.edziennik.edziennik.subject.Subject;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,14 +38,21 @@ public class Teacher {
     private boolean active = true;
     @ManyToMany(mappedBy = "teachers")
     List<Subject> subjects;
-    public String getFullName(){
+
+    public String getFullName() {
         return firstName + " " + lastName;
     }
-    public String getFullNameWithId(){
+
+    public String getFullNameWithId() {
         return firstName + " " + lastName + " (ID: " + id + ")";
     }
-    public void removeSupervisedSchoolClass(SchoolClass schoolClass){
+
+    public void removeSupervisedSchoolClass(SchoolClass schoolClass) {
         schoolClass.getSupervisingTeachers().remove(this);
         this.supervisedClasses.remove(schoolClass);
+    }
+
+    public Boolean isFree(LessonHour hour, LocalDate date) {
+        return this.lessons.stream().noneMatch(f -> f.getLessonHour().getId().equals(hour.getId()) && f.getDate().equals(date));
     }
 }

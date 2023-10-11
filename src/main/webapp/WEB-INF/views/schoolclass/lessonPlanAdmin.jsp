@@ -12,6 +12,14 @@
 <html>
 <body>
 <jsp:include page="../layout/header.jsp"/>
+<input type="hidden" name="teacherNotFree" value="${teacherNotFree}"/>
+<input type="hidden" name="classRoomNotFree" value="${classRoomNotFree}"/>
+<c:if test="${teacherNotFree != null}">
+    <h3 style="color: red;"><spring:message code="lessonPlan.teacherNotFree"/></h3>
+</c:if>
+<c:if test="${classRoomNotFree != null}">
+    <h3 style="color: red;"><spring:message code="lessonPlan.classRoomNotFree"/></h3>
+</c:if>
 <h1><spring:message code="lessonPlan.ofClass"/> ${schoolClass.name}</h1>
 <table class="lessonPlanTable centerBlock">
     <thead>
