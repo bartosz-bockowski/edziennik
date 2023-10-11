@@ -22,7 +22,6 @@ function loadAverage(classId, subjectId) {
     let url = "/schoolclass/" + classId + "/getAverageMarkBySubjectId/" + subjectId
     fetch(url).then(response2 => {
         response2.text().then(response2 => {
-            alert($("#addedMark").val())
             $(".subjectClassAverage").text(response2)
         })
     })
@@ -41,17 +40,18 @@ $(".markFormSubmit").click((e) => {
         markClick($(e.target).parent(), mark)
         if (response.status === 200) {
             loadAverage(schoolClassId, subjectId)
+            alert($("#addedMark").val())
         }
     })
 })
 
-$(".deleteButton").click((e) => {
+$(".markDeleteForm").submit((e) => {
     e.preventDefault()
     let target = $(e.target)
     if (confirm($("#removeMarkConfirm").val())) {
-        fetch("/mark/delete/" + target.parent().find(".category").val() + "/" + target.parent().find(".student").val()).then(() => {
-            markClick(target.parent(), "0")
-            loadAverage(target.parent().find(".schoolClassId").val(), target.parent().find(".subjectId").val())
+        fetch("/mark/delete/" + target.find(".category").val() + "/" + target.find(".student").val()).then(() => {
+            markClick(target, "0")
+            loadAverage(target.find(".schoolClassId").val(), target.find(".subjectId").val())
         })
     }
 })
