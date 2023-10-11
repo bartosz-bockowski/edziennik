@@ -17,6 +17,7 @@ import pl.edziennik.edziennik.security.LoggedUser;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 import pl.edziennik.edziennik.teacher.TeacherRepository;
 
+import java.lang.instrument.Instrumentation;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -36,6 +37,7 @@ public class SchoolClassController {
     private final MarkCategoryRepository markCategoryRepository;
     private final LoggedUser loggedUser;
     private final LessonPlanService lessonPlanService;
+
     public SchoolClassController(SchoolClassRepository schoolClassRepository,
                                  LessonPlanRepository lessonPlanRepository,
                                  LessonHourRepository lessonHourRepository,
@@ -57,47 +59,49 @@ public class SchoolClassController {
     }
 
     @GetMapping("/{classId}/lessonPlan")
-    public String lessonPlan(Model model, @RequestParam(value = "date", required = false) LocalDate date, @PathVariable Long classId){
-        model.addAttribute("schoolClass",schoolClassRepository.getReferenceById(classId));
-        if(!loggedUser.hasAccessToSchoolClass(classId)){
+    public String lessonPlan(Model model, @RequestParam(value = "date", required = false) LocalDate date, @PathVariable Long classId) {
+        model.addAttribute("schoolClass", schoolClassRepository.getReferenceById(classId));
+        if (!loggedUser.hasAccessToSchoolClass(classId)) {
             return "error/403";
         }
-        if(date == null){
+        if (date == null) {
             date = LocalDate.now().minusDays(LocalDate.now().getDayOfWeek().getValue() - 1);
         } else {
             date = date.minusDays(date.getDayOfWeek().getValue() - 1);
         }
         List<LocalDate> dates = new ArrayList<>();
         dates.add(date);
-        for(int i = 1; i < 5; i++){
+        for (int i = 1; i < 5; i++) {
             dates.add(date.plusDays(i));
         }
         List<LessonPlan> lessons = lessonPlanRepository.getAllBySchoolClassIdAndDateIn(classId, dates);
-        model.addAttribute("lessons",lessons);
+        model.addAttribute("lessons", lessons);
         List<LessonHour> hours = lessonHourRepository.findAllByActiveTrueOrderByStartAsc();
-        model.addAttribute("hours",hours);
-        List<List<LessonPlan>> plan = lessonPlanService.getPlan(hours,lessons,date);
-        model.addAttribute("plan",plan);
-        model.addAttribute("date",date);
+        model.addAttribute("hours", hours);
+        List<List<LessonPlan>> plan = lessonPlanService.getPlan(hours, lessons, date);
+        model.addAttribute("plan", plan);
+        model.addAttribute("date", date);
         model.addAttribute("dateFormatter", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        if(LoggedUser.isAdmin()){
-            model.addAttribute("subjects",subjectRepository.findAll());
-            model.addAttribute("teachers",teacherRepository.findAll());
-            model.addAttribute("classRooms",classRoomRepository.findAll());
+        if (LoggedUser.isAdmin()) {
+            model.addAttribute("subjects", subjectRepository.findAll());
+            model.addAttribute("teachers", teacherRepository.findAll());
+            model.addAttribute("classRooms", classRoomRepository.findAll());
             return "schoolclass/lessonPlanAdmin";
         }
         return "schoolclass/lessonPlan";
     }
+
     @GetMapping("/{classId}/marks/{subjectId}")
-    public String marks(@PathVariable Long classId, @PathVariable Long subjectId, Model model){
-        model.addAttribute("schoolClass",schoolClassRepository.getReferenceById(classId));
-        model.addAttribute("markCategories",markCategoryRepository.findAllBySchoolClassIdAndSubjectId(classId, subjectId));
-        model.addAttribute("subject",subjectRepository.getReferenceById(subjectId));
-        model.addAttribute("markCategory",new MarkCategory());
+    public String marks(@PathVariable Long classId, @PathVariable Long subjectId, Model model) {
+        model.addAttribute("schoolClass", schoolClassRepository.getReferenceById(classId));
+        model.addAttribute("markCategories", markCategoryRepository.findAllBySchoolClassIdAndSubjectId(classId, subjectId));
+        model.addAttribute("subject", subjectRepository.getReferenceById(subjectId));
+        model.addAttribute("markCategory", new MarkCategory());
         return "schoolclass/marks";
     }
+
     @GetMapping("/{schoolClassId}/getAverageMarkBySubjectId/{subjectId}")
-    public ResponseEntity<String> getAvMark(@PathVariable Long schoolClassId, @PathVariable Long subjectId){
+    public ResponseEntity<String> getAvMark(@PathVariable Long schoolClassId, @PathVariable Long subjectId) {
         BigDecimal val = schoolClassRepository.getReferenceById(schoolClassId).getAverageMarkBySubjectId(subjectId);
         String result = val.setScale(2, RoundingMode.DOWN).toString();
         return new ResponseEntity<>(result, HttpStatus.OK);

@@ -44,9 +44,9 @@ public class LessonPlanAdminController {
                                @RequestParam(required = false) Long classRoom,
                                @RequestParam(required = false) Long lessonHour,
                                @RequestParam(required = false) LocalDate date,
-                               @RequestParam(required = false) String redirect){
+                               @RequestParam(required = false) String redirect) {
         LessonPlan lesson;
-        if(id == null){
+        if (id == null) {
             lesson = new LessonPlan();
         } else {
             lesson = lessonPlanRepository.getReferenceById(id);
@@ -58,13 +58,6 @@ public class LessonPlanAdminController {
         lesson.setLessonHour(lessonHourRepository.getReferenceById(lessonHour));
         lesson.setDate(date);
         lessonPlanRepository.save(lesson);
-        Long returnId = 0L;
-        if(redirect.equals("teacher")){
-            returnId = lesson.getTeacher().getId();
-        }
-        if(redirect.equals("schoolclass")){
-            returnId = lesson.getSchoolClass().getId();
-        }
-        return "redirect:/" + redirect + "/" + returnId +"/lessonPlan?date=" + date;
+        return "redirect:/schoolclass/" + lesson.getSchoolClass().getId() + "/lessonPlan?date=" + date;
     }
 }
