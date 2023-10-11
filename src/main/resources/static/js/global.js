@@ -1,16 +1,11 @@
 $(document).ready(() => {
-    function presentMsg(msg) {
-        return msg !== "" && msg !== null && msg !== undefined
-    }
-
     $(".confirm").click((e) => {
-        let target = $(e.target)
-        let msgTarget = target.attr("msg")
-        let msgParent = target.parent().attr("msg")
-        if (presentMsg(msgTarget)) {
-            return confirm(msgTarget)
-        } else if (presentMsg(msgParent)) {
-            return confirm(msgParent)
+        return confirm($(e.target).attr("msg"))
+    })
+    $(".confirmForm").one("submit", (e) => {
+        e.preventDefault()
+        if (confirm($(e.target).attr("msg"))) {
+            $(e.target).submit()
         }
     })
     $(".selectpicker").selectpicker()

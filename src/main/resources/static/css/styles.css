@@ -1,41 +1,52 @@
-body{
+body {
     text-align: center;
     margin: 0;
     padding: 0;
 }
-a{
+
+a {
     color: black;
 }
-a:hover{
+
+a:hover {
     color: black;
 }
-.centerBlock{
+
+.centerBlock {
     margin-left: auto;
     margin-right: auto;
 }
-table{
+
+table {
     border-collapse: collapse;
 }
-table, th, td{
+
+table, th, td {
     border: 1px solid black;
 }
-th, td{
+
+th, td {
     padding: 3px;
 }
-td > a{
+
+td > a {
     margin-right: 10px;
 }
-thead{
+
+thead {
     border: 1px solid black;
     text-align: left;
 }
-.mainTable{
+
+.mainTable {
     margin-top: 20px;
 }
-.mainTable td, .mainTable th{
+
+.mainTable td, .mainTable th {
     padding: 5px;
 }
-.basicListTable a{
+
+.basicListTable a {
     display: block;
     float: left;
     height: 100%;
@@ -44,35 +55,43 @@ thead{
     color: white;
     border-radius: 3px;
 }
-.basicListTable a:hover{
+
+.basicListTable a:hover {
     text-decoration: none;
     color: white;
     background: #1373cc;
 }
-#headerMainDiv, #footerMainDiv{
+
+#headerMainDiv, #footerMainDiv {
     display: block;
     font-weight: 500;
     width: 100%;
     height: 50px;
     line-height: 50px;
 }
-#headerMainDiv{
+
+#headerMainDiv {
     border-bottom: 1px solid black;
 }
-#headerMainDiv #rightDiv{
+
+#headerMainDiv #rightDiv {
     float: right;
 }
-#headerMainDiv #rightDiv *{
+
+#headerMainDiv #rightDiv * {
     float: left;
 }
+
 #headerMainDiv form button {
     height: 100%;
     line-height: 45px;
 }
-.headerOption{
+
+.headerOption {
     float: left;
 }
-.headerOption{
+
+.headerOption {
     display: block;
     text-decoration: none;
     float: left;
@@ -80,64 +99,80 @@ thead{
     padding-right: 10px;
     color: black;
 }
-.headerOption:hover{
+
+.headerOption:hover {
     text-decoration: underline;
     color: #80ceff;
 }
-.mainHeaderOption{
+
+.mainHeaderOption {
     font-weight: 900;
 }
+
 #footerMainDiv {
     bottom: 0;
     position: fixed;
     left: 0;
     border-top: 1px solid black;
 }
-.formTable{
+
+.formTable {
     width: 360px;
     border-collapse: collapse;
     border: 0;
     table-layout: fixed;
 }
+
 .formTable > tbody > tr > td {
     border: 0;
 }
-.formTableNameCell{
+
+.formTableNameCell {
     text-align: right;
     border: 0;
 }
-.formTableErrorCell{
+
+.formTableErrorCell {
     background: red;
     word-wrap: break-word;
 }
-.formTableErrorRow{
+
+.formTableErrorRow {
 }
-.backgroundRedError{
+
+.backgroundRedError {
     background: red;
 }
-.buttonA{
+
+.buttonA {
     display: block;
 }
-input,button{
+
+input, button {
     color: black !important;
 }
-.lessonPlanTable td{
+
+.lessonPlanTable td {
     text-align: center;
     padding: 10px;
 }
-.nullLessonTd{
-    background: orange;
+
+.nullLessonTd {
+    background: #ffdb9f;
 }
-.presentLessonTd{
-    background: green;
+
+.presentLessonTd {
+    background: #b0ffb0;
 }
-.marksTable tbody td{
+
+.marksTable tbody td {
     position: relative;
     height: 60px;
     width: 20%;
     min-width: 400px;
 }
-.marksTable .markSwitch, .marksTable .markHistory{
+
+.marksTable .markSwitch, .marksTable .markHistory {
     position: absolute;
     top: 0;
     right: 0;
@@ -148,31 +183,38 @@ input,button{
     background: #eaeaea;
     color: red;
 }
-.marksTable .markSwitch:hover, .marksTable .markHistory:hover{
+
+.marksTable .markSwitch:hover, .marksTable .markHistory:hover {
     background: grey;
     cursor: pointer;
     user-select: none;
 }
-.marksTable .markHistory{
+
+.marksTable .markHistory {
     color: blue;
     right: 25px;
     border-right: 1px solid black;
 }
-.marksTableDiv{
+
+.marksTableDiv {
     width: 100%;
     overflow-x: auto;
     overflow-y: visible;
 }
-.noBorderTable{
+
+.noBorderTable {
     border: 0;
 }
-.noBorderTable *{
+
+.noBorderTable * {
     border: 0;
 }
-.paddingTable *{
+
+.paddingTable * {
     padding: 3px;
 }
-.markDiv{
+
+.markDiv {
     width: 600px;
     height: 80px;
     line-height: 50px;
@@ -186,27 +228,33 @@ input,button{
     color: white;
     margin-top: 10px;
 }
-.markDiv span{
+
+.markDiv span {
     float: right;
     font-size: 18px;
     margin-right: 40px;
 }
-.markHref:hover{
+
+.markHref:hover {
     text-decoration: none;
 }
-.notificationsButtonParent{
+
+.notificationsButtonParent {
     position: relative;
     margin-right: 5px;
 }
-.notificationsButton{
+
+.notificationsButton {
     height: 100%;
     width: 50px;
     background: #d9d9d9;
 }
-.notificationsButton:hover{
+
+.notificationsButton:hover {
     cursor: pointer;
 }
-.notificationsList{
+
+.notificationsList {
     overflow-y: scroll;
     width: 230px;
     height: 400px;
@@ -217,7 +265,8 @@ input,button{
     background: #d9d9d9;
     box-shadow: 0 0 3px 0 black;
 }
-.notificationOnList{
+
+.notificationOnList {
     width: 100%;
     height: 100px;
     line-height: 15px;
@@ -225,17 +274,21 @@ input,button{
     text-align: left;
     border-top: 1px solid black;
 }
-.notificationOnListTitle{
+
+.notificationOnListTitle {
     font-weight: 900;
 }
-.notificationListHeader, .noNotificationsDiv{
+
+.notificationListHeader, .noNotificationsDiv {
     padding: 5px;
     width: 100%;
     text-align: center;
 }
-.notificationListHeader{
+
+.notificationListHeader {
     font-weight: 900;
 }
-.thick{
+
+.thick {
     font-weight: 900;
 }

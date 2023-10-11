@@ -75,7 +75,7 @@
                         <spring:message code="subject"/><br/>
                         <spring:message code="none" var="none"/>
                         <select ${lesson == null ? 'title="'.concat(none).concat('" ') : ''}class="selectpicker"
-                                data-live-search="true" name="subject">
+                                data-live-search="true" name="subject" required>
                             <c:forEach items="${subjects}" var="subject">
                                 <option value="${subject.id}"${subject.id == lesson.subject.id ? ' selected' : ''}>${subject.name}</option>
                             </c:forEach>
@@ -83,7 +83,7 @@
                         <br/>
                         <spring:message code="teacher"/><br/>
                         <select ${lesson == null ? 'title="'.concat(none).concat('" ') : ''}class="selectpicker"
-                                data-live-search="true" name="teacher">
+                                data-live-search="true" name="teacher" required>
                             <c:forEach items="${teachers}" var="teacher">
                                 <option value="${teacher.id}"${teacher.id == lesson.teacher.id ? ' selected' : ''}>${teacher.getFullName()}</option>
                             </c:forEach>
@@ -91,7 +91,7 @@
                         <br/>
                         <spring:message code="classRoom"/><br/>
                         <select ${lesson == null ? 'title="'.concat(none).concat('" ') : ''}class="selectpicker"
-                                data-live-search="true" name="classRoom">
+                                data-live-search="true" name="classRoom" required>
                             <c:forEach items="${classRooms}" var="classRoom">
                                 <option value="${classRoom.id}"${classRoom.id == lesson.classRoom.id ? ' selected' : ''}>${classRoom.name}</option>
                             </c:forEach>
@@ -100,7 +100,7 @@
                     </form>
                     <c:if test="${lesson != null}">
                         <spring:message code="lessonPlan.confirm.delete" var="msgDelete"/>
-                        <form msg="${msgDelete}" class="confirm" method="get"
+                        <form msg="${msgDelete}" class="confirmForm" method="get"
                               action="/admin/schoolclass/${lesson.id}/removeLesson">
                             <input type="hidden" name="date" value="${date}"/>
                             <button type="submit"><spring:message code="remove"/></button>
