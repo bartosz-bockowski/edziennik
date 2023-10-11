@@ -27,9 +27,9 @@ function loadAverage(classId, subjectId) {
     })
 }
 
-$(".markFormSubmit").click((e) => {
+$(".markForm").submit((e) => {
     e.preventDefault()
-    let form = $(e.target).parent()
+    let form = $(e.target)
     let studentId = form.find(".student").val()
     let markCategoryId = form.find(".markCategory").val()
     let mark = form.find(".mark").val()
@@ -37,7 +37,7 @@ $(".markFormSubmit").click((e) => {
     let schoolClassId = form.find(".schoolClass").val()
     let subjectId = form.find(".subject").val()
     fetch("/mark/add/" + mark + "/" + studentId + "/" + markCategoryId + "/" + markId).then((response) => {
-        markClick($(e.target).parent(), mark)
+        markClick($(e.target), mark)
         if (response.status === 200) {
             loadAverage(schoolClassId, subjectId)
             alert($("#addedMark").val())

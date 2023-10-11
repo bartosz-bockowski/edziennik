@@ -58,7 +58,8 @@
                             <input type="hidden" class="subject" name="subject" value="${subject.id}"/>
                             <input type="hidden" class="schoolClass" name="schoolClass" value="${schoolClass.id}"/>
                             <input type="text" class="mark" name="mark"
-                                   value="${!student.checkMark(category.id) ? '' : student.getMarkByMarkCategoryId(category.id).mark}"/>
+                                   value="${!student.checkMark(category.id) ? '' : student.getMarkByMarkCategoryId(category.id).mark}"
+                                   required/>
                             <button class="markFormSubmit" type="submit"><spring:message code="save"/></button>
                         </form>
                         <div class="markSwitch">X</div>
