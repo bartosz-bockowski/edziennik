@@ -26,39 +26,6 @@ public class NotificationController {
     @ResponseBody
     @GetMapping("/getNotifications")
     public List getNotifications() {
-        List<Notification> notifications = loggedUser.getUser().getNotifications();
-        List<SimpleNotification> result = new ArrayList<>();
-        for (Notification notification : notifications) {
-            SimpleNotification simpleNotification = new SimpleNotification();
-            switch (notification.getType()) {
-                case NEW_MARK -> {
-                    Mark mark = notification.getMark();
-                    simpleNotification.setTitle(messageSource.getMessage("notification.newMark.title", null, LocaleContextHolder.getLocale()));
-                    simpleNotification.setMessage(messageSource.getMessage("notification.newMark.message", new Object[]{
-                            mark.getTeacher().getFullName(),
-                            mark.getStudent().getFullName(),
-                            mark.getMarkString(),
-                            mark.getMarkCategory().getSubject().getName(),
-                            mark.getMarkCategory().getName()
-                    }, LocaleContextHolder.getLocale()));
-                    simpleNotification.setHref("/mark/history/" + mark.getMarkCategory().getId() + "/" + mark.getStudent().getId());
-                }
-                case EDITTED_MARK -> {
-                    Mark mark = notification.getMark();
-                    simpleNotification.setTitle(messageSource.getMessage("notification.newMark.title", null, LocaleContextHolder.getLocale()));
-                    simpleNotification.setMessage(messageSource.getMessage("notification.edittedMark.message", new Object[]{
-                            mark.getTeacher().getFullName(),
-                            mark.getStudent().getFullName(),
-                            mark.getMarkCategory().getSubject().getName(),
-                            mark.getMarkCategory().getName(),
-                            notification.getOldMark(),
-                            notification.getNewMark()
-                    }, LocaleContextHolder.getLocale()));
-                    simpleNotification.setHref("/mark/history/" + mark.getMarkCategory().getId() + "/" + mark.getStudent().getId());
-                }
-            }
-            result.add(simpleNotification);
-        }
-        return result;
+        return new ArrayList();
     }
 }

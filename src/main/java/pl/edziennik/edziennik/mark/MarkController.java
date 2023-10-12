@@ -71,12 +71,6 @@ public class MarkController {
             f = true;
         }
         markRepository.save(markObj);
-        if (f) {
-            String oldMark = markRepository.getReferenceById(markObj.getId()).getMarkString();
-            notificationService.createAndSendNewMark(markObj, NotificationType.EDITTED_MARK, oldMark);
-        } else {
-            notificationService.createAndSendNewMark(markObj, NotificationType.NEW_MARK, null);
-        }
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 

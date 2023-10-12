@@ -44,13 +44,14 @@ public class ExamController {
         }
         exam.setCreated(LocalDateTime.now());
         examRepository.save(exam);
-        notificationService.createAndSendNewExam(exam);
         return "redirect:/teacher/" + teacherId + "/lessonPlan?date=" + date;
     }
 
     @GetMapping("/delete/{examId}")
     public String delete(@PathVariable Long examId, @RequestParam Long teacherId, @RequestParam String date) {
-        examRepository.deleteById(examId);
+        Exam exam = examRepository.getReferenceById(examId);
+        exam.setActive(false);
+        examRepository.save(exam);
         return "redirect:/teacher/" + teacherId + "/lessonPlan?date=" + date;
     }
 }

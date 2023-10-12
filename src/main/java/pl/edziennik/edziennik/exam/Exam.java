@@ -19,4 +19,5 @@ public class Exam {
     private LocalDateTime created;
     @OneToOne
     private LessonPlan lesson;
+    private Boolean active = true;
 }

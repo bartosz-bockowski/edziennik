@@ -3,6 +3,7 @@ package pl.edziennik.edziennik.notification;
 import lombok.Getter;
 import lombok.Setter;
 import pl.edziennik.edziennik.exam.Exam;
+import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 import pl.edziennik.edziennik.mark.Mark;
 import pl.edziennik.edziennik.security.user.User;
 import pl.edziennik.edziennik.teacher.Teacher;
@@ -21,15 +22,11 @@ public class Notification {
     private Long id;
     @ManyToOne
     private User sender;
-    @ManyToOne
-    private User addressee;
     private NotificationType type;
     private LocalDateTime sent;
     private Boolean seen;
-    @ManyToOne
-    private Mark mark;
-    @ManyToOne
-    private Exam exam;
-    private String newMark;
-    private String oldMark;
+    private String title;
+    private String message;
+    @ManyToMany
+    private List<User> addressees;
 }
