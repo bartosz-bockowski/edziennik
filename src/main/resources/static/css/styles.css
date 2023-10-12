@@ -259,6 +259,7 @@ input, button {
     width: 230px;
     height: 400px;
     position: absolute;
+    z-index: 5;
     display: none;
     right: 0;
     top: 50px;
