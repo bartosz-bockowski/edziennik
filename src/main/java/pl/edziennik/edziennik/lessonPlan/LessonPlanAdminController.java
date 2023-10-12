@@ -1,5 +1,7 @@
 package pl.edziennik.edziennik.lessonPlan;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,11 +11,14 @@ import pl.edziennik.edziennik.classRoom.ClassRoomRepository;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.lessonHour.LessonHourRepository;
 import pl.edziennik.edziennik.schoolClass.SchoolClassRepository;
+import pl.edziennik.edziennik.subject.Subject;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 import pl.edziennik.edziennik.teacher.Teacher;
 import pl.edziennik.edziennik.teacher.TeacherRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/lessonplan")
@@ -60,9 +65,9 @@ public class LessonPlanAdminController {
         boolean teacherFree = (id != null && teacherObj.getId().equals(lesson.getTeacher().getId())) || (id == null && teacherObj.isFree(lessonHour1, date));
         lesson.setTeacher(teacherObj);
 
-        ClassRoom classRommObj = classRoomRepository.getReferenceById(classRoom);
-        boolean classRoomFree = (id != null && classRommObj.getId().equals(lesson.getClassRoom().getId())) || (id == null && classRommObj.isFree(lessonHour1, date));
-        lesson.setClassRoom(classRommObj);
+        ClassRoom classRoomObj = classRoomRepository.getReferenceById(classRoom);
+        boolean classRoomFree = (id != null && classRoomObj.getId().equals(lesson.getClassRoom().getId())) || (id == null && classRoomObj.isFree(lessonHour1, date));
+        lesson.setClassRoom(classRoomObj);
 
         lesson.setClassRoom(classRoomRepository.getReferenceById(classRoom));
         lesson.setSchoolClass(schoolClassRepository.getReferenceById(classId));
@@ -79,5 +84,47 @@ public class LessonPlanAdminController {
             params.append("&classRoomNotFree=1");
         }
         return "redirect:/schoolclass/" + lesson.getSchoolClass().getId() + "/lessonPlan?date=" + date + params;
+    }
+
+    @GetMapping("/validateLesson")
+    public ResponseEntity<List<Integer>> validateLesson(@RequestParam(required = false) Long id,
+                                                        @RequestParam Long teacher,
+                                                        @RequestParam Long classRoom,
+                                                        @RequestParam Long subject,
+                                                        @RequestParam Long lessonHour,
+                                                        @RequestParam LocalDate date) {
+        LessonPlan lesson;
+        if (id == null) {
+            lesson = new LessonPlan();
+        } else {
+            lesson = lessonPlanRepository.getReferenceById(id);
+        }
+        LessonHour lessonHour1 = lessonHourRepository.getReferenceById(lessonHour);
+
+        Teacher teacherObj = teacherRepository.getReferenceById(teacher);
+        boolean teacherChange = id != null && !teacherObj.getId().equals(lesson.getTeacher().getId());
+        boolean teacherFree = (id != null && teacherObj.getId().equals(lesson.getTeacher().getId())) || (id == null && teacherObj.isFree(lessonHour1, date));
+
+        ClassRoom classRoomObj = classRoomRepository.getReferenceById(classRoom);
+        boolean classRoomChange = id != null && !classRoomObj.getId().equals(lesson.getClassRoom().getId());
+        boolean classRoomFree = (id != null && classRoomObj.getId().equals(lesson.getClassRoom().getId())) || (id == null && classRoomObj.isFree(lessonHour1, date));
+
+        Subject subjectObj = subjectRepository.getReferenceById(subject);
+        boolean subjectChange = id != null && !subjectObj.getId().equals(lesson.getSubject().getId());
+
+        List<Integer> response = new ArrayList<>();
+        if (id != null && !teacherChange && !classRoomChange && !subjectChange) {
+            response.add(0);
+        } else if (teacherFree && classRoomFree) {
+            response.add(1);
+        } else {
+            if (!teacherFree) {
+                response.add(2);
+            }
+            if (!classRoomFree) {
+                response.add(3);
+            }
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

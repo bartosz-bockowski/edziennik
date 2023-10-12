@@ -67,7 +67,7 @@
             <c:forEach items="${hour}" var="lesson" varStatus="hourLoop">
                 <td class="${lesson == null ? 'null' : 'present'}LessonTd">
                     <br/>
-                    <form method="get" action="/admin/lessonplan/updateLesson?date=${date}">
+                    <form method="get" action="/admin/lessonplan/updateLesson?date=${date}" class="lessonAddForm">
                         <input type="hidden" name="id" value="${lesson.id}"/>
                         <input type="hidden" name="classId" value="${schoolClass.id}"/>
                         <input type="hidden" name="lessonHour" value="${hours.get(loop.index).id}"/>
@@ -112,6 +112,7 @@
     </c:forEach>
     </tbody>
 </table>
+<script src="${pageContext.request.contextPath}/js/lessonPlanAdmin.js"></script>
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>
