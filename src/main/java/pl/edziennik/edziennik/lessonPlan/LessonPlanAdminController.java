@@ -77,13 +77,7 @@ public class LessonPlanAdminController {
         if (teacherFree && classRoomFree) {
             lessonPlanRepository.save(lesson);
         }
-        if (!teacherFree) {
-            params.append("&teacherNotFree=1");
-        }
-        if (!classRoomFree) {
-            params.append("&classRoomNotFree=1");
-        }
-        return "redirect:/schoolclass/" + lesson.getSchoolClass().getId() + "/lessonPlan?date=" + date + params;
+        return "redirect:/schoolclass/" + lesson.getSchoolClass().getId() + "/lessonPlan?date=" + date;
     }
 
     @GetMapping("/validateLesson")
