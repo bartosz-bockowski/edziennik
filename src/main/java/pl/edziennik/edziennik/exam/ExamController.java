@@ -7,8 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.lessonPlan.LessonPlanRepository;
 
-import pl.edziennik.edziennik.notification.NotificationService;
-
 import java.time.LocalDateTime;
 
 @Controller
@@ -16,14 +14,11 @@ import java.time.LocalDateTime;
 public class ExamController {
     private final ExamRepository examRepository;
     private final LessonPlanRepository lessonPlanRepository;
-    private final NotificationService notificationService;
 
     public ExamController(ExamRepository examRepository,
-                          LessonPlanRepository lessonPlanRepository,
-                          NotificationService notificationService) {
+                          LessonPlanRepository lessonPlanRepository) {
         this.examRepository = examRepository;
         this.lessonPlanRepository = lessonPlanRepository;
-        this.notificationService = notificationService;
     }
 
     @GetMapping("/add/{lessonId}")

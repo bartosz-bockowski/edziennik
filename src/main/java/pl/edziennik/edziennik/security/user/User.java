@@ -45,6 +45,4 @@ public class User {
     @Email
     private String email;
     private String phoneNumber;
-    @ManyToMany(mappedBy = "addressees")
-    private List<Notification> notifications;
 }
