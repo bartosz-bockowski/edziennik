@@ -7,6 +7,7 @@ import org.hibernate.envers.RelationTargetAuditMode;
 import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 
 import jakarta.persistence.*;
+import pl.edziennik.edziennik.teacher.Teacher;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +22,8 @@ public class Exam {
     private Long id;
     private String name;
     private LocalDateTime created;
+    @ManyToOne
+    private Teacher teacher;
     @ManyToOne
     private LessonPlan lesson;
     private Boolean active = true;

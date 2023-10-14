@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum NotificationType {
     NEW_MARK("newMark"),
     NEW_EXAM("newExam"),
-    EDITTED_MARK("edittedMark");
+    EDITED_MARK("edittedMark"),
+    CANCELLED_EXAM("cancelledMark");
 
     NotificationType(String messagePart) {
         this.messagePart = messagePart;

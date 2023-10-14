@@ -7,20 +7,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 import pl.edziennik.edziennik.lessonPlan.LessonPlanRepository;
+import pl.edziennik.edziennik.security.LoggedUser;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Controller
 @RequestMapping("/exam")
 public class ExamController {
     private final ExamRepository examRepository;
     private final LessonPlanRepository lessonPlanRepository;
+    private final LoggedUser loggedUser;
 
     public ExamController(ExamRepository examRepository,
-                          LessonPlanRepository lessonPlanRepository) {
+                          LessonPlanRepository lessonPlanRepository,
+                          LoggedUser loggedUser) {
         this.examRepository = examRepository;
         this.lessonPlanRepository = lessonPlanRepository;
+        this.loggedUser = loggedUser;
     }
 
     @GetMapping("/add/{lessonId}")
@@ -39,6 +42,7 @@ public class ExamController {
             model.addAttribute("exam", exam);
             return "exam/add";
         }
+        exam.setTeacher(loggedUser.getUser().getTeacher());
         exam.setCreated(LocalDateTime.now());
         LessonPlan lessonPlan = exam.getLesson();
         examRepository.save(exam);
@@ -48,6 +52,7 @@ public class ExamController {
     @GetMapping("/delete/{examId}")
     public String delete(@PathVariable Long examId, @RequestParam Long teacherId, @RequestParam String date) {
         Exam exam = examRepository.getReferenceById(examId);
+        exam.setTeacher(loggedUser.getUser().getTeacher());
         exam.setActive(false);
         examRepository.save(exam);
         return "redirect:/teacher/" + teacherId + "/lessonPlan?date=" + date;

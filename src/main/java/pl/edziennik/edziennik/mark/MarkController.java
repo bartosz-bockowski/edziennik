@@ -68,6 +68,12 @@ public class MarkController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/history")
+    public String idHistory(@PathVariable Long id) {
+        Mark mark = markRepository.getReferenceById(id);
+        return "redirect:/mark/history/" + mark.getMarkCategory().getId() + "/" + mark.getStudent().getId();
+    }
+
     @GetMapping("/history/{categoryId}/{studentId}")
     public String history(@PathVariable Long categoryId, @PathVariable Long studentId, Model model) {
         Student student = studentRepository.getReferenceById(studentId);

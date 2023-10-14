@@ -81,6 +81,7 @@ public class SchoolClassController {
         List<List<LessonPlan>> plan = lessonPlanService.getPlan(hours, lessons, date);
         model.addAttribute("plan", plan);
         model.addAttribute("date", date);
+        model.addAttribute("isStudent", loggedUser.getUser().getStudent() != null);
         model.addAttribute("dateFormatter", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         if (LoggedUser.isAdmin()) {
             model.addAttribute("subjects", subjectRepository.findAll());
