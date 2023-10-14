@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 import pl.edziennik.edziennik.lessonPlan.LessonPlanRepository;
-
-import pl.edziennik.edziennik.notification.NotificationService;
+import pl.edziennik.edziennik.security.LoggedUser;
 
 import java.time.LocalDateTime;
 
@@ -16,14 +16,14 @@ import java.time.LocalDateTime;
 public class ExamController {
     private final ExamRepository examRepository;
     private final LessonPlanRepository lessonPlanRepository;
-    private final NotificationService notificationService;
+    private final LoggedUser loggedUser;
 
     public ExamController(ExamRepository examRepository,
                           LessonPlanRepository lessonPlanRepository,
-                          NotificationService notificationService) {
+                          LoggedUser loggedUser) {
         this.examRepository = examRepository;
         this.lessonPlanRepository = lessonPlanRepository;
-        this.notificationService = notificationService;
+        this.loggedUser = loggedUser;
     }
 
     @GetMapping("/add/{lessonId}")
@@ -42,15 +42,19 @@ public class ExamController {
             model.addAttribute("exam", exam);
             return "exam/add";
         }
+        exam.setTeacher(loggedUser.getUser().getTeacher());
         exam.setCreated(LocalDateTime.now());
+        LessonPlan lessonPlan = exam.getLesson();
         examRepository.save(exam);
-        notificationService.createAndSendNewExam(exam);
         return "redirect:/teacher/" + teacherId + "/lessonPlan?date=" + date;
     }
 
     @GetMapping("/delete/{examId}")
     public String delete(@PathVariable Long examId, @RequestParam Long teacherId, @RequestParam String date) {
-        examRepository.deleteById(examId);
+        Exam exam = examRepository.getReferenceById(examId);
+        exam.setTeacher(loggedUser.getUser().getTeacher());
+        exam.setActive(false);
+        examRepository.save(exam);
         return "redirect:/teacher/" + teacherId + "/lessonPlan?date=" + date;
     }
 }

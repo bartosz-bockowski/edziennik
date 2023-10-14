@@ -39,56 +39,59 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public String list(Model model, @SortDefault("id") Pageable pageable){
-        model.addAttribute("page",userRepository.findAll(pageable));
+    public String list(Model model, @SortDefault("id") Pageable pageable) {
+        model.addAttribute("page", userRepository.findAll(pageable));
         return "security/user/list";
     }
-    public String getNextId(){
+
+    public String getNextId() {
         Long maxId = userRepository.getMaxId();
         String strMaxId = String.valueOf(maxId);
         int len = strMaxId.length();
         StringBuilder sb = new StringBuilder();
-        if(len < 6){
+        if (len < 6) {
             sb.append("0".repeat(6 - len));
         }
         sb.append(strMaxId);
         return sb.toString();
     }
+
     @GetMapping("/add")
-    public String add(){
+    public String add() {
         User user = new User();
         user.setUsername(getNextId());
         user.setPassword("123");
         userService.saveUser(user);
         return "redirect:/admin/user/" + user.getId() + "/details";
     }
+
     @GetMapping("/{id}/details")
-    public String details(@PathVariable Long id, Model model){
+    public String details(@PathVariable Long id, Model model) {
         User user = userRepository.getReferenceById(id);
-        model.addAttribute("user",user);
-        model.addAttribute("roles",roleRepository.findAll());
+        model.addAttribute("user", user);
+        model.addAttribute("roles", roleRepository.findAll());
         return "security/user/details";
     }
 
     @GetMapping("/{id}/setRoles")
-    public String setRoles(@PathVariable Long id, @RequestParam(value = "roles", required = false) String roles){
+    public String setRoles(@PathVariable Long id, @RequestParam(value = "roles", required = false) String roles) {
         User user = userRepository.getReferenceById(id);
         Set<Role> roleList = user.getRoles();
-        if(roles == null){
-            for(Role role : roleList){
+        if (roles == null) {
+            for (Role role : roleList) {
                 roleList.remove(role);
             }
         } else {
-            for(String x : roles.split(",")){
+            for (String x : roles.split(",")) {
                 user.getRoles().add(roleRepository.getReferenceById(Long.parseLong(x)));
             }
         }
-        userService.saveUser(user);
+        userRepository.save(user);
         return "redirect:/admin/user/" + id + "/details";
     }
 
     @GetMapping("/{id}/switch")
-    public String switch_(@PathVariable Long id){
+    public String switch_(@PathVariable Long id) {
         User user = userRepository.getReferenceById(id);
         user.setActive(!user.isActive());
         userRepository.save(user);

@@ -45,6 +45,4 @@ public class User {
     @Email
     private String email;
     private String phoneNumber;
-    @OneToMany(mappedBy = "addressee")
-    private List<Notification> notifications;
 }

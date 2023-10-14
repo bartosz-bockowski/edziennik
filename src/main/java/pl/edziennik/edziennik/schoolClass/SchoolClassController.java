@@ -59,9 +59,7 @@ public class SchoolClassController {
     }
 
     @GetMapping("/{classId}/lessonPlan")
-    public String lessonPlan(Model model, @RequestParam(value = "date", required = false) LocalDate date, @PathVariable Long classId, @RequestParam(required = false) Integer classRoomNotFree, @RequestParam(required = false) Integer teacherNotFree) {
-        model.addAttribute("teacherNotFree", teacherNotFree);
-        model.addAttribute("classRoomNotFree", classRoomNotFree);
+    public String lessonPlan(Model model, @RequestParam(value = "date", required = false) LocalDate date, @PathVariable Long classId) {
         model.addAttribute("schoolClass", schoolClassRepository.getReferenceById(classId));
         if (!loggedUser.hasAccessToSchoolClass(classId)) {
             return "error/403";
@@ -83,6 +81,7 @@ public class SchoolClassController {
         List<List<LessonPlan>> plan = lessonPlanService.getPlan(hours, lessons, date);
         model.addAttribute("plan", plan);
         model.addAttribute("date", date);
+        model.addAttribute("isStudent", loggedUser.getUser().getStudent() != null);
         model.addAttribute("dateFormatter", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         if (LoggedUser.isAdmin()) {
             model.addAttribute("subjects", subjectRepository.findAll());

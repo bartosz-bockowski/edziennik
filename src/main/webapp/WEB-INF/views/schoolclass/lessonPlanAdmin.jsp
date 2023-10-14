@@ -12,14 +12,16 @@
 <html>
 <body>
 <jsp:include page="../layout/header.jsp"/>
-<input type="hidden" name="teacherNotFree" value="${teacherNotFree}"/>
-<input type="hidden" name="classRoomNotFree" value="${classRoomNotFree}"/>
-<c:if test="${teacherNotFree != null}">
-    <h3 style="color: red;"><spring:message code="lessonPlan.teacherNotFree"/></h3>
-</c:if>
-<c:if test="${classRoomNotFree != null}">
-    <h3 style="color: red;"><spring:message code="lessonPlan.classRoomNotFree"/></h3>
-</c:if>
+<spring:message code="lessonPlan.teacherNotFree" var="teacherNotFree"/>
+<spring:message code="lessonPlan.classRoomNotFree" var="classRoomNotFree"/>
+<spring:message code="lessonPlan.bothNotFree" var="bothNotFree"/>
+<spring:message code="lessonPlan.noChanges" var="noChanges"/>
+<spring:message code="lessonPlan.confirm.updateLesson" var="confirmUpdate"/>
+<input type="hidden" id="teacherNotFree" value="${teacherNotFree}"/>
+<input type="hidden" id="classRoomNotFree" value="${classRoomNotFree}"/>
+<input type="hidden" id="bothNotFree" value="${bothNotFree}"/>
+<input type="hidden" id="noChanges" value="${noChanges}"/>
+<input type="hidden" id="confirmUpdate" value="${confirmUpdate}"/>
 <h1><spring:message code="lessonPlan.ofClass"/> ${schoolClass.name}</h1>
 <table class="lessonPlanTable centerBlock">
     <thead>
@@ -67,7 +69,7 @@
             <c:forEach items="${hour}" var="lesson" varStatus="hourLoop">
                 <td class="${lesson == null ? 'null' : 'present'}LessonTd">
                     <br/>
-                    <form method="get" action="/admin/lessonplan/updateLesson?date=${date}">
+                    <form method="get" action="/admin/lessonplan/updateLesson?date=${date}" class="lessonAddForm">
                         <input type="hidden" name="id" value="${lesson.id}"/>
                         <input type="hidden" name="classId" value="${schoolClass.id}"/>
                         <input type="hidden" name="lessonHour" value="${hours.get(loop.index).id}"/>
@@ -112,6 +114,7 @@
     </c:forEach>
     </tbody>
 </table>
+<script src="${pageContext.request.contextPath}/js/lessonPlanAdmin.js"></script>
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SimpleNotification {
+public class NotificationSimple {
     private String title;
     private String message;
     private String href;

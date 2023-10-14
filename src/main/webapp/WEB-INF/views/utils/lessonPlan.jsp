@@ -52,16 +52,19 @@
                             ${lesson.subject.name}<br>
                             ${lesson.classRoom.name}<br>
                             ${teacher == null ? lesson.teacher.fullNameWithId : lesson.schoolClass.name}<br>
-                        <c:if test="${isTeacher}">
-                            <c:if test="${lesson.exam == null}">
+                        <c:if test="${lesson.exams == null || lesson.exams.size() == 0 || !lesson.hasActiveExams()}">
+                            <c:if test="${isTeacher}">
                                 <a href="/exam/add/${lesson.id}?teacherId=${teacher.id}&date=${date}"><spring:message
                                         code="exam.addExam"/></a>
                             </c:if>
-                            <c:if test="${lesson.exam != null}">
+                        </c:if>
+                        <c:if test="${lesson.exams != null && lesson.exams.size() > 0 && lesson.hasActiveExams()}">
+                            ${lesson.getLastExam().name}
+                            <c:if test="${isTeacher}">
                                 <spring:message code="exam.delete.confiramtion" var="confirmation"/>
-                                ${lesson.exam.name} <a class="confirm" msg="${confirmation}"
-                                                       href="/exam/delete/${lesson.exam.id}?teacherId=${teacher.id}&date=${date}"><spring:message
-                                    code="delete"/></a>
+                                <a class="confirm" msg="${confirmation}"
+                                   href="/exam/delete/${lesson.getLastExam().id}?teacherId=${teacher.id}&date=${date}"><spring:message
+                                        code="delete"/></a>
                             </c:if>
                         </c:if>
                     </td>

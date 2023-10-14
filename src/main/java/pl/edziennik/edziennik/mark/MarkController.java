@@ -5,14 +5,11 @@ import org.hibernate.envers.AuditReaderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.mark.category.MarkCategory;
 import pl.edziennik.edziennik.mark.category.MarkCategoryRepository;
-import pl.edziennik.edziennik.notification.NotificationService;
-import pl.edziennik.edziennik.notification.NotificationType;
 import pl.edziennik.edziennik.student.Student;
 import pl.edziennik.edziennik.student.StudentRepository;
 import pl.edziennik.edziennik.teacher.TeacherRepository;
@@ -23,6 +20,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -34,20 +33,17 @@ public class MarkController {
     private final TeacherRepository teacherRepository;
     @Autowired
     private final EntityManager entityManager;
-    private final NotificationService notificationService;
 
     public MarkController(MarkRepository markRepository,
                           StudentRepository studentRepository,
                           MarkCategoryRepository markCategoryRepository,
                           TeacherRepository teacherRepository,
-                          EntityManager entityManager,
-                          NotificationService notificationService) {
+                          EntityManager entityManager) {
         this.markRepository = markRepository;
         this.studentRepository = studentRepository;
         this.markCategoryRepository = markCategoryRepository;
         this.teacherRepository = teacherRepository;
         this.entityManager = entityManager;
-        this.notificationService = notificationService;
     }
 
     @GetMapping("/add/{mark}/{studentId}/{markCategoryId}/{markId}")
@@ -65,19 +61,17 @@ public class MarkController {
         markObj.setTime(LocalDateTime.now());
         markObj.setTeacher(teacherRepository.getReferenceById(1L));
         markObj.setChanged(LocalDateTime.now());
-        Boolean f = false;
         if (!markId.equals("null")) {
             markObj.setId(Long.parseLong(markId));
-            f = true;
         }
         markRepository.save(markObj);
-        if (f) {
-            String oldMark = markRepository.getReferenceById(markObj.getId()).getMarkString();
-            notificationService.createAndSendNewMark(markObj, NotificationType.EDITTED_MARK, oldMark);
-        } else {
-            notificationService.createAndSendNewMark(markObj, NotificationType.NEW_MARK, null);
-        }
         return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/history")
+    public String idHistory(@PathVariable Long id) {
+        Mark mark = markRepository.getReferenceById(id);
+        return "redirect:/mark/history/" + mark.getMarkCategory().getId() + "/" + mark.getStudent().getId();
     }
 
     @GetMapping("/history/{categoryId}/{studentId}")
@@ -104,8 +98,7 @@ public class MarkController {
     public ResponseEntity<Boolean> delete(@PathVariable Long categoryId, @PathVariable Long studentId) {
         Student student = studentRepository.getReferenceById(studentId);
         Mark mark = student.getMarkByMarkCategoryId(categoryId);
-        mark.setActive(false);
-        markRepository.save(mark);
+        markRepository.delete(mark);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }
