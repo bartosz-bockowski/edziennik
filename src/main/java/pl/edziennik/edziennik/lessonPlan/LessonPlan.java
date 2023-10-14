@@ -11,6 +11,7 @@ import pl.edziennik.edziennik.subject.Subject;
 import pl.edziennik.edziennik.teacher.Teacher;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,6 +31,14 @@ public class LessonPlan {
     private SchoolClass schoolClass;
     @ManyToOne
     private Subject subject;
-    @OneToOne(mappedBy = "lesson")
-    private Exam exam;
+    @OneToMany(mappedBy = "lesson")
+    private List<Exam> exams;
+
+    public Boolean hasActiveExams() {
+        return !this.exams.stream().filter(Exam::getActive).toList().isEmpty();
+    }
+
+    public Exam getLastExam() {
+        return this.exams.get(this.exams.size() - 1);
+    }
 }

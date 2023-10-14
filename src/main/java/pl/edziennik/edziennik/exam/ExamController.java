@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 import pl.edziennik.edziennik.lessonPlan.LessonPlanRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/exam")
@@ -38,6 +40,7 @@ public class ExamController {
             return "exam/add";
         }
         exam.setCreated(LocalDateTime.now());
+        LessonPlan lessonPlan = exam.getLesson();
         examRepository.save(exam);
         return "redirect:/teacher/" + teacherId + "/lessonPlan?date=" + date;
     }

@@ -11,7 +11,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import pl.edziennik.edziennik.exam.Exam;
+import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 import pl.edziennik.edziennik.mark.Mark;
+import pl.edziennik.edziennik.schoolClass.SchoolClass;
 import pl.edziennik.edziennik.security.LoggedUser;
 import pl.edziennik.edziennik.security.user.User;
 import pl.edziennik.edziennik.student.Student;
@@ -46,14 +49,20 @@ public class NotificationController {
         AuditReader reader = AuditReaderFactory.get(entityManager);
         List<Notification> notifications = new ArrayList<>();
         User user = loggedUser.getUser();
-        List<Mark> marks = new ArrayList<>();
         Student student = user.getStudent();
-        System.out.println("OCENY");
         if (student != null) {
-            marks.addAll(student.getMarks());
+            System.out.println("OCENY");
+            List<Mark> marks = new ArrayList<>(student.getMarks());
+            for (Mark mark : marks) {
+                System.out.println(getHistory(mark, mark.getId()));
+            }
         }
-        for (Mark mark : marks) {
-            System.out.println(getHistory(mark, mark.getId()));
+        if (student != null && student.getSchoolClass() != null) {
+            System.out.println("EGZAMINY");
+            List<Exam> exams = new ArrayList<>(student.getSchoolClass().getLessonPlan().stream().flatMap(s -> s.getExams().stream()).filter(Objects::nonNull).toList());
+            for (Exam exam : exams) {
+                System.out.println(getHistory(exam, exam.getId()));
+            }
         }
         return new ArrayList();
     }
