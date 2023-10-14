@@ -296,3 +296,13 @@ b {
 .thick {
     font-weight: 900;
 }
+
+.blockRadioLabel div {
+    vertical-align: center;
+}
+
+.blockRadioLabel {
+    margin-left: 10px;
+    display: block;
+    float: left;
+}

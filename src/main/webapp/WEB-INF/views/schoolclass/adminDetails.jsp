@@ -29,7 +29,10 @@
     <div><spring:message code="schoolClass.noStudents"/></div>
 </c:if>
 <c:forEach items="${students}" var="student">
-    <div><span>${student.getFullName()}</span> <a msg="${conRemStu} (${student.getFullName()} ID: ${student.id})" class="confirm" href="/admin/schoolclass/${schoolClass.id}/removeStudent/${student.id}"><spring:message code="schoolClass.removeStudent"/></a></div>
+    <div><span>${student.getFullName()}</span> <a msg="${conRemStu} (${student.getFullName()} ID: ${student.id})"
+                                                  class="confirm"
+                                                  href="/admin/schoolclass/${schoolClass.id}/removeStudent/${student.id}"><spring:message
+            code="schoolClass.removeStudent"/></a></div>
 </c:forEach>
 <div>
     <h2><spring:message code="schoolClass.addStudent"/></h2>
@@ -53,7 +56,9 @@
 </c:if>
 <c:forEach items="${schoolClass.subjects}" var="subject">
     <div><span>${subject.name}</span>
-        <a class="confirm" msg="${conRemSub} (${subject.name} ID: ${subject.id})" href="/admin/schoolclass/${schoolClass.id}/removeSubject/${subject.id}"><spring:message code="schoolClass.removeSubject"/></a>
+        <a class="confirm" msg="${conRemSub} (${subject.name} ID: ${subject.id})"
+           href="/admin/schoolclass/${schoolClass.id}/removeSubject/${subject.id}"><spring:message
+                code="schoolClass.removeSubject"/></a>
         <a href="/schoolclass/${schoolClass.id}/marks/${subject.id}"><spring:message code="schoolClass.marks"/></a>
     </div>
 </c:forEach>

@@ -52,21 +52,35 @@
                             ${lesson.subject.name}<br>
                             ${lesson.classRoom.name}<br>
                             ${teacher == null ? lesson.teacher.fullNameWithId : lesson.schoolClass.name}<br>
-                        <c:if test="${lesson.exams == null || lesson.exams.size() == 0 || !lesson.hasActiveExams()}">
-                            <c:if test="${isTeacher}">
-                                <a href="/exam/add/${lesson.id}?teacherId=${teacher.id}&date=${date}"><spring:message
-                                        code="exam.addExam"/></a>
-                            </c:if>
+                        <c:if test="${isTeacher}">
+                            <div>
+                                <c:if test="${lesson.completed}">
+                                    <a href="/lessonplan/${lesson.id}/create"><spring:message
+                                            code="lessonPlan.edit"/></a>
+                                </c:if>
+                                <c:if test="${!lesson.completed}">
+                                    <a href="/lessonplan/${lesson.id}/create"><spring:message
+                                            code="lessonPlan.complete"/></a>
+                                </c:if>
+                            </div>
                         </c:if>
-                        <c:if test="${lesson.exams != null && lesson.exams.size() > 0 && lesson.hasActiveExams()}">
-                            ${lesson.getLastExam().name}
-                            <c:if test="${isTeacher}">
-                                <spring:message code="exam.delete.confiramtion" var="confirmation"/>
-                                <a class="confirm" msg="${confirmation}"
-                                   href="/exam/delete/${lesson.getLastExam().id}?teacherId=${teacher.id}&date=${date}"><spring:message
-                                        code="delete"/></a>
+                        <div>
+                            <c:if test="${lesson.exams == null || lesson.exams.size() == 0 || !lesson.hasActiveExams()}">
+                                <c:if test="${isTeacher}">
+                                    <a href="/exam/add/${lesson.id}?teacherId=${teacher.id}&date=${date}"><spring:message
+                                            code="exam.addExam"/></a>
+                                </c:if>
                             </c:if>
-                        </c:if>
+                            <c:if test="${lesson.exams != null && lesson.exams.size() > 0 && lesson.hasActiveExams()}">
+                                ${lesson.getLastExam().name}
+                                <c:if test="${isTeacher}">
+                                    <spring:message code="exam.delete.confiramtion" var="confirmation"/>
+                                    <a class="confirm" msg="${confirmation}"
+                                       href="/exam/delete/${lesson.getLastExam().id}?teacherId=${teacher.id}&date=${date}"><spring:message
+                                            code="delete"/></a>
+                                </c:if>
+                            </c:if>
+                        </div>
                     </td>
                 </c:if>
             </c:forEach>

@@ -69,6 +69,7 @@ public class NotificationController {
                 notifications.addAll(getHistory(exam, exam.getId()));
             }
         }
+        //lessonplan changes history should be made by creating new entity lessonplanchange
         notifications = notifications.stream().sorted(Comparator.comparing(Notification::getSent).reversed()).toList();
         List<NotificationSimple> result = new ArrayList<>();
         for (Notification notification : notifications) {
