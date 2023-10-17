@@ -1,4 +1,4 @@
-package pl.edziennik.edziennik.lessonPlan;
+package pl.edziennik.edziennik.attendance;
 
 public enum AttendanceType {
     PRESENT,

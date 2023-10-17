@@ -3,6 +3,7 @@ package pl.edziennik.edziennik.schoolClass;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
+import pl.edziennik.edziennik.attendance.Attendance;
 import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 import pl.edziennik.edziennik.mark.Mark;
 import pl.edziennik.edziennik.mark.MarkUtils;

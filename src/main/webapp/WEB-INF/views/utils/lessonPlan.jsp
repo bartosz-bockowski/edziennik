@@ -1,3 +1,4 @@
+<%@ page import="java.time.LocalDateTime" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <table class="lessonPlanTable centerBlock">
@@ -53,16 +54,18 @@
                             ${lesson.classRoom.name}<br>
                             ${teacher == null ? lesson.teacher.fullNameWithId : lesson.schoolClass.name}<br>
                         <c:if test="${isTeacher}">
-                            <div>
-                                <c:if test="${lesson.completed}">
-                                    <a href="/lessonplan/${lesson.id}/create"><spring:message
-                                            code="lessonPlan.edit"/></a>
-                                </c:if>
-                                <c:if test="${!lesson.completed}">
-                                    <a href="/lessonplan/${lesson.id}/create"><spring:message
-                                            code="lessonPlan.complete"/></a>
-                                </c:if>
-                            </div>
+                            <c:if test="${now.isAfter(lesson.dateTime)}">
+                                <div>
+                                    <c:if test="${lesson.completed}">
+                                        <a href="/lessonplan/${lesson.id}/create"><spring:message
+                                                code="lessonPlan.edit"/></a>
+                                    </c:if>
+                                    <c:if test="${!lesson.completed}">
+                                        <a href="/lessonplan/${lesson.id}/create"><spring:message
+                                                code="lessonPlan.complete"/></a>
+                                    </c:if>
+                                </div>
+                            </c:if>
                         </c:if>
                         <div>
                             <c:if test="${lesson.exams == null || lesson.exams.size() == 0 || !lesson.hasActiveExams()}">

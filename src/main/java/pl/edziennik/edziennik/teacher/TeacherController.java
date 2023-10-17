@@ -17,6 +17,7 @@ import pl.edziennik.edziennik.security.LoggedUser;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class TeacherController {
     private final SubjectRepository subjectRepository;
     private final ClassRoomRepository classRoomRepository;
     private final SchoolClassRepository schoolClassRepository;
+
     public TeacherController(TeacherRepository teacherRepository,
                              LoggedUser loggedUser,
                              LessonPlanRepository lessonPlanRepository,
@@ -49,41 +51,45 @@ public class TeacherController {
         this.classRoomRepository = classRoomRepository;
         this.schoolClassRepository = schoolClassRepository;
     }
+
     @GetMapping("/{teacherId}/lessonPlan")
-    public String lessonPlan(@PathVariable Long teacherId, Model model, @RequestParam(value = "date", required = false) LocalDate date){
-        model.addAttribute("teacher",teacherRepository.getReferenceById(teacherId));
-        if(!loggedUser.hasAccessToTeacher(teacherId)){
+    public String lessonPlan(@PathVariable Long teacherId, Model model, @RequestParam(value = "date", required = false) LocalDate date) {
+        model.addAttribute("teacher", teacherRepository.getReferenceById(teacherId));
+        if (!loggedUser.hasAccessToTeacher(teacherId)) {
             return "error/403";
         }
-        if(date == null){
+        if (date == null) {
             date = LocalDate.now().minusDays(LocalDate.now().getDayOfWeek().getValue() - 1);
         } else {
             date = date.minusDays(date.getDayOfWeek().getValue() - 1);
         }
         List<LocalDate> dates = new ArrayList<>();
         dates.add(date);
-        for(int i = 1; i < 5; i++){
+        for (int i = 1; i < 5; i++) {
             dates.add(date.plusDays(i));
         }
         List<LessonPlan> lessons = lessonPlanRepository.getAllByTeacherIdAndDateIn(teacherId, dates);
-        model.addAttribute("lessons",lessons);
+        model.addAttribute("lessons", lessons);
         List<LessonHour> hours = lessonHourRepository.findAllByActiveTrueOrderByStartAsc();
-        model.addAttribute("hours",hours);
-        List<List<LessonPlan>> plan = lessonPlanService.getPlan(hours,lessons,date);
-        model.addAttribute("plan",plan);
-        model.addAttribute("date",date);
+        model.addAttribute("hours", hours);
+        model.addAttribute("now", LocalDateTime.now());
+        List<List<LessonPlan>> plan = lessonPlanService.getPlan(hours, lessons, date);
+        model.addAttribute("plan", plan);
+        model.addAttribute("date", date);
         model.addAttribute("dateFormatter", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        model.addAttribute("isTeacher",true);
+        model.addAttribute("isTeacher", true);
         return "teacher/lessonPlan";
     }
+
     @GetMapping("/{teacherId}/supervisedClasses")
-    public String supervisedClasses(@PathVariable Long teacherId, Model model){
-        model.addAttribute("teacher",teacherRepository.getReferenceById(teacherId));
+    public String supervisedClasses(@PathVariable Long teacherId, Model model) {
+        model.addAttribute("teacher", teacherRepository.getReferenceById(teacherId));
         return "teacher/supervisedClasses";
     }
+
     @GetMapping("/{teacherId}/subjects")
-    public String subjects(@PathVariable Long teacherId, Model model){
-        model.addAttribute("teacher",teacherRepository.getReferenceById(teacherId));
+    public String subjects(@PathVariable Long teacherId, Model model) {
+        model.addAttribute("teacher", teacherRepository.getReferenceById(teacherId));
         return "teacher/subjects";
     }
 }

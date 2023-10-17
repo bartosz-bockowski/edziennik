@@ -1,8 +1,11 @@
 package pl.edziennik.edziennik.lessonPlan;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+import pl.edziennik.edziennik.attendance.Attendance;
 import pl.edziennik.edziennik.classRoom.ClassRoom;
 import pl.edziennik.edziennik.exam.Exam;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
@@ -12,6 +15,7 @@ import pl.edziennik.edziennik.subject.Subject;
 import pl.edziennik.edziennik.teacher.Teacher;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -36,10 +40,12 @@ public class LessonPlan {
     private Subject subject;
     @OneToMany(mappedBy = "lesson")
     private List<Exam> exams;
-    @ElementCollection
-    private Map<Student, AttendanceType> attendance;
+    @NotEmpty
+    @Length(min = 3)
     private String topic;
     private Boolean completed = false;
+    @OneToMany(mappedBy = "lessonPlan")
+    private List<Attendance> attendance;
 
     public Boolean hasActiveExams() {
         return !this.exams.stream().filter(Exam::getActive).toList().isEmpty();
@@ -51,5 +57,21 @@ public class LessonPlan {
 
     public String getFormattedDate() {
         return this.date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }
+
+    public String getDashDate() {
+        return this.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    public Long getAttendanceIdByStudentId(Long studentId) {
+        List<Long> result = this.attendance.stream().filter(f -> f.getStudent() != null).filter(f -> f.getStudent().getId().equals(studentId)).map(Attendance::getId).toList();
+        if (!result.isEmpty()) {
+            return result.get(0);
+        }
+        return null;
+    }
+
+    public LocalDateTime getDateTime() {
+        return LocalDateTime.of(this.date, this.lessonHour.getStart());
     }
 }

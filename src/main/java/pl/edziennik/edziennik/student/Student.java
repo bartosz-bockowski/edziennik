@@ -2,6 +2,7 @@ package pl.edziennik.edziennik.student;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.edziennik.edziennik.attendance.Attendance;
 import pl.edziennik.edziennik.mark.Mark;
 import pl.edziennik.edziennik.parent.Parent;
 import pl.edziennik.edziennik.schoolClass.SchoolClass;
@@ -42,6 +43,9 @@ public class Student {
     public String getFullNameWithId() {
         return firstName + " " + lastName + " (ID: " + id + ")";
     }
+
+    @OneToMany(mappedBy = "student")
+    private List<Attendance> attendance;
 
     public Mark getMarkByMarkCategoryId(Long markCategoryId) {
         Mark mark = null;
