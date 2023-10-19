@@ -59,97 +59,129 @@ public class NotificationController {
         User user = loggedUser.getUser();
         Student student = user.getStudent();
         if (student != null) {
-            List<Mark> marks = new ArrayList<>(student.getMarks());
+            List<Mark> marks = student.getMarks();
             for (Mark mark : marks) {
-                notifications.addAll(getHistory(mark, mark.getId(), null));
+                List<Mark> markHistory = new ArrayList<>();
+                HashMap<Object, LocalDateTime> history = getHistory(mark, mark.getId(), null);
+                for (Object o : history.keySet()) {
+                    markHistory.add((Mark) o);
+                }
+
+                for (int i = 0; i < markHistory.size(); i++) {
+                    Mark target = markHistory.get(i);
+                    Notification notification = new Notification();
+                    if (i == 0) {
+                        notification.setTitle(messageSource.getMessage("notification.newMark.title", null, LocaleContextHolder.getLocale()));
+                        notification.setMessage(messageSource.getMessage("notification.newMark.message", new Object[]{
+                                target.getTeacher().getFullName(),
+                                target.getStudent().getFullName(),
+                                target.getMarkString(),
+                                target.getMarkCategory().getSubject().getName(),
+                                target.getMarkCategory().getName()
+                        }, LocaleContextHolder.getLocale()));
+                    } else {
+                        notification.setTitle(messageSource.getMessage("notification.editedMark.title", null, LocaleContextHolder.getLocale()));
+                        notification.setMessage(messageSource.getMessage("notification.editedMark.message", new Object[]{
+                                target.getTeacher().getFullName(),
+                                target.getStudent().getFullName(),
+                                target.getMarkString(),
+                                markHistory.get(i - 1).getMarkString(),
+                                target.getMarkCategory().getSubject().getName(),
+                                target.getMarkCategory().getName()
+                        }, LocaleContextHolder.getLocale()));
+                    }
+                    notification.setSent(history.values().stream().toList().get(i));
+                    notification.setHref("/mark/" + target.getId() + "/history");
+                    notifications.add(notification);
+                }
             }
+//        if (student != null && student.getSchoolClass() != null) {
+//            List<Exam> exams = new ArrayList<>(student.getSchoolClass().getLessonPlan().stream().flatMap(s -> s.getExams().stream()).filter(Objects::nonNull).toList());
+//            for (Exam exam : exams) {
+//                notifications.addAll(getHistory(exam, exam.getId(), null));
+//            }
+//            List<LessonPlan> lessons = new ArrayList<>(student.getSchoolClass().getLessonPlan());
+//            for (LessonPlan lesson : lessons) {
+//                notifications.addAll(getHistory(lesson, lesson.getId(), RevisionType.MOD));
+//            }
+//        }
+//        notifications = notifications.stream().sorted(Comparator.comparing(Notification::getSent).reversed()).toList();
+//        List<NotificationSimple> result = new ArrayList<>();
+//        for (Notification notification : notifications) {
+//            NotificationSimple notificationSimple = new NotificationSimple();
+//            switch (notification.getType()) {
+//                case NEW_MARK -> {
+//                    notificationSimple.setTitle(messageSource.getMessage("notification.newMark.title", null, LocaleContextHolder.getLocale()));
+//                    notificationSimple.setHref("/mark/" + notification.getTargetId() + "/history");
+//                    Mark mark = markRepository.getReferenceById(notification.getTargetId());
+//                    notificationSimple.setMessage(messageSource.getMessage("notification.newMark.message", new Object[]{
+//                            mark.getTeacher().getFullName(),
+//                            mark.getStudent().getFullName(),
+//                            mark.getMarkString(),
+//                            mark.getMarkCategory().getSubject().getName(),
+//                            mark.getMarkCategory().getName()
+//                    }, LocaleContextHolder.getLocale()));
+//                }
+//                case EDITED_MARK -> {
+//                    notificationSimple.setTitle(messageSource.getMessage("notification.editedMark.title", null, LocaleContextHolder.getLocale()));
+//                    notificationSimple.setHref("/mark/" + notification.getTargetId() + "/history");
+//                    List<Notification> markHistory = notifications.stream().filter(f -> (f.getType() == NotificationType.EDITED_MARK || f.getType() == NotificationType.NEW_MARK) && Objects.equals(f.getTargetId(), notification.getTargetId())).toList();
+//                    Long oldMarkId = markHistory.get(markHistory.indexOf(notification) + 1).getTargetId();
+//                    String oldMark = markRepository.getReferenceById(oldMarkId).getMarkString();
+//                    Mark mark = markRepository.getReferenceById(notification.getTargetId());
+//                    notificationSimple.setMessage(messageSource.getMessage("notification.editedMark.message", new Object[]{
+//                            mark.getTeacher().getFullName(),
+//                            mark.getStudent().getFullName(),
+//                            mark.getMarkCategory().getSubject().getName(),
+//                            mark.getMarkCategory().getName(),
+//                            mark.getMarkString(),
+//                            oldMark
+//                    }, LocaleContextHolder.getLocale()));
+//                }
+//                case NEW_EXAM -> {
+//                    Exam exam = examRepository.getReferenceById(notification.getTargetId());
+//                    notificationSimple.setTitle(messageSource.getMessage("notification.newExam.title", null, LocaleContextHolder.getLocale()));
+//                    notificationSimple.setHref("/schoolclass/" + exam.getLesson().getSchoolClass().getId() + "/lessonPlan?date=" + exam.getLesson().getDate().format(dateHrefFormatter));
+//                    notificationSimple.setMessage(messageSource.getMessage("notification.newExam.message", new Object[]{
+//                            exam.getTeacher().getFullName(),
+//                            exam.getLesson().getSchoolClass().getName(),
+//                            exam.getLesson().getSubject().getName(),
+//                            exam.getName(),
+//                            exam.getLesson().getDate().format(dateTimeFormatter)
+//                    }, LocaleContextHolder.getLocale()));
+//                }
+//                case CANCELLED_EXAM -> {
+//                    Exam exam = examRepository.getReferenceById(notification.getTargetId());
+//                    notificationSimple.setTitle(messageSource.getMessage("notification.cancelledExam.title", null, LocaleContextHolder.getLocale()));
+//                    notificationSimple.setHref("/schoolclass/" + exam.getLesson().getSchoolClass().getId() + "/lessonPlan?date=" + exam.getLesson().getDate().format(dateHrefFormatter));
+//                    notificationSimple.setMessage(messageSource.getMessage("notification.cancelledExam.message", new Object[]{
+//                            exam.getTeacher().getFullName(),
+//                            exam.getLesson().getSchoolClass().getName(),
+//                            exam.getLesson().getSubject().getName(),
+//                            exam.getName(),
+//                            exam.getLesson().getDate().format(dateTimeFormatter)
+//                    }, LocaleContextHolder.getLocale()));
+//                }
+//                editted lesson
+//            }
+//            result.add(notificationSimple);
         }
-        if (student != null && student.getSchoolClass() != null) {
-            List<Exam> exams = new ArrayList<>(student.getSchoolClass().getLessonPlan().stream().flatMap(s -> s.getExams().stream()).filter(Objects::nonNull).toList());
-            for (Exam exam : exams) {
-                notifications.addAll(getHistory(exam, exam.getId(), null));
-            }
-            List<LessonPlan> lessons = new ArrayList<>(student.getSchoolClass().getLessonPlan());
-            for (LessonPlan lesson : lessons) {
-                notifications.addAll(getHistory(lesson, lesson.getId(), RevisionType.MOD));
-            }
-        }
-        notifications = notifications.stream().sorted(Comparator.comparing(Notification::getSent).reversed()).toList();
-        List<NotificationSimple> result = new ArrayList<>();
-        for (Notification notification : notifications) {
-            NotificationSimple notificationSimple = new NotificationSimple();
-            switch (notification.getType()) {
-                case NEW_MARK -> {
-                    notificationSimple.setTitle(messageSource.getMessage("notification.newMark.title", null, LocaleContextHolder.getLocale()));
-                    notificationSimple.setHref("/mark/" + notification.getTargetId() + "/history");
-                    Mark mark = markRepository.getReferenceById(notification.getTargetId());
-                    notificationSimple.setMessage(messageSource.getMessage("notification.newMark.message", new Object[]{
-                            mark.getTeacher().getFullName(),
-                            mark.getStudent().getFullName(),
-                            mark.getMarkString(),
-                            mark.getMarkCategory().getSubject().getName(),
-                            mark.getMarkCategory().getName()
-                    }, LocaleContextHolder.getLocale()));
-                }
-                case EDITED_MARK -> {
-                    notificationSimple.setTitle(messageSource.getMessage("notification.editedMark.title", null, LocaleContextHolder.getLocale()));
-                    notificationSimple.setHref("/mark/" + notification.getTargetId() + "/history");
-                    List<Notification> markHistory = notifications.stream().filter(f -> (f.getType() == NotificationType.EDITED_MARK || f.getType() == NotificationType.NEW_MARK) && Objects.equals(f.getTargetId(), notification.getTargetId())).toList();
-                    Long oldMarkId = markHistory.get(markHistory.indexOf(notification) + 1).getTargetId();
-                    String oldMark = markRepository.getReferenceById(oldMarkId).getMarkString();
-                    Mark mark = markRepository.getReferenceById(notification.getTargetId());
-                    notificationSimple.setMessage(messageSource.getMessage("notification.editedMark.message", new Object[]{
-                            mark.getTeacher().getFullName(),
-                            mark.getStudent().getFullName(),
-                            mark.getMarkCategory().getSubject().getName(),
-                            mark.getMarkCategory().getName(),
-                            mark.getMarkString(),
-                            oldMark
-                    }, LocaleContextHolder.getLocale()));
-                }
-                case NEW_EXAM -> {
-                    Exam exam = examRepository.getReferenceById(notification.getTargetId());
-                    notificationSimple.setTitle(messageSource.getMessage("notification.newExam.title", null, LocaleContextHolder.getLocale()));
-                    notificationSimple.setHref("/schoolclass/" + exam.getLesson().getSchoolClass().getId() + "/lessonPlan?date=" + exam.getLesson().getDate().format(dateHrefFormatter));
-                    notificationSimple.setMessage(messageSource.getMessage("notification.newExam.message", new Object[]{
-                            exam.getTeacher().getFullName(),
-                            exam.getLesson().getSchoolClass().getName(),
-                            exam.getLesson().getSubject().getName(),
-                            exam.getName(),
-                            exam.getLesson().getDate().format(dateTimeFormatter)
-                    }, LocaleContextHolder.getLocale()));
-                }
-                case CANCELLED_EXAM -> {
-                    Exam exam = examRepository.getReferenceById(notification.getTargetId());
-                    notificationSimple.setTitle(messageSource.getMessage("notification.cancelledExam.title", null, LocaleContextHolder.getLocale()));
-                    notificationSimple.setHref("/schoolclass/" + exam.getLesson().getSchoolClass().getId() + "/lessonPlan?date=" + exam.getLesson().getDate().format(dateHrefFormatter));
-                    notificationSimple.setMessage(messageSource.getMessage("notification.cancelledExam.message", new Object[]{
-                            exam.getTeacher().getFullName(),
-                            exam.getLesson().getSchoolClass().getName(),
-                            exam.getLesson().getSubject().getName(),
-                            exam.getName(),
-                            exam.getLesson().getDate().format(dateTimeFormatter)
-                    }, LocaleContextHolder.getLocale()));
-                }
-                //editted lesson
-            }
-            result.add(notificationSimple);
-        }
-        return result;
+        return null;
     }
 
-    public <T> List<Notification> getHistory(T arg, Long id, RevisionType type) {
+    public <T> LinkedHashMap<Object, LocalDateTime> getHistory(T arg, Long id, RevisionType type) {
         AuditReader reader = AuditReaderFactory.get(entityManager);
-        AuditQuery query = reader.createQuery().forRevisionsOfEntity(arg.getClass(), false, false);
+        AuditQuery query = reader.createQuery().forRevisionsOfEntity(arg.getClass(), false, true);
         query.add(AuditEntity.id().eq(id));
         List<Object[]> results = query.getResultList();
-        List<Notification> mainResult = new ArrayList<>();
+        LinkedHashMap<Object, LocalDateTime> mainResult = new LinkedHashMap<Object, LocalDateTime>();
         for (Object[] result : results) {
-            if (type == null || (type == result[2])) {
-                DefaultRevisionEntity revisionEntity = (DefaultRevisionEntity) result[1];
-                NotificationType notificationType = getNotificationType(arg, result);
-                mainResult.add(new Notification(LocalDateTime.ofInstant(Instant.ofEpochMilli(revisionEntity.getTimestamp()), TimeZone.getDefault().toZoneId()), notificationType, id));
-            }
+            //if (type == null || (type == result[2])) {
+//                DefaultRevisionEntity revisionEntity = (DefaultRevisionEntity) result[1];
+//                NotificationType notificationType = getNotificationType(arg, result);
+            DefaultRevisionEntity entity = (DefaultRevisionEntity) result[1];
+            mainResult.put(result[0], LocalDateTime.ofInstant(Instant.ofEpochMilli(entity.getTimestamp()), TimeZone.getDefault().toZoneId()));
+            //}
         }
         return mainResult;
     }

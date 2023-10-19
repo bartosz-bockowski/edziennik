@@ -8,9 +8,19 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class Notification {
     private LocalDateTime sent;
-    private NotificationType type;
-    private Long targetId;
+    private String title;
+    private String message;
+    private String href;
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "sent=" + sent +
+                ", title='" + title + '\'' +
+                ", message='" + message + '\'' +
+                ", href='" + href + '\'' +
+                '}';
+    }
 }
