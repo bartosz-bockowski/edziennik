@@ -2,11 +2,10 @@ package pl.edziennik.edziennik.classRoom;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
-import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,7 +20,7 @@ public class ClassRoom {
     @NotEmpty
     private String name;
     @OneToMany(mappedBy = "classRoom")
-    private List<LessonPlan> lessons;
+    private List<Lesson> lessons;
     private boolean active;
 
     public Boolean isFree(LessonHour hour, LocalDate date) {

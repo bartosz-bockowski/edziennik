@@ -6,25 +6,20 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.SortDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.classRoom.ClassRoomRepository;
+import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.lessonHour.LessonHourRepository;
-import pl.edziennik.edziennik.lessonPlan.LessonPlan;
-import pl.edziennik.edziennik.lessonPlan.LessonPlanRepository;
+import pl.edziennik.edziennik.lesson.LessonPlanRepository;
 import pl.edziennik.edziennik.student.Student;
 import pl.edziennik.edziennik.student.StudentRepository;
 import pl.edziennik.edziennik.subject.Subject;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 import pl.edziennik.edziennik.teacher.TeacherRepository;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 
 @Controller
@@ -143,9 +138,9 @@ public class SchoolClassAdminController {
                                @RequestParam(required = false) Long classRoom,
                                @RequestParam(required = false) Long lessonHour,
                                @RequestParam(required = false) LocalDate date) {
-        LessonPlan lesson;
+        Lesson lesson;
         if (id == null) {
-            lesson = new LessonPlan();
+            lesson = new Lesson();
         } else {
             lesson = lessonPlanRepository.getReferenceById(id);
         }

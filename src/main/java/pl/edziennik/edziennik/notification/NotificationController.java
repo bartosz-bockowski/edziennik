@@ -1,20 +1,17 @@
 package pl.edziennik.edziennik.notification;
 
-import org.aspectj.weaver.ast.Not;
 import org.hibernate.envers.*;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.edziennik.edziennik.exam.Exam;
 import pl.edziennik.edziennik.exam.ExamRepository;
-import pl.edziennik.edziennik.lessonPlan.LessonPlan;
+import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.mark.Mark;
 import pl.edziennik.edziennik.mark.MarkRepository;
 import pl.edziennik.edziennik.security.LoggedUser;
@@ -23,7 +20,6 @@ import pl.edziennik.edziennik.student.Student;
 
 import jakarta.persistence.EntityManager;
 
-import java.text.DateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -102,7 +98,7 @@ public class NotificationController {
 
         List<Exam> exams = new ArrayList<>();
         if (student != null && student.getSchoolClass() != null) {
-            exams = student.getSchoolClass().getLessonPlan().stream().flatMap(s -> s.getExams().stream()).filter(Objects::nonNull).toList();
+            exams = student.getSchoolClass().getLesson().stream().flatMap(s -> s.getExams().stream()).filter(Objects::nonNull).toList();
         }
         for (Exam exam : exams) {
             List<Exam> examHistory = new ArrayList<>();
@@ -131,18 +127,18 @@ public class NotificationController {
             }
         }
 
-        List<LessonPlan> lessons = new ArrayList<>();
+        List<Lesson> lessons = new ArrayList<>();
         if (student != null && student.getSchoolClass() != null) {
-            lessons = student.getSchoolClass().getLessonPlan();
+            lessons = student.getSchoolClass().getLesson();
         }
-        for (LessonPlan lesson : lessons) {
-            List<LessonPlan> lessonHistory = new ArrayList<>();
-            HashMap<Object, LocalDateTime> history = getHistory(LessonPlan.class, lesson.getId());
+        for (Lesson lesson : lessons) {
+            List<Lesson> lessonHistory = new ArrayList<>();
+            HashMap<Object, LocalDateTime> history = getHistory(Lesson.class, lesson.getId());
             for (Object o : history.keySet()) {
-                lessonHistory.add((LessonPlan) o);
+                lessonHistory.add((Lesson) o);
             }
             for (int i = 0; i < lessonHistory.size(); i++) {
-                LessonPlan target = lessonHistory.get(i);
+                Lesson target = lessonHistory.get(i);
                 Notification notification = new Notification();
                 String part = "updatedLesson";
                 if (target.getActive().equals(false)) {

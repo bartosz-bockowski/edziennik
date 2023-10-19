@@ -1,4 +1,4 @@
-package pl.edziennik.edziennik.lessonPlan;
+package pl.edziennik.edziennik.lesson;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -12,7 +12,6 @@ import pl.edziennik.edziennik.classRoom.ClassRoom;
 import pl.edziennik.edziennik.exam.Exam;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.schoolClass.SchoolClass;
-import pl.edziennik.edziennik.student.Student;
 import pl.edziennik.edziennik.subject.Subject;
 import pl.edziennik.edziennik.teacher.Teacher;
 
@@ -20,13 +19,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Getter
 @Setter
 @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
-public class LessonPlan {
+public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -49,7 +47,7 @@ public class LessonPlan {
     @Length(min = 3)
     private String topic;
     private Boolean completed = false;
-    @OneToMany(mappedBy = "lessonPlan")
+    @OneToMany(mappedBy = "lesson")
     private List<Attendance> attendance;
     private Boolean active = true;
 

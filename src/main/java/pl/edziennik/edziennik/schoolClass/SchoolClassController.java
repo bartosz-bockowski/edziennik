@@ -6,18 +6,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.classRoom.ClassRoomRepository;
+import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.lessonHour.LessonHourRepository;
-import pl.edziennik.edziennik.lessonPlan.LessonPlanRepository;
-import pl.edziennik.edziennik.lessonPlan.LessonPlan;
-import pl.edziennik.edziennik.lessonPlan.LessonPlanService;
+import pl.edziennik.edziennik.lesson.LessonPlanRepository;
+import pl.edziennik.edziennik.lesson.LessonPlanService;
 import pl.edziennik.edziennik.mark.category.MarkCategory;
 import pl.edziennik.edziennik.mark.category.MarkCategoryRepository;
 import pl.edziennik.edziennik.security.LoggedUser;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 import pl.edziennik.edziennik.teacher.TeacherRepository;
 
-import java.lang.instrument.Instrumentation;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -74,11 +73,11 @@ public class SchoolClassController {
         for (int i = 1; i < 5; i++) {
             dates.add(date.plusDays(i));
         }
-        List<LessonPlan> lessons = lessonPlanRepository.getAllBySchoolClassIdAndDateInAndActiveTrue(classId, dates);
+        List<Lesson> lessons = lessonPlanRepository.getAllBySchoolClassIdAndDateInAndActiveTrue(classId, dates);
         model.addAttribute("lessons", lessons);
         List<LessonHour> hours = lessonHourRepository.findAllByActiveTrueOrderByStartAsc();
         model.addAttribute("hours", hours);
-        List<List<LessonPlan>> plan = lessonPlanService.getPlan(hours, lessons, date);
+        List<List<Lesson>> plan = lessonPlanService.getPlan(hours, lessons, date);
         model.addAttribute("plan", plan);
         model.addAttribute("date", date);
         model.addAttribute("isStudent", loggedUser.getUser().getStudent() != null);

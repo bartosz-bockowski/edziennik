@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
-import pl.edziennik.edziennik.lessonPlan.LessonPlan;
+import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.student.Student;
 
 import jakarta.persistence.*;
@@ -22,5 +22,5 @@ public class Attendance {
     @ManyToOne
     private Student student;
     @ManyToOne
-    private LessonPlan lessonPlan;
+    private Lesson lesson;
 }

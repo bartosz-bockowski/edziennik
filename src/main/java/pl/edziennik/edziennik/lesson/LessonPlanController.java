@@ -1,4 +1,4 @@
-package pl.edziennik.edziennik.lessonPlan;
+package pl.edziennik.edziennik.lesson;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -61,30 +61,29 @@ public class LessonPlanController {
 
     @GetMapping("/{id}/create")
     public String create(@PathVariable Long id, Model model) {
-        LessonPlan lessonPlan = lessonPlanRepository.getReferenceById(id);
-        if (!loggedUser.hasAccessToSchoolClassAdmin(lessonPlan.getSchoolClass().getId())) {
+        Lesson lesson = lessonPlanRepository.getReferenceById(id);
+        if (!loggedUser.hasAccessToSchoolClassAdmin(lesson.getSchoolClass().getId())) {
             return "error/403";
         }
-        model.addAttribute("lessonPlan", lessonPlan);
+        model.addAttribute("lessonPlan", lesson);
         model.addAttribute("attendanceTypes", AttendanceType.values());
         return "lesson/create";
     }
 
     @PostMapping("/create")
-    public String create(@Valid LessonPlan lessonPlan, BindingResult result, Model model) {
+    public String create(@Valid Lesson lesson, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("lessonPlan", lessonPlan);
+            model.addAttribute("lessonPlan", lesson);
             model.addAttribute("attendanceTypes", AttendanceType.values());
             return "lesson/create";
         }
-        if (!loggedUser.hasAccessToSchoolClassAdmin(lessonPlan.getSchoolClass().getId())) {
+        if (!loggedUser.hasAccessToSchoolClassAdmin(lesson.getSchoolClass().getId())) {
             return "error/403";
         }
-        attendanceRepository.saveAll(lessonPlan.getAttendance());
-        lessonPlan.setCompleted(true);
-        lessonPlan.setCreatedBy(loggedUser.getUser().getTeacher());
-        lessonPlanRepository.save(lessonPlan);
-        return "redirect:/teacher/" + loggedUser.getUser().getTeacher().getId() + "/lessonPlan?date=" + lessonPlan.getDashDate();
+        attendanceRepository.saveAll(lesson.getAttendance());
+        lesson.setCompleted(true);
+        lessonPlanRepository.save(lesson);
+        return "redirect:/teacher/" + loggedUser.getUser().getTeacher().getId() + "/lessonPlan?date=" + lesson.getDashDate();
     }
 
     @GetMapping("/updateLesson")
@@ -98,9 +97,9 @@ public class LessonPlanController {
         if (!loggedUser.hasAccessToSchoolClassAdmin(classId)) {
             return "error/403";
         }
-        LessonPlan lesson;
+        Lesson lesson;
         if (id == null) {
-            lesson = new LessonPlan();
+            lesson = new Lesson();
         } else {
             lesson = lessonPlanRepository.getReferenceById(id);
         }
@@ -108,18 +107,18 @@ public class LessonPlanController {
         lesson.setSubject(subjectRepository.getReferenceById(subject));
 
         Teacher teacherObj = teacherRepository.getReferenceById(teacher);
-        boolean teacherFree = (id != null && teacherObj.getId().equals(lesson.getTeacher().getId())) || (id == null && teacherObj.isFree(lessonHour1, date));
+        boolean teacherFree = (id != null && teacherObj.getId().equals(lesson.getTeacher().getId()) || teacherObj.isFree(lessonHour1, date)) || (id == null && teacherObj.isFree(lessonHour1, date));
         lesson.setTeacher(teacherObj);
 
         ClassRoom classRoomObj = classRoomRepository.getReferenceById(classRoom);
-        boolean classRoomFree = (id != null && classRoomObj.getId().equals(lesson.getClassRoom().getId())) || (id == null && classRoomObj.isFree(lessonHour1, date));
+        boolean classRoomFree = (id != null && classRoomObj.getId().equals(lesson.getClassRoom().getId()) || classRoomObj.isFree(lessonHour1, date)) || (id == null && classRoomObj.isFree(lessonHour1, date));
         lesson.setClassRoom(classRoomObj);
 
         lesson.setClassRoom(classRoomRepository.getReferenceById(classRoom));
         lesson.setSchoolClass(schoolClassRepository.getReferenceById(classId));
         lesson.setLessonHour(lessonHour1);
+        lesson.setCreatedBy(loggedUser.getUser().getTeacher());
         lesson.setDate(date);
-        StringBuilder params = new StringBuilder();
         if (teacherFree && classRoomFree) {
             lessonPlanRepository.save(lesson);
         }
@@ -136,9 +135,9 @@ public class LessonPlanController {
         if (!LoggedUser.isAdmin() && (loggedUser.getUser().getTeacher() == null || (loggedUser.getUser().getTeacher() != null && loggedUser.getUser().getTeacher().getSupervisedClasses().isEmpty()))) {
             return null;
         }
-        LessonPlan lesson;
+        Lesson lesson;
         if (id == null) {
-            lesson = new LessonPlan();
+            lesson = new Lesson();
         } else {
             lesson = lessonPlanRepository.getReferenceById(id);
         }
@@ -146,11 +145,11 @@ public class LessonPlanController {
 
         Teacher teacherObj = teacherRepository.getReferenceById(teacher);
         boolean teacherChange = id != null && !teacherObj.getId().equals(lesson.getTeacher().getId());
-        boolean teacherFree = (id != null && teacherObj.getId().equals(lesson.getTeacher().getId())) || (id == null && teacherObj.isFree(lessonHour1, date));
+        boolean teacherFree = (id != null && (teacherObj.getId().equals(lesson.getTeacher().getId()) || teacherObj.isFree(lessonHour1, date))) || (id == null && teacherObj.isFree(lessonHour1, date));
 
         ClassRoom classRoomObj = classRoomRepository.getReferenceById(classRoom);
         boolean classRoomChange = id != null && !classRoomObj.getId().equals(lesson.getClassRoom().getId());
-        boolean classRoomFree = (id != null && classRoomObj.getId().equals(lesson.getClassRoom().getId())) || (id == null && classRoomObj.isFree(lessonHour1, date));
+        boolean classRoomFree = (id != null && classRoomObj.getId().equals(lesson.getClassRoom().getId()) || classRoomObj.isFree(lessonHour1, date)) || (id == null && classRoomObj.isFree(lessonHour1, date));
 
         Subject subjectObj = subjectRepository.getReferenceById(subject);
         boolean subjectChange = id != null && !subjectObj.getId().equals(lesson.getSubject().getId());
@@ -158,8 +157,6 @@ public class LessonPlanController {
         List<Integer> response = new ArrayList<>();
         if (id != null && !teacherChange && !classRoomChange && !subjectChange) {
             response.add(0);
-        } else if (teacherFree && classRoomFree) {
-            response.add(1);
         } else {
             if (!teacherFree) {
                 response.add(2);
@@ -173,7 +170,7 @@ public class LessonPlanController {
 
     @GetMapping("/{id}/removeLesson")
     public String removeLesson(@PathVariable Long id, @RequestParam(required = false) String date) {
-        LessonPlan lesson = lessonPlanRepository.getReferenceById(id);
+        Lesson lesson = lessonPlanRepository.getReferenceById(id);
         if (!loggedUser.hasAccessToSchoolClassAdmin(lesson.getSchoolClass().getId())) {
             return "error/403";
         }

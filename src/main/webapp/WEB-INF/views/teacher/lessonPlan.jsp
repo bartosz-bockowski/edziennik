@@ -11,7 +11,7 @@
 <html>
 <body>
 <jsp:include page="../layout/header.jsp"/>
-<h1><spring:message code="lessonPlan.ofTeacher"/> ${teacher.fullNameWithId}</h1>
+<h1><spring:message code="lesson.ofTeacher"/> ${teacher.fullNameWithId}</h1>
 <jsp:include page="../utils/lessonPlan.jsp"/>
 <jsp:include page="../layout/footer.jsp"/>
 </body>

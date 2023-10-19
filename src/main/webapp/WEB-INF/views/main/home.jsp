@@ -11,7 +11,7 @@
         <span class="mainPageUserHeader"><spring:message code="user.student"/></span>
         <span class="mainPageUserInfo">${loggedUser.student.fullNameWithId}</span>
         <a href="/student/${loggedUser.student.id}/marks"><spring:message code="student.marks"/></a>
-        <a href="/schoolclass/${loggedUser.student.schoolClass.id}/lessonPlan"><spring:message code="lessonPlan"/></a>
+        <a href="/schoolclass/${loggedUser.student.schoolClass.id}/lessonPlan"><spring:message code="lesson"/></a>
         <a href="/student/${loggedUser.student.id}/attendance"><spring:message code="student.attendance"/></a>
     </div>
 </c:if>
@@ -25,7 +25,7 @@
             <span class="mainPageUserHeader"><spring:message code="user.student"/></span>
             <span class="mainPageUserInfo">${loggedUser.student.fullNameWithId}</span>
             <a href="/student/${student.id}/marks"><spring:message code="student.marks"/></a>
-            <a href="/schoolclass/${student.schoolClass.id}/lessonPlan"><spring:message code="lessonPlan"/></a>
+            <a href="/schoolclass/${student.schoolClass.id}/lessonPlan"><spring:message code="lesson"/></a>
             <a href="/student/${student.id}/attendance"><spring:message code="student.attendance"/></a>
         </div>
     </c:forEach>
@@ -34,7 +34,7 @@
     <div class="mainPageUser">
         <span class="mainPageUserHeader"><spring:message code="user.teacher"/></span>
         <span class="mainPageUserInfo">${loggedUser.teacher.fullNameWithId}</span>
-        <a href="/teacher/${loggedUser.teacher.id}/lessonPlan"><spring:message code="lessonPlan"/></a>
+        <a href="/teacher/${loggedUser.teacher.id}/lessonPlan"><spring:message code="lesson"/></a>
         <a href="/teacher/${loggedUser.teacher.id}/subjects"><spring:message code="teacher.subjects"/></a>
         <a href="/teacher/${loggedUser.teacher.id}/supervisedClasses"><spring:message
                 code="teacher.supervisedClasses"/></a>
