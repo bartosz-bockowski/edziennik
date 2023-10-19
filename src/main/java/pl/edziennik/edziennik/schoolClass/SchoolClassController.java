@@ -83,7 +83,7 @@ public class SchoolClassController {
         model.addAttribute("date", date);
         model.addAttribute("isStudent", loggedUser.getUser().getStudent() != null);
         model.addAttribute("dateFormatter", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        if (LoggedUser.isAdmin()) {
+        if (loggedUser.hasAccessToSchoolClassAdmin(classId)) {
             model.addAttribute("subjects", subjectRepository.findAll());
             model.addAttribute("teachers", teacherRepository.findAll());
             model.addAttribute("classRooms", classRoomRepository.findAll());

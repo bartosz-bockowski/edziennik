@@ -62,4 +62,8 @@ public class LoggedUser {
     public Boolean hasAccessToTeacher(Long id) {
         return (getUser().getTeacher() != null && getUser().getTeacher().getId().equals(id)) || isAdmin();
     }
+
+    public Boolean hasAccessToSchoolClassAdmin(Long id) {
+        return (getUser().getTeacher() != null && getUser().getTeacher().getSupervisedClasses().stream().map(SchoolClass::getId).toList().contains(id)) || isAdmin();
+    }
 }

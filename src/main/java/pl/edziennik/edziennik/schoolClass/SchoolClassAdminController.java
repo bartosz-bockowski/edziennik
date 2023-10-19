@@ -135,11 +135,6 @@ public class SchoolClassAdminController {
         return "redirect:/admin/schoolclass/" + id + "/adminDetails";
     }
 
-    @GetMapping("/{classId}/lessonPlan")
-    public String lessonPlan(@PathVariable Long classId, @RequestParam(required = false) LocalDate date) {
-        return "redirect:/schoolclass/" + classId + "/lessonPlan?date=" + date;
-    }
-
     @GetMapping("/updateLesson")
     public String updateLesson(@RequestParam(required = false) Long classId,
                                @RequestParam(required = false) Long id,
@@ -163,7 +158,7 @@ public class SchoolClassAdminController {
         lessonPlanRepository.save(lesson);
         return "redirect:/admin/schoolclass/" + lesson.getSchoolClass().getId() + "/lessonPlan?date=" + date;
     }
-    
+
 
     @GetMapping("/{classId}/setSupervisingTeacher/{teacherId}")
     public String setSupervisingTeacher(@PathVariable Long classId, @PathVariable Long teacherId) {

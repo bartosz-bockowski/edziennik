@@ -57,6 +57,9 @@ public class LessonPlanController {
     @GetMapping("/{id}/create")
     public String create(@PathVariable Long id, Model model) {
         LessonPlan lessonPlan = lessonPlanRepository.getReferenceById(id);
+        if (!loggedUser.hasAccessToSchoolClassAdmin(lessonPlan.getSchoolClass().getId())) {
+            return "error/403";
+        }
         model.addAttribute("lessonPlan", lessonPlan);
         model.addAttribute("attendanceTypes", AttendanceType.values());
         return "lesson/create";
@@ -68,6 +71,9 @@ public class LessonPlanController {
             model.addAttribute("lessonPlan", lessonPlan);
             model.addAttribute("attendanceTypes", AttendanceType.values());
             return "lesson/create";
+        }
+        if (!loggedUser.hasAccessToSchoolClassAdmin(lessonPlan.getSchoolClass().getId())) {
+            return "error/403";
         }
         attendanceRepository.saveAll(lessonPlan.getAttendance());
         lessonPlan.setCompleted(true);
@@ -83,6 +89,9 @@ public class LessonPlanController {
                                @RequestParam(required = false) Long classRoom,
                                @RequestParam(required = false) Long lessonHour,
                                @RequestParam(required = false) LocalDate date) {
+        if (!loggedUser.hasAccessToSchoolClassAdmin(classId)) {
+            return "error/403";
+        }
         LessonPlan lesson;
         if (id == null) {
             lesson = new LessonPlan();
@@ -118,6 +127,9 @@ public class LessonPlanController {
                                                         @RequestParam Long subject,
                                                         @RequestParam Long lessonHour,
                                                         @RequestParam LocalDate date) {
+        if (!LoggedUser.isAdmin() && (loggedUser.getUser().getTeacher() == null || (loggedUser.getUser().getTeacher() != null && loggedUser.getUser().getTeacher().getSupervisedClasses().isEmpty()))) {
+            return null;
+        }
         LessonPlan lesson;
         if (id == null) {
             lesson = new LessonPlan();
@@ -156,8 +168,11 @@ public class LessonPlanController {
     @GetMapping("/{id}/removeLesson")
     public String removeLesson(@PathVariable Long id, @RequestParam(required = false) String date) {
         LessonPlan lesson = lessonPlanRepository.getReferenceById(id);
+        if (!loggedUser.hasAccessToSchoolClassAdmin(lesson.getSchoolClass().getId())) {
+            return "error/403";
+        }
         Long classId = lesson.getSchoolClass().getId();
         lessonPlanRepository.delete(lesson);
-        return "redirect:/admin/schoolclass/" + classId + "/lessonPlan?date=" + date;
+        return "redirect:/schoolclass/" + classId + "/lessonPlan?date=" + date;
     }
 }
