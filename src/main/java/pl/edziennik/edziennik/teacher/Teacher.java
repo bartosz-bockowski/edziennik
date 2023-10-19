@@ -53,6 +53,6 @@ public class Teacher {
     }
 
     public Boolean isFree(LessonHour hour, LocalDate date) {
-        return this.lessons.stream().noneMatch(f -> f.getLessonHour().getId().equals(hour.getId()) && f.getDate().equals(date));
+        return this.lessons.stream().noneMatch(f -> f.getLessonHour().getId().equals(hour.getId()) && f.getDate().equals(date) && f.getActive().equals(true));
     }
 }

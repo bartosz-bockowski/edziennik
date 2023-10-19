@@ -26,6 +26,7 @@
     <form:input type="hidden" path="lessonHour"/>
     <form:input type="hidden" path="schoolClass"/>
     <form:input type="hidden" path="teacher"/>
+    <form:input type="hidden" path="subject"/>
     <div>
         <spring:message code="lessonPlan.topic"/>
         <form:input type="text" path="topic" required="required"/>
