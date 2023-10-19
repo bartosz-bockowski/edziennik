@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.edziennik.edziennik.exam.Exam;
 import pl.edziennik.edziennik.exam.ExamRepository;
+import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 import pl.edziennik.edziennik.mark.Mark;
 import pl.edziennik.edziennik.mark.MarkRepository;
 import pl.edziennik.edziennik.security.LoggedUser;
@@ -60,16 +61,19 @@ public class NotificationController {
         if (student != null) {
             List<Mark> marks = new ArrayList<>(student.getMarks());
             for (Mark mark : marks) {
-                notifications.addAll(getHistory(mark, mark.getId()));
+                notifications.addAll(getHistory(mark, mark.getId(), null));
             }
         }
         if (student != null && student.getSchoolClass() != null) {
             List<Exam> exams = new ArrayList<>(student.getSchoolClass().getLessonPlan().stream().flatMap(s -> s.getExams().stream()).filter(Objects::nonNull).toList());
             for (Exam exam : exams) {
-                notifications.addAll(getHistory(exam, exam.getId()));
+                notifications.addAll(getHistory(exam, exam.getId(), null));
+            }
+            List<LessonPlan> lessons = new ArrayList<>(student.getSchoolClass().getLessonPlan());
+            for (LessonPlan lesson : lessons) {
+                notifications.addAll(getHistory(lesson, lesson.getId(), RevisionType.MOD));
             }
         }
-        //lessonplan changes history should be made by creating new entity lessonplanchange
         notifications = notifications.stream().sorted(Comparator.comparing(Notification::getSent).reversed()).toList();
         List<NotificationSimple> result = new ArrayList<>();
         for (Notification notification : notifications) {
@@ -127,22 +131,25 @@ public class NotificationController {
                             exam.getLesson().getDate().format(dateTimeFormatter)
                     }, LocaleContextHolder.getLocale()));
                 }
+                //editted lesson
             }
             result.add(notificationSimple);
         }
         return result;
     }
 
-    public <T> List<Notification> getHistory(T arg, Long id) {
+    public <T> List<Notification> getHistory(T arg, Long id, RevisionType type) {
         AuditReader reader = AuditReaderFactory.get(entityManager);
         AuditQuery query = reader.createQuery().forRevisionsOfEntity(arg.getClass(), false, false);
         query.add(AuditEntity.id().eq(id));
         List<Object[]> results = query.getResultList();
         List<Notification> mainResult = new ArrayList<>();
         for (Object[] result : results) {
-            DefaultRevisionEntity revisionEntity = (DefaultRevisionEntity) result[1];
-            NotificationType notificationType = getNotificationType(arg, result);
-            mainResult.add(new Notification(LocalDateTime.ofInstant(Instant.ofEpochMilli(revisionEntity.getTimestamp()), TimeZone.getDefault().toZoneId()), notificationType, id));
+            if (type == null || (type == result[2])) {
+                DefaultRevisionEntity revisionEntity = (DefaultRevisionEntity) result[1];
+                NotificationType notificationType = getNotificationType(arg, result);
+                mainResult.add(new Notification(LocalDateTime.ofInstant(Instant.ofEpochMilli(revisionEntity.getTimestamp()), TimeZone.getDefault().toZoneId()), notificationType, id));
+            }
         }
         return mainResult;
     }
@@ -163,6 +170,9 @@ public class NotificationController {
             }
             if (arg.getClass().equals(Exam.class)) {
                 notificationType = NotificationType.CANCELLED_EXAM;
+            }
+            if (arg.getClass().equals(LessonPlan.class)) {
+                notificationType = NotificationType.CHANGED_LESSON;
             }
         }
         return notificationType;

@@ -163,14 +163,7 @@ public class SchoolClassAdminController {
         lessonPlanRepository.save(lesson);
         return "redirect:/admin/schoolclass/" + lesson.getSchoolClass().getId() + "/lessonPlan?date=" + date;
     }
-
-    @GetMapping("/{id}/removeLesson")
-    public String removeLesson(@PathVariable Long id, @RequestParam(required = false) String date) {
-        LessonPlan lesson = lessonPlanRepository.getReferenceById(id);
-        Long classId = lesson.getSchoolClass().getId();
-        lessonPlanRepository.delete(lesson);
-        return "redirect:/admin/schoolclass/" + classId + "/lessonPlan?date=" + date;
-    }
+    
 
     @GetMapping("/{classId}/setSupervisingTeacher/{teacherId}")
     public String setSupervisingTeacher(@PathVariable Long classId, @PathVariable Long teacherId) {

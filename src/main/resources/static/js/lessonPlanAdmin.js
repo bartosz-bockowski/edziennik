@@ -2,7 +2,7 @@ $(document).ready(() => {
     $(".lessonAddForm button[type='submit']").on("click", async (e) => {
         e.preventDefault()
         let form = $(e.target).parent()
-        let response = await fetch("/admin/lessonplan/validateLesson?" + form.serialize())
+        let response = await fetch("/lessonplan/validateLesson?" + form.serialize())
         let res = await response.json()
         if (res.includes(1)) {
             if (confirm($("#confirmUpdate").val())) {

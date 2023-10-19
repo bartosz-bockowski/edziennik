@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.hibernate.validator.constraints.Length;
 import pl.edziennik.edziennik.attendance.Attendance;
 import pl.edziennik.edziennik.classRoom.ClassRoom;
@@ -23,6 +25,7 @@ import java.util.Map;
 @Entity
 @Getter
 @Setter
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class LessonPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
