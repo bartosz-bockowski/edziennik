@@ -82,6 +82,7 @@ public class LessonPlanController {
         }
         attendanceRepository.saveAll(lessonPlan.getAttendance());
         lessonPlan.setCompleted(true);
+        lessonPlan.setCreatedBy(loggedUser.getUser().getTeacher());
         lessonPlanRepository.save(lessonPlan);
         return "redirect:/teacher/" + loggedUser.getUser().getTeacher().getId() + "/lessonPlan?date=" + lessonPlan.getDashDate();
     }
@@ -181,6 +182,7 @@ public class LessonPlanController {
             examRepository.save(exam);
         }
         lesson.setActive(false);
+        lesson.setCreatedBy(loggedUser.getUser().getTeacher());
         lessonPlanRepository.save(lesson);
         Long classId = lesson.getSchoolClass().getId();
         return "redirect:/schoolclass/" + classId + "/lessonPlan?date=" + date;

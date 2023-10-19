@@ -7,6 +7,8 @@ import org.hibernate.envers.query.AuditQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,7 +57,6 @@ public class NotificationController {
     @ResponseBody
     @GetMapping("/getNotifications")
     public List getNotifications() {
-        AuditReader reader = AuditReaderFactory.get(entityManager);
         List<Notification> notifications = new ArrayList<>();
         User user = loggedUser.getUser();
         Student student = user.getStudent();
@@ -129,47 +130,45 @@ public class NotificationController {
                 notifications.add(notification);
             }
         }
-        for (Notification notification : notifications) {
-            System.out.println(notification.getTitle());
-            System.out.println(notification.getMessage());
-            System.out.println();
+
+        List<LessonPlan> lessons = new ArrayList<>();
+        if (student != null && student.getSchoolClass() != null) {
+            lessons = student.getSchoolClass().getLessonPlan();
         }
-//        notifications = notifications.stream().sorted(Comparator.comparing(Notification::getSent).reversed()).toList();
-//        List<NotificationSimple> result = new ArrayList<>();
-//        for (Notification notification : notifications) {
-//            NotificationSimple notificationSimple = new NotificationSimple();
-//            switch (notification.getType()) {
-//                case NEW_EXAM -> {
-//                    Exam exam = examRepository.getReferenceById(notification.getTargetId());
-//                    notificationSimple.setTitle(messageSource.getMessage("notification.newExam.title", null, LocaleContextHolder.getLocale()));
-//                    notificationSimple.setHref("/schoolclass/" + exam.getLesson().getSchoolClass().getId() + "/lessonPlan?date=" + exam.getLesson().getDate().format(dateHrefFormatter));
-//                    notificationSimple.setMessage(messageSource.getMessage("notification.newExam.message", new Object[]{
-//                            exam.getTeacher().getFullName(),
-//                            exam.getLesson().getSchoolClass().getName(),
-//                            exam.getLesson().getSubject().getName(),
-//                            exam.getName(),
-//                            exam.getLesson().getDate().format(dateTimeFormatter)
-//                    }, LocaleContextHolder.getLocale()));
-//                }
-//                case CANCELLED_EXAM -> {
-//                    Exam exam = examRepository.getReferenceById(notification.getTargetId());
-//                    notificationSimple.setTitle(messageSource.getMessage("notification.cancelledExam.title", null, LocaleContextHolder.getLocale()));
-//                    notificationSimple.setHref("/schoolclass/" + exam.getLesson().getSchoolClass().getId() + "/lessonPlan?date=" + exam.getLesson().getDate().format(dateHrefFormatter));
-//                    notificationSimple.setMessage(messageSource.getMessage("notification.cancelledExam.message", new Object[]{
-//                            exam.getTeacher().getFullName(),
-//                            exam.getLesson().getSchoolClass().getName(),
-//                            exam.getLesson().getSubject().getName(),
-//                            exam.getName(),
-//                            exam.getLesson().getDate().format(dateTimeFormatter)
-//                    }, LocaleContextHolder.getLocale()));
-//                }
-//                editted lesson
-//            }
-//            result.add(notificationSimple);
-        return null;
+        for (LessonPlan lesson : lessons) {
+            List<LessonPlan> lessonHistory = new ArrayList<>();
+            HashMap<Object, LocalDateTime> history = getHistory(LessonPlan.class, lesson.getId());
+            for (Object o : history.keySet()) {
+                lessonHistory.add((LessonPlan) o);
+            }
+            for (int i = 0; i < lessonHistory.size(); i++) {
+                LessonPlan target = lessonHistory.get(i);
+                Notification notification = new Notification();
+                String part = "updatedLesson";
+                if (target.getActive().equals(false)) {
+                    part = "cancelledLesson";
+                } else if (i == 0) {
+                    part = "newLesson";
+                }
+                notification.setTitle(messageSource.getMessage("notification." + part + ".title", null, LocaleContextHolder.getLocale()));
+                notification.setMessage(messageSource.getMessage("notification." + part + ".message", new Object[]{
+                        target.getCreatedBy().getFullName(),
+                        target.getSubject().getName(),
+                        target.getSchoolClass().getName(),
+                        target.getFormattedDate(),
+                        target.getLessonHour().getStart(),
+                        target.getLessonHour().getEnd()
+                }, LocaleContextHolder.getLocale()));
+                notification.setSent(history.values().stream().toList().get(i));
+                notification.setHref("/schoolclass/" + target.getSchoolClass().getId() + "/lessonPlan?date=" + target.getDashDate());
+                notifications.add(notification);
+            }
+        }
+
+        return notifications.stream().sorted(Comparator.comparing(Notification::getSent).reversed()).toList();
     }
 
-    public <T> LinkedHashMap<Object, LocalDateTime> getHistory(Class<?> cls, Long id) {
+    public LinkedHashMap<Object, LocalDateTime> getHistory(Class<?> cls, Long id) {
         AuditReader reader = AuditReaderFactory.get(entityManager);
         AuditQuery query = reader.createQuery().forRevisionsOfEntity(cls, false, true);
         query.add(AuditEntity.id().eq(id));

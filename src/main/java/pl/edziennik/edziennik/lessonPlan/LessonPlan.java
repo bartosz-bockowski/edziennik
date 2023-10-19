@@ -33,6 +33,8 @@ public class LessonPlan {
     @ManyToOne
     private Teacher teacher;
     @ManyToOne
+    private Teacher createdBy;
+    @ManyToOne
     private LessonHour lessonHour;
     @ManyToOne
     private ClassRoom classRoom;
