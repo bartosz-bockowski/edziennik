@@ -45,14 +45,11 @@
         <tr>
             <td>${hours.get(loop.index).start} - ${hours.get(loop.index).end}</td>
             <c:forEach items="${hour}" var="lesson">
-                <c:if test="${lesson == null}">
-                    <td>-</td>
-                </c:if>
-                <c:if test="${lesson != null}">
-                    <td>
-                            ${lesson.subject.name}<br>
-                            ${lesson.classRoom.name}<br>
-                            ${teacher == null ? lesson.teacher.fullNameWithId : lesson.schoolClass.name}<br>
+                <td>
+                    <c:if test="${lesson != null}">
+                        ${lesson.subject.name}<br>
+                        ${lesson.classRoom.name}<br>
+                        ${teacher == null ? lesson.teacher.fullNameWithId : lesson.schoolClass.name}<br>
                         <c:if test="${isTeacher}">
                             <c:if test="${now.isAfter(lesson.dateTime)}">
                                 <div>
@@ -84,8 +81,8 @@
                                 </c:if>
                             </c:if>
                         </div>
-                    </td>
-                </c:if>
+                    </c:if>
+                </td>
             </c:forEach>
         </tr>
     </c:forEach>
