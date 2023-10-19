@@ -74,7 +74,7 @@ public class SchoolClassController {
         for (int i = 1; i < 5; i++) {
             dates.add(date.plusDays(i));
         }
-        List<LessonPlan> lessons = lessonPlanRepository.getAllBySchoolClassIdAndDateIn(classId, dates);
+        List<LessonPlan> lessons = lessonPlanRepository.getAllBySchoolClassIdAndDateInAndActiveTrue(classId, dates);
         model.addAttribute("lessons", lessons);
         List<LessonHour> hours = lessonHourRepository.findAllByActiveTrueOrderByStartAsc();
         model.addAttribute("hours", hours);
