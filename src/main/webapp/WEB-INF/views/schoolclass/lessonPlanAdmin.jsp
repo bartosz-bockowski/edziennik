@@ -22,16 +22,16 @@
 <input type="hidden" id="bothNotFree" value="${bothNotFree}"/>
 <input type="hidden" id="noChanges" value="${noChanges}"/>
 <input type="hidden" id="confirmUpdate" value="${confirmUpdate}"/>
-<h1><spring:message code="lesson.ofClass"/> ${schoolClass.name}</h1>
+<h1><spring:message code="lessonPlan.ofClass"/> ${schoolClass.name}</h1>
 <table class="lessonPlanTable centerBlock">
     <thead>
     <tr>
         <td></td>
-        <td><a href="?date=${date.minusDays(7)}"><<< <spring:message code="lesson.previousWeek"/></a></td>
+        <td><a href="?date=${date.minusDays(7)}"><<< <spring:message code="lessonPlan.previousWeek"/></a></td>
         <td></td>
         <td></td>
         <td></td>
-        <td><a href="?date=${date.plusDays(7)}"><spring:message code="lesson.nextWeek"/> >>></a></td>
+        <td><a href="?date=${date.plusDays(7)}"><spring:message code="lessonPlan.nextWeek"/> >>></a></td>
     </tr>
     <tr>
         <td></td>

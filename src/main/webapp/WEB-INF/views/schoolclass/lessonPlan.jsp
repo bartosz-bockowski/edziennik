@@ -11,7 +11,7 @@
 <html>
 <body>
 <jsp:include page="../layout/header.jsp"/>
-<h1><spring:message code="lesson.ofClass"/> ${schoolClass.name}</h1>
+<h1><spring:message code="lessonPlan.ofClass"/> ${schoolClass.name}</h1>
 <jsp:include page="../utils/lessonPlan.jsp"/>
 <jsp:include page="../layout/footer.jsp"/>
 </body>

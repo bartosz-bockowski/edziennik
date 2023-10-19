@@ -5,11 +5,11 @@
     <thead>
     <tr>
         <td></td>
-        <td><a href="?date=${date.minusDays(7)}"><<< <spring:message code="lesson.previousWeek"/></a></td>
+        <td><a href="?date=${date.minusDays(7)}"><<< <spring:message code="lessonPlan.previousWeek"/></a></td>
         <td></td>
         <td></td>
         <td></td>
-        <td><a href="?date=${date.plusDays(7)}"><spring:message code="lesson.nextWeek"/> >>></a></td>
+        <td><a href="?date=${date.plusDays(7)}"><spring:message code="lessonPlan.nextWeek"/> >>></a></td>
     </tr>
     <tr>
         <td></td>
