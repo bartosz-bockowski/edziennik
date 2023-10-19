@@ -14,21 +14,21 @@ import java.time.LocalDateTime;
 @RequestMapping("/exam")
 public class ExamController {
     private final ExamRepository examRepository;
-    private final LessonRepository lessonPlanRepository;
+    private final LessonRepository lessonRepository;
     private final LoggedUser loggedUser;
 
     public ExamController(ExamRepository examRepository,
-                          LessonRepository lessonPlanRepository,
+                          LessonRepository lessonRepository,
                           LoggedUser loggedUser) {
         this.examRepository = examRepository;
-        this.lessonPlanRepository = lessonPlanRepository;
+        this.lessonRepository = lessonRepository;
         this.loggedUser = loggedUser;
     }
 
     @GetMapping("/add/{lessonId}")
     public String addExam(@PathVariable Long lessonId, Model model, @RequestParam Long teacherId, @RequestParam String date) {
         Exam exam = new Exam();
-        exam.setLesson(lessonPlanRepository.getReferenceById(lessonId));
+        exam.setLesson(lessonRepository.getReferenceById(lessonId));
         model.addAttribute("teacherId", teacherId);
         model.addAttribute("date", date);
         model.addAttribute("exam", exam);

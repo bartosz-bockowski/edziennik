@@ -27,26 +27,26 @@ import java.util.List;
 public class TeacherController {
     private final TeacherRepository teacherRepository;
     private final LoggedUser loggedUser;
-    private final LessonRepository lessonPlanRepository;
+    private final LessonRepository lessonRepository;
     private final LessonHourRepository lessonHourRepository;
-    private final LessonService lessonPlanService;
+    private final LessonService lessonService;
     private final SubjectRepository subjectRepository;
     private final ClassRoomRepository classRoomRepository;
     private final SchoolClassRepository schoolClassRepository;
 
     public TeacherController(TeacherRepository teacherRepository,
                              LoggedUser loggedUser,
-                             LessonRepository lessonPlanRepository,
+                             LessonRepository lessonRepository,
                              LessonHourRepository lessonHourRepository,
-                             LessonService lessonPlanService,
+                             LessonService lessonService,
                              SubjectRepository subjectRepository,
                              ClassRoomRepository classRoomRepository,
                              SchoolClassRepository schoolClassRepository) {
         this.teacherRepository = teacherRepository;
         this.loggedUser = loggedUser;
-        this.lessonPlanRepository = lessonPlanRepository;
+        this.lessonRepository = lessonRepository;
         this.lessonHourRepository = lessonHourRepository;
-        this.lessonPlanService = lessonPlanService;
+        this.lessonService = lessonService;
         this.subjectRepository = subjectRepository;
         this.classRoomRepository = classRoomRepository;
         this.schoolClassRepository = schoolClassRepository;
@@ -68,12 +68,12 @@ public class TeacherController {
         for (int i = 1; i < 5; i++) {
             dates.add(date.plusDays(i));
         }
-        List<Lesson> lessons = lessonPlanRepository.getAllByTeacherIdAndDateInAndActiveTrue(teacherId, dates);
+        List<Lesson> lessons = lessonRepository.getAllByTeacherIdAndDateInAndActiveTrue(teacherId, dates);
         model.addAttribute("lessons", lessons);
         List<LessonHour> hours = lessonHourRepository.findAllByActiveTrueOrderByStartAsc();
         model.addAttribute("hours", hours);
         model.addAttribute("now", LocalDateTime.now());
-        List<List<Lesson>> plan = lessonPlanService.getPlan(hours, lessons, date);
+        List<List<Lesson>> plan = lessonService.getPlan(hours, lessons, date);
         model.addAttribute("plan", plan);
         model.addAttribute("date", date);
         model.addAttribute("dateFormatter", DateTimeFormatter.ofPattern("dd.MM.yyyy"));

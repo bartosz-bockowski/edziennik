@@ -19,7 +19,7 @@
 <div><spring:message code="subject"/>: <b>${lesson.subject.name}</b></div>
 <div><spring:message code="date"/>: <b>${lesson.formattedDate}</b></div>
 <div><spring:message code="lessonHour"/>: <b>${lesson.lessonHour.id}</b></div>
-<form:form action="/lessonplan/create" method="post" modelAttribute="lesson">
+<form:form action="/lesson/create" method="post" modelAttribute="lesson">
     <form:input type="hidden" path="id"/>
     <form:input type="hidden" path="date"/>
     <form:input type="hidden" path="classRoom"/>

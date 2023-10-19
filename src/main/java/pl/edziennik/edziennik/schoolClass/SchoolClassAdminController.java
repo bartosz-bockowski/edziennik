@@ -28,7 +28,7 @@ public class SchoolClassAdminController {
     private final SchoolClassRepository schoolClassRepository;
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
-    private final LessonRepository lessonPlanRepository;
+    private final LessonRepository lessonRepository;
     private final LessonHourRepository lessonHourRepository;
     private final TeacherRepository teacherRepository;
     private final ClassRoomRepository classRoomRepository;
@@ -36,14 +36,14 @@ public class SchoolClassAdminController {
     public SchoolClassAdminController(SchoolClassRepository schoolClassRepository,
                                       StudentRepository studentRepository,
                                       SubjectRepository subjectRepository,
-                                      LessonRepository lessonPlanRepository,
+                                      LessonRepository lessonRepository,
                                       LessonHourRepository lessonHourRepository,
                                       TeacherRepository teacherRepository,
                                       ClassRoomRepository classRoomRepository) {
         this.schoolClassRepository = schoolClassRepository;
         this.studentRepository = studentRepository;
         this.subjectRepository = subjectRepository;
-        this.lessonPlanRepository = lessonPlanRepository;
+        this.lessonRepository = lessonRepository;
         this.lessonHourRepository = lessonHourRepository;
         this.teacherRepository = teacherRepository;
         this.classRoomRepository = classRoomRepository;
@@ -142,7 +142,7 @@ public class SchoolClassAdminController {
         if (id == null) {
             lesson = new Lesson();
         } else {
-            lesson = lessonPlanRepository.getReferenceById(id);
+            lesson = lessonRepository.getReferenceById(id);
         }
         lesson.setSubject(subjectRepository.getReferenceById(subject));
         lesson.setTeacher(teacherRepository.getReferenceById(teacher));
@@ -150,7 +150,7 @@ public class SchoolClassAdminController {
         lesson.setSchoolClass(schoolClassRepository.getReferenceById(classId));
         lesson.setLessonHour(lessonHourRepository.getReferenceById(lessonHour));
         lesson.setDate(date);
-        lessonPlanRepository.save(lesson);
+        lessonRepository.save(lesson);
         return "redirect:/admin/schoolclass/" + lesson.getSchoolClass().getId() + "/lessonPlan?date=" + date;
     }
 

@@ -28,33 +28,33 @@ import java.util.List;
 @RequestMapping("/schoolclass")
 public class SchoolClassController {
     private final SchoolClassRepository schoolClassRepository;
-    private final LessonRepository lessonPlanRepository;
+    private final LessonRepository lessonRepository;
     private final LessonHourRepository lessonHourRepository;
     private final ClassRoomRepository classRoomRepository;
     private final TeacherRepository teacherRepository;
     private final SubjectRepository subjectRepository;
     private final MarkCategoryRepository markCategoryRepository;
     private final LoggedUser loggedUser;
-    private final LessonService lessonPlanService;
+    private final LessonService lessonService;
 
     public SchoolClassController(SchoolClassRepository schoolClassRepository,
-                                 LessonRepository lessonPlanRepository,
+                                 LessonRepository lessonRepository,
                                  LessonHourRepository lessonHourRepository,
                                  ClassRoomRepository classRoomRepository,
                                  TeacherRepository teacherRepository,
                                  SubjectRepository subjectRepository,
                                  MarkCategoryRepository markCategoryRepository,
                                  LoggedUser loggedUser,
-                                 LessonService lessonPlanService) {
+                                 LessonService lessonService) {
         this.schoolClassRepository = schoolClassRepository;
-        this.lessonPlanRepository = lessonPlanRepository;
+        this.lessonRepository = lessonRepository;
         this.lessonHourRepository = lessonHourRepository;
         this.classRoomRepository = classRoomRepository;
         this.teacherRepository = teacherRepository;
         this.subjectRepository = subjectRepository;
         this.markCategoryRepository = markCategoryRepository;
         this.loggedUser = loggedUser;
-        this.lessonPlanService = lessonPlanService;
+        this.lessonService = lessonService;
     }
 
     @GetMapping("/{classId}/lessonPlan")
@@ -73,11 +73,11 @@ public class SchoolClassController {
         for (int i = 1; i < 5; i++) {
             dates.add(date.plusDays(i));
         }
-        List<Lesson> lessons = lessonPlanRepository.getAllBySchoolClassIdAndDateInAndActiveTrue(classId, dates);
+        List<Lesson> lessons = lessonRepository.getAllBySchoolClassIdAndDateInAndActiveTrue(classId, dates);
         model.addAttribute("lessons", lessons);
         List<LessonHour> hours = lessonHourRepository.findAllByActiveTrueOrderByStartAsc();
         model.addAttribute("hours", hours);
-        List<List<Lesson>> plan = lessonPlanService.getPlan(hours, lessons, date);
+        List<List<Lesson>> plan = lessonService.getPlan(hours, lessons, date);
         model.addAttribute("plan", plan);
         model.addAttribute("date", date);
         model.addAttribute("isStudent", loggedUser.getUser().getStudent() != null);

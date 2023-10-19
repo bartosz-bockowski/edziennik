@@ -27,9 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/lessonplan")
+@RequestMapping("/lesson")
 public class LessonController {
-    private final LessonRepository lessonPlanRepository;
+    private final LessonRepository lessonRepository;
     private final AttendanceRepository attendanceRepository;
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
@@ -39,7 +39,7 @@ public class LessonController {
     private final LoggedUser loggedUser;
     private final ExamRepository examRepository;
 
-    public LessonController(LessonRepository lessonPlanRepository,
+    public LessonController(LessonRepository lessonRepository,
                             AttendanceRepository attendanceRepository,
                             SubjectRepository subjectRepository,
                             TeacherRepository teacherRepository,
@@ -48,7 +48,7 @@ public class LessonController {
                             LessonHourRepository lessonHourRepository,
                             LoggedUser loggedUser,
                             ExamRepository examRepository) {
-        this.lessonPlanRepository = lessonPlanRepository;
+        this.lessonRepository = lessonRepository;
         this.attendanceRepository = attendanceRepository;
         this.subjectRepository = subjectRepository;
         this.teacherRepository = teacherRepository;
@@ -61,11 +61,11 @@ public class LessonController {
 
     @GetMapping("/{id}/create")
     public String create(@PathVariable Long id, Model model) {
-        Lesson lesson = lessonPlanRepository.getReferenceById(id);
+        Lesson lesson = lessonRepository.getReferenceById(id);
         if (!loggedUser.hasAccessToSchoolClassAdmin(lesson.getSchoolClass().getId())) {
             return "error/403";
         }
-        model.addAttribute("lessonPlan", lesson);
+        model.addAttribute("lesson", lesson);
         model.addAttribute("attendanceTypes", AttendanceType.values());
         return "lesson/create";
     }
@@ -73,7 +73,7 @@ public class LessonController {
     @PostMapping("/create")
     public String create(@Valid Lesson lesson, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("lessonPlan", lesson);
+            model.addAttribute("lesson", lesson);
             model.addAttribute("attendanceTypes", AttendanceType.values());
             return "lesson/create";
         }
@@ -82,7 +82,7 @@ public class LessonController {
         }
         attendanceRepository.saveAll(lesson.getAttendance());
         lesson.setCompleted(true);
-        lessonPlanRepository.save(lesson);
+        lessonRepository.save(lesson);
         return "redirect:/teacher/" + loggedUser.getUser().getTeacher().getId() + "/lessonPlan?date=" + lesson.getDashDate();
     }
 
@@ -101,7 +101,7 @@ public class LessonController {
         if (id == null) {
             lesson = new Lesson();
         } else {
-            lesson = lessonPlanRepository.getReferenceById(id);
+            lesson = lessonRepository.getReferenceById(id);
         }
         LessonHour lessonHour1 = lessonHourRepository.getReferenceById(lessonHour);
         lesson.setSubject(subjectRepository.getReferenceById(subject));
@@ -120,7 +120,7 @@ public class LessonController {
         lesson.setCreatedBy(loggedUser.getUser().getTeacher());
         lesson.setDate(date);
         if (teacherFree && classRoomFree) {
-            lessonPlanRepository.save(lesson);
+            lessonRepository.save(lesson);
         }
         return "redirect:/schoolclass/" + lesson.getSchoolClass().getId() + "/lessonPlan?date=" + date;
     }
@@ -139,7 +139,7 @@ public class LessonController {
         if (id == null) {
             lesson = new Lesson();
         } else {
-            lesson = lessonPlanRepository.getReferenceById(id);
+            lesson = lessonRepository.getReferenceById(id);
         }
         LessonHour lessonHour1 = lessonHourRepository.getReferenceById(lessonHour);
 
@@ -170,7 +170,7 @@ public class LessonController {
 
     @GetMapping("/{id}/removeLesson")
     public String removeLesson(@PathVariable Long id, @RequestParam(required = false) String date) {
-        Lesson lesson = lessonPlanRepository.getReferenceById(id);
+        Lesson lesson = lessonRepository.getReferenceById(id);
         if (!loggedUser.hasAccessToSchoolClassAdmin(lesson.getSchoolClass().getId())) {
             return "error/403";
         }
@@ -180,7 +180,7 @@ public class LessonController {
         }
         lesson.setActive(false);
         lesson.setCreatedBy(loggedUser.getUser().getTeacher());
-        lessonPlanRepository.save(lesson);
+        lessonRepository.save(lesson);
         Long classId = lesson.getSchoolClass().getId();
         return "redirect:/schoolclass/" + classId + "/lessonPlan?date=" + date;
     }

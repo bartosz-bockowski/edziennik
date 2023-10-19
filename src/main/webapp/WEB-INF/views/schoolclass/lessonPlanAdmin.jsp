@@ -69,7 +69,7 @@
             <c:forEach items="${hour}" var="lesson" varStatus="hourLoop">
                 <td class="${lesson == null ? 'null' : 'present'}LessonTd">
                     <br/>
-                    <form method="get" action="/lessonplan/updateLesson?date=${date}" class="lessonAddForm">
+                    <form method="get" action="/lesson/updateLesson?date=${date}" class="lessonAddForm">
                         <input type="hidden" name="id" value="${lesson.id}"/>
                         <input type="hidden" name="classId" value="${schoolClass.id}"/>
                         <input type="hidden" name="lessonHour" value="${hours.get(loop.index).id}"/>
@@ -103,7 +103,7 @@
                     <c:if test="${lesson != null}">
                         <spring:message code="lesson.confirm.delete" var="msgDelete"/>
                         <form msg="${msgDelete}" class="confirmForm" method="get"
-                              action="/lessonplan/${lesson.id}/removeLesson">
+                              action="/lesson/${lesson.id}/removeLesson">
                             <input type="hidden" name="date" value="${date}"/>
                             <button type="submit"><spring:message code="remove"/></button>
                         </form>

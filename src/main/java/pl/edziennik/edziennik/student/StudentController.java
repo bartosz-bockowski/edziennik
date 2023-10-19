@@ -65,12 +65,12 @@ public class StudentController {
     }
 
     @GetMapping("/{studentId}/attendance")
-    public String attendance(@PathVariable Long studentId, @QuerydslPredicate(root = Attendance.class) Predicate predicate, @SortDefault("id") Pageable pageable) {
+    public String attendance(@PathVariable Long studentId, @QuerydslPredicate(root = Attendance.class) Predicate predicate) {
         QAttendance qAttendance = QAttendance.attendance;
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(qAttendance.student.id.eq(studentId));
-        builder.and(qAttendance.lessonPlan.date.before(LocalDate.now().plusDays(1)));
-        builder.and(qAttendance.lessonPlan.lessonHour.start.before(LocalTime.now()));
+        builder.and(qAttendance.lesson.date.before(LocalDate.now().plusDays(1)));
+        builder.and(qAttendance.lesson.lessonHour.start.before(LocalTime.now()));
         builder.and(predicate);
         Iterable<Attendance> attendanceList = attendanceRepository.findAll(builder);
         System.out.println(attendanceList);

@@ -54,11 +54,11 @@
                             <c:if test="${now.isAfter(lesson.dateTime)}">
                                 <div>
                                     <c:if test="${lesson.completed}">
-                                        <a href="/lessonplan/${lesson.id}/create"><spring:message
+                                        <a href="/lesson/${lesson.id}/create"><spring:message
                                                 code="lesson.edit"/></a>
                                     </c:if>
                                     <c:if test="${!lesson.completed}">
-                                        <a href="/lessonplan/${lesson.id}/create"><spring:message
+                                        <a href="/lesson/${lesson.id}/create"><spring:message
                                                 code="lesson.complete"/></a>
                                     </c:if>
                                 </div>
