@@ -24,5 +24,6 @@ public class LessonHour {
     private LocalTime end;
     @OneToMany(mappedBy = "lessonHour")
     private List<LessonPlan> lessonPlans;
+    private int number = 1;
     private boolean active = true;
 }

@@ -44,7 +44,6 @@ public class ExamController {
         }
         exam.setTeacher(loggedUser.getUser().getTeacher());
         exam.setCreated(LocalDateTime.now());
-        LessonPlan lessonPlan = exam.getLesson();
         examRepository.save(exam);
         return "redirect:/teacher/" + teacherId + "/lessonPlan?date=" + date;
     }
