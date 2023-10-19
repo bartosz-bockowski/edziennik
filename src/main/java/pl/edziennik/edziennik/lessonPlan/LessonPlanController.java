@@ -11,6 +11,8 @@ import pl.edziennik.edziennik.attendance.AttendanceRepository;
 import pl.edziennik.edziennik.attendance.AttendanceType;
 import pl.edziennik.edziennik.classRoom.ClassRoom;
 import pl.edziennik.edziennik.classRoom.ClassRoomRepository;
+import pl.edziennik.edziennik.exam.Exam;
+import pl.edziennik.edziennik.exam.ExamRepository;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.lessonHour.LessonHourRepository;
 import pl.edziennik.edziennik.schoolClass.SchoolClassRepository;
@@ -35,6 +37,7 @@ public class LessonPlanController {
     private final SchoolClassRepository schoolClassRepository;
     private final LessonHourRepository lessonHourRepository;
     private final LoggedUser loggedUser;
+    private final ExamRepository examRepository;
 
     public LessonPlanController(LessonPlanRepository lessonPlanRepository,
                                 AttendanceRepository attendanceRepository,
@@ -43,7 +46,8 @@ public class LessonPlanController {
                                 ClassRoomRepository classRoomRepository,
                                 SchoolClassRepository schoolClassRepository,
                                 LessonHourRepository lessonHourRepository,
-                                LoggedUser loggedUser) {
+                                LoggedUser loggedUser,
+                                ExamRepository examRepository) {
         this.lessonPlanRepository = lessonPlanRepository;
         this.attendanceRepository = attendanceRepository;
         this.subjectRepository = subjectRepository;
@@ -52,6 +56,7 @@ public class LessonPlanController {
         this.schoolClassRepository = schoolClassRepository;
         this.lessonHourRepository = lessonHourRepository;
         this.loggedUser = loggedUser;
+        this.examRepository = examRepository;
     }
 
     @GetMapping("/{id}/create")
@@ -171,8 +176,13 @@ public class LessonPlanController {
         if (!loggedUser.hasAccessToSchoolClassAdmin(lesson.getSchoolClass().getId())) {
             return "error/403";
         }
+        for (Exam exam : lesson.getExams().stream().filter(f -> f.getActive().equals(true)).toList()) {
+            exam.setActive(false);
+            examRepository.save(exam);
+        }
+        lesson.setActive(false);
+        lessonPlanRepository.save(lesson);
         Long classId = lesson.getSchoolClass().getId();
-        lessonPlanRepository.delete(lesson);
         return "redirect:/schoolclass/" + classId + "/lessonPlan?date=" + date;
     }
 }
