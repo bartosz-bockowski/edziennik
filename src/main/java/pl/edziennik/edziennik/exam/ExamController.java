@@ -5,8 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.edziennik.edziennik.lessonPlan.LessonPlan;
-import pl.edziennik.edziennik.lessonPlan.LessonPlanRepository;
+import pl.edziennik.edziennik.lesson.LessonRepository;
 import pl.edziennik.edziennik.security.LoggedUser;
 
 import java.time.LocalDateTime;
@@ -15,21 +14,21 @@ import java.time.LocalDateTime;
 @RequestMapping("/exam")
 public class ExamController {
     private final ExamRepository examRepository;
-    private final LessonPlanRepository lessonPlanRepository;
+    private final LessonRepository lessonRepository;
     private final LoggedUser loggedUser;
 
     public ExamController(ExamRepository examRepository,
-                          LessonPlanRepository lessonPlanRepository,
+                          LessonRepository lessonRepository,
                           LoggedUser loggedUser) {
         this.examRepository = examRepository;
-        this.lessonPlanRepository = lessonPlanRepository;
+        this.lessonRepository = lessonRepository;
         this.loggedUser = loggedUser;
     }
 
     @GetMapping("/add/{lessonId}")
     public String addExam(@PathVariable Long lessonId, Model model, @RequestParam Long teacherId, @RequestParam String date) {
         Exam exam = new Exam();
-        exam.setLesson(lessonPlanRepository.getReferenceById(lessonId));
+        exam.setLesson(lessonRepository.getReferenceById(lessonId));
         model.addAttribute("teacherId", teacherId);
         model.addAttribute("date", date);
         model.addAttribute("exam", exam);

@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.edziennik.edziennik.classRoom.ClassRoomRepository;
+import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.lessonHour.LessonHourRepository;
-import pl.edziennik.edziennik.lessonPlan.LessonPlan;
-import pl.edziennik.edziennik.lessonPlan.LessonPlanRepository;
-import pl.edziennik.edziennik.lessonPlan.LessonPlanService;
+import pl.edziennik.edziennik.lesson.LessonRepository;
+import pl.edziennik.edziennik.lesson.LessonService;
 import pl.edziennik.edziennik.schoolClass.SchoolClassRepository;
 import pl.edziennik.edziennik.security.LoggedUser;
 import pl.edziennik.edziennik.subject.SubjectRepository;
@@ -27,26 +27,26 @@ import java.util.List;
 public class TeacherController {
     private final TeacherRepository teacherRepository;
     private final LoggedUser loggedUser;
-    private final LessonPlanRepository lessonPlanRepository;
+    private final LessonRepository lessonRepository;
     private final LessonHourRepository lessonHourRepository;
-    private final LessonPlanService lessonPlanService;
+    private final LessonService lessonService;
     private final SubjectRepository subjectRepository;
     private final ClassRoomRepository classRoomRepository;
     private final SchoolClassRepository schoolClassRepository;
 
     public TeacherController(TeacherRepository teacherRepository,
                              LoggedUser loggedUser,
-                             LessonPlanRepository lessonPlanRepository,
+                             LessonRepository lessonRepository,
                              LessonHourRepository lessonHourRepository,
-                             LessonPlanService lessonPlanService,
+                             LessonService lessonService,
                              SubjectRepository subjectRepository,
                              ClassRoomRepository classRoomRepository,
                              SchoolClassRepository schoolClassRepository) {
         this.teacherRepository = teacherRepository;
         this.loggedUser = loggedUser;
-        this.lessonPlanRepository = lessonPlanRepository;
+        this.lessonRepository = lessonRepository;
         this.lessonHourRepository = lessonHourRepository;
-        this.lessonPlanService = lessonPlanService;
+        this.lessonService = lessonService;
         this.subjectRepository = subjectRepository;
         this.classRoomRepository = classRoomRepository;
         this.schoolClassRepository = schoolClassRepository;
@@ -68,12 +68,12 @@ public class TeacherController {
         for (int i = 1; i < 5; i++) {
             dates.add(date.plusDays(i));
         }
-        List<LessonPlan> lessons = lessonPlanRepository.getAllByTeacherIdAndDateInAndActiveTrue(teacherId, dates);
+        List<Lesson> lessons = lessonRepository.getAllByTeacherIdAndDateInAndActiveTrue(teacherId, dates);
         model.addAttribute("lessons", lessons);
         List<LessonHour> hours = lessonHourRepository.findAllByActiveTrueOrderByStartAsc();
         model.addAttribute("hours", hours);
         model.addAttribute("now", LocalDateTime.now());
-        List<List<LessonPlan>> plan = lessonPlanService.getPlan(hours, lessons, date);
+        List<List<Lesson>> plan = lessonService.getPlan(hours, lessons, date);
         model.addAttribute("plan", plan);
         model.addAttribute("date", date);
         model.addAttribute("dateFormatter", DateTimeFormatter.ofPattern("dd.MM.yyyy"));

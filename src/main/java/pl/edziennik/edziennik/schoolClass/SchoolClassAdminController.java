@@ -6,25 +6,20 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.SortDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.classRoom.ClassRoomRepository;
+import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.lessonHour.LessonHourRepository;
-import pl.edziennik.edziennik.lessonPlan.LessonPlan;
-import pl.edziennik.edziennik.lessonPlan.LessonPlanRepository;
+import pl.edziennik.edziennik.lesson.LessonRepository;
 import pl.edziennik.edziennik.student.Student;
 import pl.edziennik.edziennik.student.StudentRepository;
 import pl.edziennik.edziennik.subject.Subject;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 import pl.edziennik.edziennik.teacher.TeacherRepository;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 
 @Controller
@@ -33,7 +28,7 @@ public class SchoolClassAdminController {
     private final SchoolClassRepository schoolClassRepository;
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
-    private final LessonPlanRepository lessonPlanRepository;
+    private final LessonRepository lessonRepository;
     private final LessonHourRepository lessonHourRepository;
     private final TeacherRepository teacherRepository;
     private final ClassRoomRepository classRoomRepository;
@@ -41,14 +36,14 @@ public class SchoolClassAdminController {
     public SchoolClassAdminController(SchoolClassRepository schoolClassRepository,
                                       StudentRepository studentRepository,
                                       SubjectRepository subjectRepository,
-                                      LessonPlanRepository lessonPlanRepository,
+                                      LessonRepository lessonRepository,
                                       LessonHourRepository lessonHourRepository,
                                       TeacherRepository teacherRepository,
                                       ClassRoomRepository classRoomRepository) {
         this.schoolClassRepository = schoolClassRepository;
         this.studentRepository = studentRepository;
         this.subjectRepository = subjectRepository;
-        this.lessonPlanRepository = lessonPlanRepository;
+        this.lessonRepository = lessonRepository;
         this.lessonHourRepository = lessonHourRepository;
         this.teacherRepository = teacherRepository;
         this.classRoomRepository = classRoomRepository;
@@ -143,11 +138,11 @@ public class SchoolClassAdminController {
                                @RequestParam(required = false) Long classRoom,
                                @RequestParam(required = false) Long lessonHour,
                                @RequestParam(required = false) LocalDate date) {
-        LessonPlan lesson;
+        Lesson lesson;
         if (id == null) {
-            lesson = new LessonPlan();
+            lesson = new Lesson();
         } else {
-            lesson = lessonPlanRepository.getReferenceById(id);
+            lesson = lessonRepository.getReferenceById(id);
         }
         lesson.setSubject(subjectRepository.getReferenceById(subject));
         lesson.setTeacher(teacherRepository.getReferenceById(teacher));
@@ -155,7 +150,7 @@ public class SchoolClassAdminController {
         lesson.setSchoolClass(schoolClassRepository.getReferenceById(classId));
         lesson.setLessonHour(lessonHourRepository.getReferenceById(lessonHour));
         lesson.setDate(date);
-        lessonPlanRepository.save(lesson);
+        lessonRepository.save(lesson);
         return "redirect:/admin/schoolclass/" + lesson.getSchoolClass().getId() + "/lessonPlan?date=" + date;
     }
 

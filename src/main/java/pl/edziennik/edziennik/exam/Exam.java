@@ -4,13 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
-import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 
 import jakarta.persistence.*;
+import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.teacher.Teacher;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -25,6 +24,6 @@ public class Exam {
     @ManyToOne
     private Teacher teacher;
     @ManyToOne
-    private LessonPlan lesson;
+    private Lesson lesson;
     private Boolean active = true;
 }

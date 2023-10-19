@@ -1,4 +1,4 @@
-package pl.edziennik.edziennik.lessonPlan;
+package pl.edziennik.edziennik.lesson;
 
 import org.springframework.stereotype.Service;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LessonPlanService {
-    public List<List<LessonPlan>> getPlan(List<LessonHour> hours, List<LessonPlan> lessons, LocalDate date) {
-        List<List<LessonPlan>> plan = new ArrayList<>();
+public class LessonService {
+    public List<List<Lesson>> getPlan(List<LessonHour> hours, List<Lesson> lessons, LocalDate date) {
+        List<List<Lesson>> plan = new ArrayList<>();
         for (LessonHour hour : hours) {
-            List<LessonPlan> day = new ArrayList<>();
+            List<Lesson> day = new ArrayList<>();
             for (int j = 0; j < 5; j++) {
                 int finalJ = j;
-                List<LessonPlan> l = lessons.stream().filter(lesson -> lesson.getDate().equals(date.plusDays(finalJ)) && lesson.getLessonHour().equals(hour)).toList();
+                List<Lesson> l = lessons.stream().filter(lesson -> lesson.getDate().equals(date.plusDays(finalJ)) && lesson.getLessonHour().equals(hour)).toList();
                 if (l.isEmpty()) {
                     day.add(null);
                 } else {

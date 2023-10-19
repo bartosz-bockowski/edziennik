@@ -4,8 +4,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
-import pl.edziennik.edziennik.lessonPlan.LessonPlan;
 import pl.edziennik.edziennik.schoolClass.SchoolClass;
 import pl.edziennik.edziennik.security.user.User;
 
@@ -34,7 +34,7 @@ public class Teacher {
     @ManyToMany
     private List<SchoolClass> supervisedClasses = new ArrayList<>();
     @OneToMany(mappedBy = "teacher")
-    private List<LessonPlan> lessons;
+    private List<Lesson> lessons;
     private boolean active = true;
     @ManyToMany(mappedBy = "teachers")
     List<Subject> subjects;

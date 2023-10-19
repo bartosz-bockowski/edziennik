@@ -4,11 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import pl.edziennik.edziennik.lessonPlan.LessonPlan;
+import pl.edziennik.edziennik.lesson.Lesson;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -23,7 +21,7 @@ public class LessonHour {
     @NotNull
     private LocalTime end;
     @OneToMany(mappedBy = "lessonHour")
-    private List<LessonPlan> lessonPlans;
+    private List<Lesson> lessons;
     private int number = 1;
     private boolean active = true;
 }

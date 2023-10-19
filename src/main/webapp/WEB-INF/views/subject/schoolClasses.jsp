@@ -28,7 +28,7 @@
         <td>${schoolclass.name}</td>
         <td><spring:message code="${schoolclass.active}"/></td>
         <td>
-            <a href="/schoolclass/${schoolclass.id}/lessonPlan"><spring:message code="lessonPlan"/></a>
+            <a href="/schoolclass/${schoolclass.id}/lesson"><spring:message code="lessonPlan"/></a>
             <a href="/schoolclass/${schoolclass.id}/marks/${subject.id}"><spring:message code="schoolClass.marks"/></a>
         </td>
     </tr>

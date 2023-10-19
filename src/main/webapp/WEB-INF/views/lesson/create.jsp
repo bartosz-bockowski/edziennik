@@ -14,12 +14,12 @@
 <html>
 <body>
 <jsp:include page="../layout/header.jsp"/>
-<h1><spring:message code="lessonPlan.creation"/></h1>
-<div><spring:message code="schoolClass.name"/>: <b>${lessonPlan.schoolClass.name}</b></div>
-<div><spring:message code="subject"/>: <b>${lessonPlan.subject.name}</b></div>
-<div><spring:message code="date"/>: <b>${lessonPlan.formattedDate}</b></div>
-<div><spring:message code="lessonHour"/>: <b>${lessonPlan.lessonHour.id}</b></div>
-<form:form action="/lessonplan/create" method="post" modelAttribute="lessonPlan">
+<h1><spring:message code="lesson.creation"/></h1>
+<div><spring:message code="schoolClass.name"/>: <b>${lesson.schoolClass.name}</b></div>
+<div><spring:message code="subject"/>: <b>${lesson.subject.name}</b></div>
+<div><spring:message code="date"/>: <b>${lesson.formattedDate}</b></div>
+<div><spring:message code="lessonHour"/>: <b>${lesson.lessonHour.id}</b></div>
+<form:form action="/lesson/create" method="post" modelAttribute="lesson">
     <form:input type="hidden" path="id"/>
     <form:input type="hidden" path="date"/>
     <form:input type="hidden" path="classRoom"/>
@@ -27,29 +27,30 @@
     <form:input type="hidden" path="schoolClass"/>
     <form:input type="hidden" path="teacher"/>
     <form:input type="hidden" path="subject"/>
+    <form:input type="hidden" path="createdBy"/>
     <div>
-        <spring:message code="lessonPlan.topic"/>
+        <spring:message code="lesson.topic"/>
         <form:input type="text" path="topic" required="required"/>
     </div>
-    <h3><spring:message code="lessonPlan.attendance"/></h3>
+    <h3><spring:message code="lesson.attendance"/></h3>
     <table class="centerBlock mainTable">
         <thead>
         <tr>
             <th><spring:message code="student"/></th>
-            <th><spring:message code="lessonPlan.studentPresence"/></th>
+            <th><spring:message code="lesson.studentPresence"/></th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${lessonPlan.schoolClass.students}" var="student" varStatus="loop">
+        <c:forEach items="${lesson.schoolClass.students}" var="student" varStatus="loop">
             <tr>
                 <td>${student.fullNameWithId}</td>
                 <td>
                     <form:input type="hidden" path="attendance[${loop.index}].id"
-                                value="${lessonPlan.getAttendanceIdByStudentId(student.id)}"/>
+                                value="${lesson.getAttendanceIdByStudentId(student.id)}"/>
                     <form:input type="hidden" path="attendance[${loop.index}].student"
                                 value="${student.id}"/>
-                    <form:input type="hidden" path="attendance[${loop.index}].lessonPlan"
-                                value="${lessonPlan.id}"/>
+                    <form:input type="hidden" path="attendance[${loop.index}].lesson"
+                                value="${lesson.id}"/>
                     <c:forEach items="${attendanceTypes}" var="attendanceType" varStatus="typeLoop">
                         <label class="blockRadioLabel">
                             <div><spring:message code="attendanceType.${attendanceType.name()}"/>

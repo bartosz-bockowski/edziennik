@@ -12,11 +12,11 @@
 <html>
 <body>
 <jsp:include page="../layout/header.jsp"/>
-<spring:message code="lessonPlan.teacherNotFree" var="teacherNotFree"/>
-<spring:message code="lessonPlan.classRoomNotFree" var="classRoomNotFree"/>
-<spring:message code="lessonPlan.bothNotFree" var="bothNotFree"/>
-<spring:message code="lessonPlan.noChanges" var="noChanges"/>
-<spring:message code="lessonPlan.confirm.updateLesson" var="confirmUpdate"/>
+<spring:message code="lesson.teacherNotFree" var="teacherNotFree"/>
+<spring:message code="lesson.classRoomNotFree" var="classRoomNotFree"/>
+<spring:message code="lesson.bothNotFree" var="bothNotFree"/>
+<spring:message code="lesson.noChanges" var="noChanges"/>
+<spring:message code="lesson.confirm.updateLesson" var="confirmUpdate"/>
 <input type="hidden" id="teacherNotFree" value="${teacherNotFree}"/>
 <input type="hidden" id="classRoomNotFree" value="${classRoomNotFree}"/>
 <input type="hidden" id="bothNotFree" value="${bothNotFree}"/>
@@ -69,7 +69,7 @@
             <c:forEach items="${hour}" var="lesson" varStatus="hourLoop">
                 <td class="${lesson == null ? 'null' : 'present'}LessonTd">
                     <br/>
-                    <form method="get" action="/lessonplan/updateLesson?date=${date}" class="lessonAddForm">
+                    <form method="get" action="/lesson/updateLesson?date=${date}" class="lessonAddForm">
                         <input type="hidden" name="id" value="${lesson.id}"/>
                         <input type="hidden" name="classId" value="${schoolClass.id}"/>
                         <input type="hidden" name="lessonHour" value="${hours.get(loop.index).id}"/>
@@ -101,9 +101,9 @@
                         <button type="submit"><spring:message code="save"/></button>
                     </form>
                     <c:if test="${lesson != null}">
-                        <spring:message code="lessonPlan.confirm.delete" var="msgDelete"/>
+                        <spring:message code="lesson.confirm.delete" var="msgDelete"/>
                         <form msg="${msgDelete}" class="confirmForm" method="get"
-                              action="/lessonplan/${lesson.id}/removeLesson">
+                              action="/lesson/${lesson.id}/removeLesson">
                             <input type="hidden" name="date" value="${date}"/>
                             <button type="submit"><spring:message code="remove"/></button>
                         </form>
