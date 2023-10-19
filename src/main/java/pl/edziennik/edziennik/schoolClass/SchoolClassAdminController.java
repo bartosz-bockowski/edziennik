@@ -140,40 +140,6 @@ public class SchoolClassAdminController {
         return "redirect:/schoolclass/" + classId + "/lessonPlan?date=" + date;
     }
 
-    @GetMapping("/updateLesson")
-    public String updateLesson(@RequestParam(required = false) Long classId,
-                               @RequestParam(required = false) Long id,
-                               @RequestParam(required = false) Long subject,
-                               @RequestParam(required = false) Long teacher,
-                               @RequestParam(required = false) Long classRoom,
-                               @RequestParam(required = false) Long lessonHour,
-                               @RequestParam(required = false) LocalDate date) {
-        LessonPlan lesson;
-        if (id == null) {
-            lesson = new LessonPlan();
-        } else {
-            lesson = lessonPlanRepository.getReferenceById(id);
-        }
-        lesson.setSubject(subjectRepository.getReferenceById(subject));
-        lesson.setTeacher(teacherRepository.getReferenceById(teacher));
-        lesson.setClassRoom(classRoomRepository.getReferenceById(classRoom));
-        lesson.setSchoolClass(schoolClassRepository.getReferenceById(classId));
-        lesson.setLessonHour(lessonHourRepository.getReferenceById(lessonHour));
-        lesson.setDate(date);
-        lessonPlanRepository.save(lesson);
-        return "redirect:/admin/schoolclass/" + lesson.getSchoolClass().getId() + "/lessonPlan?date=" + date;
-    }
-
-    @GetMapping("/{id}/removeLesson")
-    public String removeLesson(@PathVariable Long id, @RequestParam(required = false) String date) {
-        LessonPlan lesson = lessonPlanRepository.getReferenceById(id);
-        lesson.setActive(false);
-        lessonPlanRepository.save(lesson);
-
-        Long classId = lesson.getSchoolClass().getId();
-        return "redirect:/admin/schoolclass/" + classId + "/lessonPlan?date=" + date;
-    }
-
     @GetMapping("/{classId}/setSupervisingTeacher/{teacherId}")
     public String setSupervisingTeacher(@PathVariable Long classId, @PathVariable Long teacherId) {
         SchoolClass schoolClass = schoolClassRepository.getReferenceById(classId);
