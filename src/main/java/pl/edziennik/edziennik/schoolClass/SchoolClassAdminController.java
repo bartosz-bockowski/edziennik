@@ -167,8 +167,10 @@ public class SchoolClassAdminController {
     @GetMapping("/{id}/removeLesson")
     public String removeLesson(@PathVariable Long id, @RequestParam(required = false) String date) {
         LessonPlan lesson = lessonPlanRepository.getReferenceById(id);
+        lesson.setActive(false);
+        lessonPlanRepository.save(lesson);
+
         Long classId = lesson.getSchoolClass().getId();
-        lessonPlanRepository.delete(lesson);
         return "redirect:/admin/schoolclass/" + classId + "/lessonPlan?date=" + date;
     }
 

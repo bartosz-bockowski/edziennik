@@ -73,7 +73,6 @@ public class LessonPlanAdminController {
         lesson.setSchoolClass(schoolClassRepository.getReferenceById(classId));
         lesson.setLessonHour(lessonHour1);
         lesson.setDate(date);
-        StringBuilder params = new StringBuilder();
         if (teacherFree && classRoomFree) {
             lessonPlanRepository.save(lesson);
         }

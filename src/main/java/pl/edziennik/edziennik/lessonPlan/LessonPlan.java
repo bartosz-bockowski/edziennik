@@ -46,6 +46,7 @@ public class LessonPlan {
     private Boolean completed = false;
     @OneToMany(mappedBy = "lessonPlan")
     private List<Attendance> attendance;
+    private Boolean active = true;
 
     public Boolean hasActiveExams() {
         return !this.exams.stream().filter(Exam::getActive).toList().isEmpty();
