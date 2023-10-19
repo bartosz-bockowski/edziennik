@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LessonPlanService {
+public class LessonService {
     public List<List<Lesson>> getPlan(List<LessonHour> hours, List<Lesson> lessons, LocalDate date) {
         List<List<Lesson>> plan = new ArrayList<>();
         for (LessonHour hour : hours) {

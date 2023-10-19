@@ -10,8 +10,8 @@ import pl.edziennik.edziennik.classRoom.ClassRoomRepository;
 import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.lessonHour.LessonHourRepository;
-import pl.edziennik.edziennik.lesson.LessonPlanRepository;
-import pl.edziennik.edziennik.lesson.LessonPlanService;
+import pl.edziennik.edziennik.lesson.LessonRepository;
+import pl.edziennik.edziennik.lesson.LessonService;
 import pl.edziennik.edziennik.schoolClass.SchoolClassRepository;
 import pl.edziennik.edziennik.security.LoggedUser;
 import pl.edziennik.edziennik.subject.SubjectRepository;
@@ -27,18 +27,18 @@ import java.util.List;
 public class TeacherController {
     private final TeacherRepository teacherRepository;
     private final LoggedUser loggedUser;
-    private final LessonPlanRepository lessonPlanRepository;
+    private final LessonRepository lessonPlanRepository;
     private final LessonHourRepository lessonHourRepository;
-    private final LessonPlanService lessonPlanService;
+    private final LessonService lessonPlanService;
     private final SubjectRepository subjectRepository;
     private final ClassRoomRepository classRoomRepository;
     private final SchoolClassRepository schoolClassRepository;
 
     public TeacherController(TeacherRepository teacherRepository,
                              LoggedUser loggedUser,
-                             LessonPlanRepository lessonPlanRepository,
+                             LessonRepository lessonPlanRepository,
                              LessonHourRepository lessonHourRepository,
-                             LessonPlanService lessonPlanService,
+                             LessonService lessonPlanService,
                              SubjectRepository subjectRepository,
                              ClassRoomRepository classRoomRepository,
                              SchoolClassRepository schoolClassRepository) {

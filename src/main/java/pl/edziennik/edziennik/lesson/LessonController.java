@@ -28,8 +28,8 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/lessonplan")
-public class LessonPlanController {
-    private final LessonPlanRepository lessonPlanRepository;
+public class LessonController {
+    private final LessonRepository lessonPlanRepository;
     private final AttendanceRepository attendanceRepository;
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
@@ -39,15 +39,15 @@ public class LessonPlanController {
     private final LoggedUser loggedUser;
     private final ExamRepository examRepository;
 
-    public LessonPlanController(LessonPlanRepository lessonPlanRepository,
-                                AttendanceRepository attendanceRepository,
-                                SubjectRepository subjectRepository,
-                                TeacherRepository teacherRepository,
-                                ClassRoomRepository classRoomRepository,
-                                SchoolClassRepository schoolClassRepository,
-                                LessonHourRepository lessonHourRepository,
-                                LoggedUser loggedUser,
-                                ExamRepository examRepository) {
+    public LessonController(LessonRepository lessonPlanRepository,
+                            AttendanceRepository attendanceRepository,
+                            SubjectRepository subjectRepository,
+                            TeacherRepository teacherRepository,
+                            ClassRoomRepository classRoomRepository,
+                            SchoolClassRepository schoolClassRepository,
+                            LessonHourRepository lessonHourRepository,
+                            LoggedUser loggedUser,
+                            ExamRepository examRepository) {
         this.lessonPlanRepository = lessonPlanRepository;
         this.attendanceRepository = attendanceRepository;
         this.subjectRepository = subjectRepository;

@@ -9,8 +9,8 @@ import pl.edziennik.edziennik.classRoom.ClassRoomRepository;
 import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.lessonHour.LessonHourRepository;
-import pl.edziennik.edziennik.lesson.LessonPlanRepository;
-import pl.edziennik.edziennik.lesson.LessonPlanService;
+import pl.edziennik.edziennik.lesson.LessonRepository;
+import pl.edziennik.edziennik.lesson.LessonService;
 import pl.edziennik.edziennik.mark.category.MarkCategory;
 import pl.edziennik.edziennik.mark.category.MarkCategoryRepository;
 import pl.edziennik.edziennik.security.LoggedUser;
@@ -28,24 +28,24 @@ import java.util.List;
 @RequestMapping("/schoolclass")
 public class SchoolClassController {
     private final SchoolClassRepository schoolClassRepository;
-    private final LessonPlanRepository lessonPlanRepository;
+    private final LessonRepository lessonPlanRepository;
     private final LessonHourRepository lessonHourRepository;
     private final ClassRoomRepository classRoomRepository;
     private final TeacherRepository teacherRepository;
     private final SubjectRepository subjectRepository;
     private final MarkCategoryRepository markCategoryRepository;
     private final LoggedUser loggedUser;
-    private final LessonPlanService lessonPlanService;
+    private final LessonService lessonPlanService;
 
     public SchoolClassController(SchoolClassRepository schoolClassRepository,
-                                 LessonPlanRepository lessonPlanRepository,
+                                 LessonRepository lessonPlanRepository,
                                  LessonHourRepository lessonHourRepository,
                                  ClassRoomRepository classRoomRepository,
                                  TeacherRepository teacherRepository,
                                  SubjectRepository subjectRepository,
                                  MarkCategoryRepository markCategoryRepository,
                                  LoggedUser loggedUser,
-                                 LessonPlanService lessonPlanService) {
+                                 LessonService lessonPlanService) {
         this.schoolClassRepository = schoolClassRepository;
         this.lessonPlanRepository = lessonPlanRepository;
         this.lessonHourRepository = lessonHourRepository;

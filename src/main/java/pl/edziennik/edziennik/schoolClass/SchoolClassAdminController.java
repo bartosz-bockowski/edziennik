@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.classRoom.ClassRoomRepository;
 import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.lessonHour.LessonHourRepository;
-import pl.edziennik.edziennik.lesson.LessonPlanRepository;
+import pl.edziennik.edziennik.lesson.LessonRepository;
 import pl.edziennik.edziennik.student.Student;
 import pl.edziennik.edziennik.student.StudentRepository;
 import pl.edziennik.edziennik.subject.Subject;
@@ -28,7 +28,7 @@ public class SchoolClassAdminController {
     private final SchoolClassRepository schoolClassRepository;
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
-    private final LessonPlanRepository lessonPlanRepository;
+    private final LessonRepository lessonPlanRepository;
     private final LessonHourRepository lessonHourRepository;
     private final TeacherRepository teacherRepository;
     private final ClassRoomRepository classRoomRepository;
@@ -36,7 +36,7 @@ public class SchoolClassAdminController {
     public SchoolClassAdminController(SchoolClassRepository schoolClassRepository,
                                       StudentRepository studentRepository,
                                       SubjectRepository subjectRepository,
-                                      LessonPlanRepository lessonPlanRepository,
+                                      LessonRepository lessonPlanRepository,
                                       LessonHourRepository lessonHourRepository,
                                       TeacherRepository teacherRepository,
                                       ClassRoomRepository classRoomRepository) {
