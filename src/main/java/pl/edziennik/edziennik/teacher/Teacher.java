@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
+import pl.edziennik.edziennik.mark.Mark;
 import pl.edziennik.edziennik.schoolClass.SchoolClass;
 import pl.edziennik.edziennik.security.user.User;
 
@@ -38,6 +39,8 @@ public class Teacher {
     private boolean active = true;
     @ManyToMany(mappedBy = "teachers")
     List<Subject> subjects;
+    @OneToMany(mappedBy = "teacher")
+    private List<Mark> marks;
 
     public String getFullName() {
         return firstName + " " + lastName;

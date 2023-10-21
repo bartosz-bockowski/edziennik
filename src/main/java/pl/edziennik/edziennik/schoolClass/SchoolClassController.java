@@ -16,6 +16,7 @@ import pl.edziennik.edziennik.mark.category.MarkCategoryRepository;
 import pl.edziennik.edziennik.security.LoggedUser;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 import pl.edziennik.edziennik.teacher.TeacherRepository;
+import pl.edziennik.edziennik.utils.DateUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -60,19 +61,12 @@ public class SchoolClassController {
     @GetMapping("/{classId}/lessonPlan")
     public String lessonPlan(Model model, @RequestParam(value = "date", required = false) LocalDate date, @PathVariable Long classId) {
         model.addAttribute("schoolClass", schoolClassRepository.getReferenceById(classId));
-        if (!loggedUser.hasAccessToSchoolClass(classId)) {
+        if (!loggedUser.hasAccessToAnyStudentOfSchoolClass(classId)) {
             return "error/403";
         }
-        if (date == null) {
-            date = LocalDate.now().minusDays(LocalDate.now().getDayOfWeek().getValue() - 1);
-        } else {
-            date = date.minusDays(date.getDayOfWeek().getValue() - 1);
-        }
         List<LocalDate> dates = new ArrayList<>();
-        dates.add(date);
-        for (int i = 1; i < 5; i++) {
-            dates.add(date.plusDays(i));
-        }
+        DateUtils dateUtils = new DateUtils();
+        date = dateUtils.getDateAndListOfDatesForLessonPlan(date, dates);
         List<Lesson> lessons = lessonRepository.getAllBySchoolClassIdAndDateInAndActiveTrue(classId, dates);
         model.addAttribute("lessons", lessons);
         List<LessonHour> hours = lessonHourRepository.findAllByActiveTrueOrderByStartAsc();
@@ -91,10 +85,16 @@ public class SchoolClassController {
         return "schoolclass/lessonPlan";
     }
 
-    @GetMapping("/{classId}/marks/{subjectId}")
-    public String marks(@PathVariable Long classId, @PathVariable Long subjectId, Model model) {
-        model.addAttribute("schoolClass", schoolClassRepository.getReferenceById(classId));
-        model.addAttribute("markCategories", markCategoryRepository.findAllBySchoolClassIdAndSubjectId(classId, subjectId));
+    @GetMapping("/{schoolClassId}/marks/{subjectId}")
+    public String marks(@PathVariable Long schoolClassId, @PathVariable Long subjectId, Model model) {
+        if (!loggedUser.teachesSubject(subjectId) && !loggedUser.hasAccessToAnyStudentOfSchoolClass(schoolClassId)) {
+            return "error/403";
+        }
+        if (loggedUser.teachesSubject(subjectId)) {
+            model.addAttribute("manageMarks", true);
+        }
+        model.addAttribute("schoolClass", schoolClassRepository.getReferenceById(schoolClassId));
+        model.addAttribute("markCategories", markCategoryRepository.findAllBySchoolClassIdAndSubjectId(schoolClassId, subjectId));
         model.addAttribute("subject", subjectRepository.getReferenceById(subjectId));
         model.addAttribute("markCategory", new MarkCategory());
         return "schoolclass/marks";
@@ -102,6 +102,9 @@ public class SchoolClassController {
 
     @GetMapping("/{schoolClassId}/getAverageMarkBySubjectId/{subjectId}")
     public ResponseEntity<String> getAvMark(@PathVariable Long schoolClassId, @PathVariable Long subjectId) {
+        if (!loggedUser.supervisesClass(schoolClassId) && !loggedUser.teachesSubject(subjectId) && !loggedUser.hasAccessToAnyStudentOfSchoolClass(schoolClassId)) {
+            return null;
+        }
         BigDecimal val = schoolClassRepository.getReferenceById(schoolClassId).getAverageMarkBySubjectId(subjectId);
         String result = val.setScale(2, RoundingMode.DOWN).toString();
         return new ResponseEntity<>(result, HttpStatus.OK);

@@ -4,6 +4,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.edziennik.edziennik.lesson.Lesson;
+import pl.edziennik.edziennik.mark.Mark;
+import pl.edziennik.edziennik.mark.category.MarkCategory;
 import pl.edziennik.edziennik.parent.Parent;
 import pl.edziennik.edziennik.schoolClass.SchoolClass;
 import pl.edziennik.edziennik.security.user.User;
@@ -33,7 +35,7 @@ public class LoggedUser {
         return user.orElse(null);
     }
 
-    public Boolean hasAccessToSchoolClass(Long id) {
+    public Boolean hasAccessToAnyStudentOfSchoolClass(Long id) {
         List<Student> students = new ArrayList<>();
         if (getUser().getParent() != null) {
             students.addAll(getUser().getParent().getStudents().stream().filter(f -> f.getSchoolClass() != null).toList());
@@ -73,4 +75,29 @@ public class LoggedUser {
         Teacher teacher = getUser().getTeacher();
         return isAdmin() || teacher != null && teacher.getLessons().stream().map(Lesson::getId).toList().contains(id);
     }
+
+    public Boolean hasSupervisedClasses() {
+        return isAdmin() || getUser().getTeacher() != null && !getUser().getTeacher().getSupervisedClasses().isEmpty();
+    }
+
+    public Boolean teachesSubject(Long subjectId) {
+        return isAdmin() || getUser().getTeacher() != null && getUser().getTeacher().getSubjects().stream().map(Subject::getId).toList().contains(subjectId);
+    }
+
+    public Boolean teachesSubjectOfMarkCategoryId(Long markCategoryId) {
+        return isAdmin() || getUser().getTeacher() != null && getUser().getTeacher().getSubjects().stream().flatMap(subject -> subject.getMarkCategories().stream().map(MarkCategory::getId)).toList().contains(markCategoryId);
+    }
+
+    public Boolean hasAccessToMarkHistory(Long markId) {
+        return isAdmin() || getUser().getStudent() != null && getUser().getStudent().getMarks().stream().map(Mark::getId).toList().contains(markId) || getUser().getTeacher() != null && getUser().getTeacher().getMarks().stream().map(Mark::getId).toList().contains(markId);
+    }
+
+    public Boolean isMarkCreator(Long markId) {
+        return isAdmin() || getUser().getTeacher() != null && getUser().getTeacher().getMarks().stream().map(Mark::getId).toList().contains(markId);
+    }
+
+    public Boolean supervisesClass(Long schoolClassId) {
+        return isAdmin() || getUser().getTeacher() != null && getUser().getTeacher().getSupervisedClasses().stream().map(SchoolClass::getId).toList().contains(schoolClassId);
+    }
+
 }

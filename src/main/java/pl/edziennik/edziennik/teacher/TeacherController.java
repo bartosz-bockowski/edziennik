@@ -15,6 +15,7 @@ import pl.edziennik.edziennik.lesson.LessonService;
 import pl.edziennik.edziennik.schoolClass.SchoolClassRepository;
 import pl.edziennik.edziennik.security.LoggedUser;
 import pl.edziennik.edziennik.subject.SubjectRepository;
+import pl.edziennik.edziennik.utils.DateUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -58,16 +59,9 @@ public class TeacherController {
         if (!loggedUser.hasAccessToTeacher(teacherId)) {
             return "error/403";
         }
-        if (date == null) {
-            date = LocalDate.now().minusDays(LocalDate.now().getDayOfWeek().getValue() - 1);
-        } else {
-            date = date.minusDays(date.getDayOfWeek().getValue() - 1);
-        }
         List<LocalDate> dates = new ArrayList<>();
-        dates.add(date);
-        for (int i = 1; i < 5; i++) {
-            dates.add(date.plusDays(i));
-        }
+        DateUtils dateUtils = new DateUtils();
+        date = dateUtils.getDateAndListOfDatesForLessonPlan(date, dates);
         List<Lesson> lessons = lessonRepository.getAllByTeacherIdAndDateInAndActiveTrue(teacherId, dates);
         model.addAttribute("lessons", lessons);
         List<LessonHour> hours = lessonHourRepository.findAllByActiveTrueOrderByStartAsc();
@@ -83,12 +77,18 @@ public class TeacherController {
 
     @GetMapping("/{teacherId}/supervisedClasses")
     public String supervisedClasses(@PathVariable Long teacherId, Model model) {
+        if (!loggedUser.hasAccessToTeacher(teacherId)) {
+            return "error/403";
+        }
         model.addAttribute("teacher", teacherRepository.getReferenceById(teacherId));
         return "teacher/supervisedClasses";
     }
 
     @GetMapping("/{teacherId}/subjects")
     public String subjects(@PathVariable Long teacherId, Model model) {
+        if (!loggedUser.hasAccessToTeacher(teacherId)) {
+            return "error/403";
+        }
         model.addAttribute("teacher", teacherRepository.getReferenceById(teacherId));
         return "teacher/subjects";
     }

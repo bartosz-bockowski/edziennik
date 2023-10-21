@@ -72,13 +72,13 @@ public class LessonController {
 
     @PostMapping("/create")
     public String create(@Valid Lesson lesson, BindingResult result, Model model) {
+        if (!loggedUser.hasAccessToSchoolClassAdmin(lesson.getSchoolClass().getId())) {
+            return "error/403";
+        }
         if (result.hasErrors()) {
             model.addAttribute("lesson", lesson);
             model.addAttribute("attendanceTypes", AttendanceType.values());
             return "lesson/create";
-        }
-        if (!loggedUser.hasAccessToSchoolClassAdmin(lesson.getSchoolClass().getId())) {
-            return "error/403";
         }
         attendanceRepository.saveAll(lesson.getAttendance());
         lesson.setCompleted(true);
@@ -132,7 +132,7 @@ public class LessonController {
                                                         @RequestParam Long subject,
                                                         @RequestParam Long lessonHour,
                                                         @RequestParam LocalDate date) {
-        if (!LoggedUser.isAdmin() && (loggedUser.getUser().getTeacher() == null || (loggedUser.getUser().getTeacher() != null && loggedUser.getUser().getTeacher().getSupervisedClasses().isEmpty()))) {
+        if (!loggedUser.hasSupervisedClasses()) {
             return null;
         }
         Lesson lesson;

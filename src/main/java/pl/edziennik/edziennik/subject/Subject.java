@@ -2,10 +2,12 @@ package pl.edziennik.edziennik.subject;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.edziennik.edziennik.mark.category.MarkCategory;
 import pl.edziennik.edziennik.schoolClass.SchoolClass;
 import pl.edziennik.edziennik.teacher.Teacher;
 
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
@@ -20,5 +22,7 @@ public class Subject {
     private List<SchoolClass> schoolClasses;
     @ManyToMany
     private List<Teacher> teachers;
+    @OneToMany(mappedBy = "subject")
+    private List<MarkCategory> markCategories;
     private boolean active = true;
 }
