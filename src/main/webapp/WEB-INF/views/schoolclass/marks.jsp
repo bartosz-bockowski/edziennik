@@ -50,9 +50,12 @@
                 <td>${student.fullName}</td>
                 <c:forEach items="${markCategories}" var="category">
                     <td>
-                        <span ${!student.checkMark(category.id) ? 'style="display: none;"' : ''}
-                                class="markSpan">${student.checkMark(markCategory.id) ? '' : student.getMarkByMarkCategoryId(category.id).mark}</span>
+                        <c:if test="${!manageMarks}">
+                            <span class="markSpan">${student.checkMark(category.id) ? student.getMarkByMarkCategoryId(category.id).mark : ' - '}</span>
+                        </c:if>
                         <c:if test="${manageMarks}">
+                            <span ${student.checkMark(category.id) ? '' : 'style="display: none;"'}
+                                    class="markSpan">${student.checkMark(category.id) ? student.getMarkByMarkCategoryId(category.id).mark : ' - '}</span>
                             <form ${!student.checkMark(category.id) ? '' : 'style="display: none;"'}
                                     class="markForm">
                                 <input type="hidden" class="markId"
@@ -67,11 +70,11 @@
                             <a target="_blank" href="/mark/history/${category.id}/${student.id}">
                                 <div class="markHistory">X</div>
                             </a>
+                            <form class="markDeleteForm" method="post">
+                                <input type="hidden" class="category" value="${category.id}"/>
+                                <button type="submit" class="markHistory deleteButton">D</button>
+                            </form>
                         </c:if>
-                        <form class="markDeleteForm" method="post">
-                            <input type="hidden" class="category" value="${category.id}"/>
-                            <button type="submit" class="markHistory deleteButton">D</button>
-                        </form>
                     </td>
                 </c:forEach>
             </tr>
