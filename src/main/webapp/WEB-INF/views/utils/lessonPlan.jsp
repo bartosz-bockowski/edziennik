@@ -72,11 +72,11 @@
                                 </c:if>
                             </c:if>
                             <c:if test="${lesson.exams != null && lesson.exams.size() > 0 && lesson.hasActiveExams()}">
-                                ${lesson.getLastExam().name}
+                                ${lesson.lastExam.name}
                                 <c:if test="${isTeacher}">
                                     <spring:message code="exam.delete.confiramtion" var="confirmation"/>
                                     <a class="confirm" msg="${confirmation}"
-                                       href="/exam/delete/${lesson.getLastExam().id}?teacherId=${teacher.id}&date=${date}"><spring:message
+                                       href="/exam/delete/${lesson.lastExam.id}?teacherId=${teacher.id}&date=${date}"><spring:message
                                             code="delete"/></a>
                                 </c:if>
                             </c:if>

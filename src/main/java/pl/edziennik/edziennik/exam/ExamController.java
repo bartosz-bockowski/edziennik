@@ -27,6 +27,9 @@ public class ExamController {
 
     @GetMapping("/add/{lessonId}")
     public String addExam(@PathVariable Long lessonId, Model model, @RequestParam Long teacherId, @RequestParam String date) {
+        if (!loggedUser.hasAccessToLesson(lessonId)) {
+            return "error/403";
+        }
         Exam exam = new Exam();
         exam.setLesson(lessonRepository.getReferenceById(lessonId));
         model.addAttribute("teacherId", teacherId);
@@ -37,6 +40,9 @@ public class ExamController {
 
     @PostMapping("/add")
     public String add(@Valid Exam exam, BindingResult result, Model model, @RequestParam String date, @RequestParam Long teacherId) {
+        if (!loggedUser.hasAccessToLesson(exam.getLesson().getId())) {
+            return "error/403";
+        }
         if (result.hasErrors()) {
             model.addAttribute("exam", exam);
             return "exam/add";
@@ -50,6 +56,9 @@ public class ExamController {
     @GetMapping("/delete/{examId}")
     public String delete(@PathVariable Long examId, @RequestParam Long teacherId, @RequestParam String date) {
         Exam exam = examRepository.getReferenceById(examId);
+        if (!loggedUser.hasAccessToLesson(exam.getLesson().getId())) {
+            return "error/403";
+        }
         exam.setTeacher(loggedUser.getUser().getTeacher());
         exam.setActive(false);
         examRepository.save(exam);

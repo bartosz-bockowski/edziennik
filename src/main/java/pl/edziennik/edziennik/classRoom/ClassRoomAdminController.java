@@ -1,7 +1,6 @@
 package pl.edziennik.edziennik.classRoom;
 
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
@@ -19,21 +18,24 @@ public class ClassRoomAdminController {
     public ClassRoomAdminController(ClassRoomRepository classRoomRepository) {
         this.classRoomRepository = classRoomRepository;
     }
+
     @GetMapping("/list")
-    public String list(Model model, @SortDefault("id") Pageable pageable){
+    public String list(Model model, @SortDefault("id") Pageable pageable) {
         model.addAttribute("page", classRoomRepository.findAll(pageable));
         return "classRoom/list";
     }
+
     @GetMapping("/add")
-    public String add(Model model){
-        model.addAttribute("classRoom",new ClassRoom());
+    public String add(Model model) {
+        model.addAttribute("classRoom", new ClassRoom());
         return "classRoom/add";
     }
+
     @PostMapping("/add")
-    public String add(Model model, @Valid ClassRoom classRoom, BindingResult result){
-        if(result.hasErrors()){
-            model.addAttribute("classRoom",classRoom);
-            model.addAttribute("result",result);
+    public String add(Model model, @Valid ClassRoom classRoom, BindingResult result) {
+        if (result.hasErrors()) {
+            model.addAttribute("classRoom", classRoom);
+            model.addAttribute("result", result);
             return "classRoom/add";
         }
         classRoomRepository.save(classRoom);

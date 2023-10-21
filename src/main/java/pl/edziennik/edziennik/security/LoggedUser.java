@@ -3,12 +3,14 @@ package pl.edziennik.edziennik.security;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.parent.Parent;
 import pl.edziennik.edziennik.schoolClass.SchoolClass;
 import pl.edziennik.edziennik.security.user.User;
 import pl.edziennik.edziennik.security.user.UserRepository;
 import pl.edziennik.edziennik.student.Student;
 import pl.edziennik.edziennik.subject.Subject;
+import pl.edziennik.edziennik.teacher.Teacher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,5 +67,10 @@ public class LoggedUser {
 
     public Boolean hasAccessToSchoolClassAdmin(Long id) {
         return (getUser().getTeacher() != null && getUser().getTeacher().getSupervisedClasses().stream().map(SchoolClass::getId).toList().contains(id)) || isAdmin();
+    }
+
+    public Boolean hasAccessToLesson(Long id) {
+        Teacher teacher = getUser().getTeacher();
+        return isAdmin() || teacher != null && teacher.getLessons().stream().map(Lesson::getId).toList().contains(id);
     }
 }
