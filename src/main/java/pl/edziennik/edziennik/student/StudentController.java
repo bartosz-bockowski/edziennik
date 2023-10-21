@@ -66,6 +66,9 @@ public class StudentController {
 
     @GetMapping("/{studentId}/attendance")
     public String attendance(@PathVariable Long studentId, @QuerydslPredicate(root = Attendance.class) Predicate predicate) {
+        if (!loggedUser.hasAccessToStudent(studentId)) {
+            return "error/403";
+        }
         QAttendance qAttendance = QAttendance.attendance;
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(qAttendance.student.id.eq(studentId));

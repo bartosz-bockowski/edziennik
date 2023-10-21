@@ -52,20 +52,22 @@
                     <td>
                         <span ${!student.checkMark(category.id) ? 'style="display: none;"' : ''}
                                 class="markSpan">${student.checkMark(markCategory.id) ? '' : student.getMarkByMarkCategoryId(category.id).mark}</span>
-                        <form ${!student.checkMark(category.id) ? '' : 'style="display: none;"'}
-                                class="markForm">
-                            <input type="hidden" class="markId"
-                                   value="${student.getMarkByMarkCategoryId(category.id) == null ? 'null' : student.getMarkByMarkCategoryId(category.id).id}"/>
-                            <input type="hidden" class="markCategory" name="markCategory" value="${category.id}"/>
-                            <input type="text" class="mark" name="mark"
-                                   value="${!student.checkMark(category.id) ? '' : student.getMarkByMarkCategoryId(category.id).mark}"
-                                   required/>
-                            <button class="markFormSubmit" type="submit"><spring:message code="save"/></button>
-                        </form>
-                        <div class="markSwitch">X</div>
-                        <a target="_blank" href="/mark/history/${category.id}/${student.id}">
-                            <div class="markHistory">X</div>
-                        </a>
+                        <c:if test="${manageMarks}">
+                            <form ${!student.checkMark(category.id) ? '' : 'style="display: none;"'}
+                                    class="markForm">
+                                <input type="hidden" class="markId"
+                                       value="${student.getMarkByMarkCategoryId(category.id) == null ? 'null' : student.getMarkByMarkCategoryId(category.id).id}"/>
+                                <input type="hidden" class="markCategory" name="markCategory" value="${category.id}"/>
+                                <input type="text" class="mark" name="mark"
+                                       value="${!student.checkMark(category.id) ? '' : student.getMarkByMarkCategoryId(category.id).mark}"
+                                       required/>
+                                <button class="markFormSubmit" type="submit"><spring:message code="save"/></button>
+                            </form>
+                            <div class="markSwitch">X</div>
+                            <a target="_blank" href="/mark/history/${category.id}/${student.id}">
+                                <div class="markHistory">X</div>
+                            </a>
+                        </c:if>
                         <form class="markDeleteForm" method="post">
                             <input type="hidden" class="category" value="${category.id}"/>
                             <button type="submit" class="markHistory deleteButton">D</button>
