@@ -109,4 +109,5 @@ public class SchoolClassController {
         String result = val.setScale(2, RoundingMode.DOWN).toString();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    //@TODO - non-admin details of school class, accesible for example by supervisor
 }

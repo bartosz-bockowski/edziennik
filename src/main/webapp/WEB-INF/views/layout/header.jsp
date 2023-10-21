@@ -61,6 +61,5 @@
         </sec:authorize>
     </div>
 </header>
-<br/>
-</body>
-</html>
+<div id="container">
+    <br>

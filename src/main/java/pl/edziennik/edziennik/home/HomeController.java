@@ -14,7 +14,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String hello(Model model){
+    public String hello(Model model) {
         model.addAttribute("loggedUser", loggedUser.getUser());
         return "main/home";
     }

@@ -3,6 +3,7 @@ package pl.edziennik.edziennik.student;
 import lombok.Getter;
 import lombok.Setter;
 import pl.edziennik.edziennik.attendance.Attendance;
+import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.mark.Mark;
 import pl.edziennik.edziennik.parent.Parent;
 import pl.edziennik.edziennik.schoolClass.SchoolClass;
@@ -12,6 +13,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,6 +38,9 @@ public class Student {
     @OneToMany(mappedBy = "student")
     private List<Mark> marks;
 
+    @OneToMany(mappedBy = "student")
+    private List<Attendance> attendance;
+
     public String getFullName() {
         return this.firstName + " " + this.lastName;
     }
@@ -44,8 +49,6 @@ public class Student {
         return firstName + " " + lastName + " (ID: " + id + ")";
     }
 
-    @OneToMany(mappedBy = "student")
-    private List<Attendance> attendance;
 
     public Mark getMarkByMarkCategoryId(Long markCategoryId) {
         Mark mark = null;
@@ -67,5 +70,13 @@ public class Student {
 
     public List<Mark> getMarksBySubjectId(Long subjectId) {
         return this.marks.stream().filter(p -> Objects.equals(p.getMarkCategory().getSubject().getId(), subjectId)).toList();
+    }
+
+    public Attendance getAttendanceByDateAndLessonHourId(LocalDate date, Long lessonHourId) {
+        List<Attendance> r = this.attendance.stream().filter(f -> f.getLesson().getLessonHour().getId().equals(lessonHourId) && f.getLesson().getDate().equals(date)).toList();
+        if (!r.isEmpty()) {
+            return r.get(0);
+        }
+        return null;
     }
 }
