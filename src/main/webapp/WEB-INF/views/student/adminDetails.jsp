@@ -13,10 +13,16 @@
 <jsp:include page="../layout/header.jsp"/>
 <a href="/admin/student/list"><spring:message code="student.list"/></a>
 <h1><spring:message code="student.studentDetails"/></h1>
-<h3>${student.getFullName()}</h3>
-<spring:message code="student.nullClass" var="nullClass"/>
+<h3>${student.fullName}</h3>
 <spring:message code="student.schoolClass"/>:
-<b>${student.schoolClass.name != null ? student.schoolClass.name : nullClass}</b>
+<b>
+    <c:if test="${student.schoolClass != null}">
+        ${student.schoolClass.name}
+    </c:if>
+    <c:if test="${student.schoolClass == null}">
+        <spring:message code="student.nullClass"/>
+    </c:if>
+</b>
 <form method="get" action="/admin/student/${student.id}/setClass">
     <select class="selectpicker" data-live-search="true" name="classId">
         <c:forEach items="${schoolClasses}" var="schoolClass">

@@ -24,7 +24,6 @@
 <script src="${pageContext.request.contextPath}/js/schoolClass/schoolClassDetails.js"></script>
 <!-- students -->
 <h3><spring:message code="schoolClass.students"/></h3>
-<spring:message code="schoolClass.confirmRemoveStudent" var="conRemStu"/>
 <c:if test="${schoolClass.students.size() == 0}">
     <div><spring:message code="schoolClass.noStudents"/></div>
 </c:if>
@@ -34,7 +33,6 @@
 <!-- subjects -->
 <br/>
 <h3><spring:message code="schoolClass.subjects"/></h3>
-<spring:message code="schoolClass.confirmRemoveSubject" var="conRemSub"/>
 <c:if test="${schoolClass.subjects.size() == 0}">
     <div><spring:message code="schoolClass.noSubjects"/></div>
 </c:if>

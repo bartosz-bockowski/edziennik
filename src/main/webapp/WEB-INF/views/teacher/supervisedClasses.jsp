@@ -30,9 +30,6 @@
         <td>
             <a href="/schoolclass/${schoolclass.id}/details"><spring:message
                     code="schoolClass.details"/></a>
-            <spring:message code="schoolClass.switch.confirm" var="confirm"/>
-            <spring:message code="activate" var="activate"/>
-            <spring:message code="disactivate" var="disactivate"/>
             <a href="/schoolclass/${schoolclass.id}/lessonPlan"><spring:message code="lessonPlan"/></a>
         </td>
     </tr>

@@ -43,8 +43,7 @@
             </td>
         </tr>
     </table>
-    <spring:message code="add" var="add"/>
-    <input type="submit" value="${add}"/>
+    <button type="submit"><spring:message code="add"/></button>
 </form:form>
 <jsp:include page="../layout/footer.jsp"/>
 </body>

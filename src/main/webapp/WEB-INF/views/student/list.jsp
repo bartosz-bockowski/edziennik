@@ -26,8 +26,14 @@
     <tr>
         <td>${student.id}</td>
         <td>${student.getFullName()}</td>
-        <spring:message code="student.nullClass" var="nullClass"/>
-        <td>${student.schoolClass.name != null ? student.schoolClass.name : nullClass}</td>
+        <td>
+            <c:if test="${student.schoolClass != null}">
+                ${student.schoolClass.name}
+            </c:if>
+            <c:if test="${student.schoolClass == null}">
+                <spring:message code="student.nullClass"/>
+            </c:if>
+        </td>
         <td><spring:message code="${student.active}"/></td>
         <td>
             <a href="/admin/student/${student.id}/adminDetails"><spring:message code="student.details"/></a>
