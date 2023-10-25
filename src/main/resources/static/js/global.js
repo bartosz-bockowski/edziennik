@@ -29,7 +29,7 @@ $(document).ready(() => {
             if (len === 0) {
                 let title = document.createElement("div")
                 title.classList.add("noNotificationsDiv")
-                title.innerText = $("#noNotificationsVal").val()
+                title.innerText = $("#noNotificationsVal").text()
                 list.appendChild(title)
             }
             for (let i = 0; i < len; i++) {
@@ -45,7 +45,7 @@ $(document).ready(() => {
 
                 let href = document.createElement("a")
                 href.href = data[i].href
-                href.innerText = $("#moreVal").val()
+                href.innerText = $("#moreVal").text()
 
                 element.appendChild(title)
                 element.appendChild(message)

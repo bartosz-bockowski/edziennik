@@ -44,10 +44,8 @@
         <sec:authorize access="isAuthenticated()">
             <div id="rightDiv">
                 <div class="notificationsButtonParent">
-                    <spring:message code="notifications.noNotifications" var="noNotifications"/>
-                    <spring:message code="notifications.more" var="more"/>
-                    <input type="hidden" value="${noNotifications}" id="noNotificationsVal"/>
-                    <input type="hidden" value="${more}" id="moreVal"/>
+                    <p id="noNotificationsVal" hidden><spring:message code="notifications.noNotifications"/></p>
+                    <p id="moreVal" hidden><spring:message code="notifications.more"/></p>
                     <div class="notificationsButton">
                     </div>
                     <div class="notificationsList">

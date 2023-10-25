@@ -34,13 +34,13 @@ $(".markForm").submit((e) => {
     let markCategoryId = form.find(".markCategory").val()
     let mark = form.find(".mark").val()
     let markId = form.find(".markId").val()
-    let schoolClassId = $("#schoolClass").val()
-    let subjectId = $("#subject").val()
+    let schoolClassId = $("#schoolClass").text()
+    let subjectId = $("#subject").text()
     fetch("/mark/add/" + mark + "/" + studentId + "/" + markCategoryId + "/" + markId).then((response) => {
         markClick($(e.target), mark)
         if (response.status === 200) {
             loadAverage(schoolClassId, subjectId)
-            alert($("#addedMark").val())
+            alert($("#addedMark").text())
         }
     })
 })
@@ -48,10 +48,10 @@ $(".markForm").submit((e) => {
 $(".markDeleteForm").submit((e) => {
     e.preventDefault()
     let target = $(e.target)
-    if (confirm($("#removeMarkConfirm").val())) {
+    if (confirm($("#removeMarkConfirm").text())) {
         fetch("/mark/delete/" + target.find(".category").val() + "/" + target.parent().parent().find("#student").val()).then(() => {
             markClick(target, "0")
-            loadAverage($("#schoolClass").val(), $("#subject").val())
+            loadAverage($("#schoolClass").text(), $("#subject").text())
         })
     }
 })

@@ -12,16 +12,10 @@
 <html>
 <body>
 <jsp:include page="../layout/header.jsp"/>
-<spring:message code="lesson.teacherNotFree" var="teacherNotFree"/>
-<spring:message code="lesson.classRoomNotFree" var="classRoomNotFree"/>
-<spring:message code="lesson.bothNotFree" var="bothNotFree"/>
-<spring:message code="lesson.noChanges" var="noChanges"/>
-<spring:message code="lesson.confirm.updateLesson" var="confirmUpdate"/>
-<input type="hidden" id="teacherNotFree" value="${teacherNotFree}"/>
-<input type="hidden" id="classRoomNotFree" value="${classRoomNotFree}"/>
-<input type="hidden" id="bothNotFree" value="${bothNotFree}"/>
-<input type="hidden" id="noChanges" value="${noChanges}"/>
-<input type="hidden" id="confirmUpdate" value="${confirmUpdate}"/>
+<p id="teacherNotFree" hidden><spring:message code="lesson.teacherNotFree"/></p>
+<p id="classRoomNotFree" hidden><spring:message code="lesson.classRoomNotFree"/></p>
+<p id="noChanges" hidden><spring:message code="lesson.noChanges"/></p>
+<p id="confirmUpdate" hidden><spring:message code="lesson.confirm.updateLesson"/></p>
 <h1><spring:message code="lessonPlan.ofClass"/> ${schoolClass.name}</h1>
 <table class="lessonPlanTable centerBlock">
     <thead>

@@ -17,12 +17,12 @@
 <div><spring:message code="user.username"/>: <b>${user.username}</b></div>
 <div><spring:message code="user.roles"/>:</div>
 <form method="get" action="/admin/user/${user.id}/setRoles">
-<c:forEach items="${roles}" var="role" varStatus="loopStatus">
-    <input type="checkbox" value="${role.id}" id="role${role.id}" name="roles" <c:if test="${user.roles.contains(role)}">checked="checked"</c:if>>
-    <label for="role${role.id}">${role.name}</label><br>
-</c:forEach>
-    <spring:message code="user.saveRoles" var="save"/>
-    <input type="submit" value="${save}"/>
+    <c:forEach items="${roles}" var="role" varStatus="loopStatus">
+        <input type="checkbox" value="${role.id}" id="role${role.id}" name="roles"
+               <c:if test="${user.roles.contains(role)}">checked="checked"</c:if>>
+        <label for="role${role.id}">${role.name}</label><br>
+    </c:forEach>
+    <button type="submit"><spring:message code="user.saveRoles"/></button>
 </form>
 <c:if test="${user.student != null}">
     <h1><spring:message code="user.student"/></h1>

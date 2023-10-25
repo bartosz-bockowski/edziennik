@@ -5,20 +5,20 @@ $(document).ready(() => {
         let response = await fetch("/lesson/validateLesson?" + form.serialize())
         let res = await response.json()
         if (res.length === 0) {
-            if (confirm($("#confirmUpdate").val())) {
+            if (confirm($("#confirmUpdate").text())) {
                 form.submit()
             }
         } else {
             let notification = ""
             if (res.includes(0)) {
-                notification = $("#noChanges").val()
+                notification = $("#noChanges").text()
             } else {
                 if (res.includes(2)) {
-                    notification += $("#teacherNotFree").val()
+                    notification += $("#teacherNotFree").text()
                     notification += "\n"
                 }
                 if (res.includes(3)) {
-                    notification += $("#classRoomNotFree").val()
+                    notification += $("#classRoomNotFree").text()
                     notification += "\n"
                 }
             }

@@ -11,12 +11,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
-<input type="hidden" id="schoolClass" value="${schoolClass.id}"/>
-<input type="hidden" id="subject" value="${subject.id}"/>
-<spring:message code="mark.addedMark" var="addedMark"/>
-<input type="hidden" id="addedMark" value="${addedMark}"/>
-<spring:message code="mark.deleteConfirm" var="removeMarkConfirm"/>
-<input type="hidden" id="removeMarkConfirm" value="${removeMarkConfirm}"/>
+<p id="schoolClass" hidden>${schoolClass.id}</p>
+<p id="subject" hidden>${subject.id}</p>
+<p id="addedMark" hidden><spring:message code="mark.addedMark"/></p>
+<p id="removeMarkConfirm" hidden><spring:message code="mark.deleteConfirm"/></p>
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="schoolClass.marks"/> ${schoolClass.name}</h1>
 <h3><spring:message code="subject"/>: ${subject.name}</h3>
