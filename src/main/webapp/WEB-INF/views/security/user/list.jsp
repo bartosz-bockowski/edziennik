@@ -12,8 +12,10 @@
 <body>
 <jsp:include page="../../layout/header.jsp"/>
 <h1><spring:message code="user.list"/></h1>
-<spring:message code="user.add.confirm" var="userConfirm"/>
-<a class="confirm" msg="${userConfirm}" href="/admin/user/add"><spring:message code="user.add"/></a>
+<a class="confirm" href="/admin/user/add">
+    <spring:message code="user.add"/>
+    <p class="msg"><spring:message code="user.add.confirm"/></p>
+</a>
 <table class="centerBlock mainTable basicListTable">
     <thead>
     <th><spring:message code="user.id"/></th>
@@ -30,10 +32,10 @@
         <td>
             <a href="/admin/user/${user.id}/details"><spring:message code="user.details"/></a>
             <c:if test="${user.username != 'admin'}">
-                <spring:message code="user.switch.confirm" var="confirm"/>
-                <spring:message code="activate" var="activate"/>
-                <spring:message code="disactivate" var="disactivate"/>
-                <a msg="${confirm}" class="confirm" href="/admin/user/${user.id}/switch"><spring:message code="${user.active ? disactivate : activate}"/></a>
+                <a class="confirm" href="/admin/user/${user.id}/switch">
+                    <spring:message code="${user.active ? 'disactivate' : 'activate'}"/>
+                    <p class="msg" hidden><spring:message code="user.switch.confirm"/></p>
+                </a>
             </c:if>
         </td>
     </tr>

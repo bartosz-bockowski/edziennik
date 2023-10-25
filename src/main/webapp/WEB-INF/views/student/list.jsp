@@ -32,10 +32,10 @@
         <td>
             <a href="/admin/student/${student.id}/adminDetails"><spring:message code="student.details"/></a>
             <a href="/student/${student.id}/marks"><spring:message code="student.marks"/></a>
-            <spring:message code="student.switch.confirm" var="confirm"/>
-            <spring:message code="activate" var="activate"/>
-            <spring:message code="disactivate" var="disactivate"/>
-            <a msg="${confirm}" class="confirm" href="/admin/student/${student.id}/switch"><spring:message code="${student.active ? disactivate : activate}"/></a>
+            <a class="confirm" href="/admin/student/${student.id}/switch">
+                <spring:message code="${student.active ? 'disactivate' : 'activate'}"/>
+                <p class="msg" hidden><spring:message code="student.switch.confirm"/></p>
+            </a>
         </td>
     </tr>
     </tbody>

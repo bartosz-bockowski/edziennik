@@ -28,10 +28,10 @@
         <td><spring:message code="${parent.active}"/></td>
         <td>
             <a href="/admin/parent/${parent.id}/details"><spring:message code="parent.details"/></a>
-            <spring:message code="parent.switch.confirm" var="confirm"/>
-            <spring:message code="activate" var="activate"/>
-            <spring:message code="disactivate" var="disactivate"/>
-            <a msg="${confirm}" class="confirm" href="/admin/parent/${parent.id}/switch"><spring:message code="${parent.active ? disactivate : activate}"/></a>
+            <a class="confirm" href="/admin/parent/${parent.id}/switch">
+                <spring:message code="${parent.active ? 'disactivate' : 'activate'}"/>
+                <p class="msg" hidden><spring:message code="parent.switch.confirm"/></p>
+            </a>
         </td>
     </tr>
     </tbody>

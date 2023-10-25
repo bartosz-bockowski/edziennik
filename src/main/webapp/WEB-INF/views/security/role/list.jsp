@@ -21,10 +21,10 @@
         <td><spring:message code="${role.active}"/></td>
         <td>
             <a href="/admin/role/${role.id}/details"><spring:message code="role.details"/></a>
-            <spring:message code="role.switch.confirm" var="confirm"/>
-            <spring:message code="activate" var="activate"/>
-            <spring:message code="disactivate" var="disactivate"/>
-            <a msg="${confirm}" class="confirm" href="/admin/role/${role.id}/switch"><spring:message code="${role.active ? disactivate : activate}"/></a>
+            <a class="confirm" href="/admin/role/${role.id}/switch">
+                <spring:message code="${role.active ? 'disactivate' : 'activate'}"/>
+                <p class="msg" hidden><spring:message code="role.switch.confirm"/></p>
+            </a>
         </td>
     </tr>
 </c:forEach>

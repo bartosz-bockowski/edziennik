@@ -95,9 +95,8 @@
                         <button type="submit"><spring:message code="save"/></button>
                     </form>
                     <c:if test="${lesson != null}">
-                        <spring:message code="lesson.confirm.delete" var="msgDelete"/>
-                        <form msg="${msgDelete}" class="confirmForm" method="get"
-                              action="/lesson/${lesson.id}/removeLesson">
+                        <form class="confirmForm" method="get" action="/lesson/${lesson.id}/removeLesson">
+                            <p class="msg" hidden><spring:message code="lesson.confirm.delete"/></p>
                             <input type="hidden" name="date" value="${date}"/>
                             <button type="submit"><spring:message code="remove"/></button>
                         </form>

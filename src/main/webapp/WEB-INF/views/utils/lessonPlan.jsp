@@ -74,10 +74,10 @@
                             <c:if test="${lesson.exams != null && lesson.exams.size() > 0 && lesson.hasActiveExams()}">
                                 ${lesson.lastExam.name}
                                 <c:if test="${isTeacher}">
-                                    <spring:message code="exam.delete.confiramtion" var="confirmation"/>
-                                    <a class="confirm" msg="${confirmation}"
+                                    <a class="confirm"
                                        href="/exam/delete/${lesson.lastExam.id}?teacherId=${teacher.id}&date=${date}"><spring:message
-                                            code="delete"/></a>
+                                            code="delete"/>
+                                    <p class="msg" hidden><spring:message code="exam.delete.confiramtion"/></p></a>
                                 </c:if>
                             </c:if>
                         </div>

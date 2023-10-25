@@ -30,12 +30,14 @@
         <button type="submit" class="selectpickerButton"><spring:message code="subject.addT"/></button>
     </form>
     <div><spring:message code="subject.teachers"/>:</div>
-    <spring:message code="subject.confirmRemoveTeacher" var="conRemTea"/>
     <c:if test="${subject.teachers.size() == 0}">
         <div><spring:message code="subject.noTeachers"/></div>
     </c:if>
     <c:forEach items="${subject.teachers}" var="teacher">
-        <div><span>${teacher.getFullName()}</span> <a msg="${conRemTea} (${teacher.getFullName()} ID: ${teacher.id})" class="confirm" href="/admin/subject/${subject.id}/removeTeacher/${teacher.id}"><spring:message code="subject.removeTeacher"/></a></div>
+        <div><span>${teacher.fullName}</span> <a class="confirm" href="/admin/subject/${subject.id}/removeTeacher/${teacher.id}">
+            <spring:message code="subject.removeTeacher"/>
+            <p class="msg" hidden><spring:message code="subject.confirmRemoveTeacher"/> (${teacher.fullNameWithId})</p>
+        </a></div>
     </c:forEach>
 </div>
 <jsp:include page="../layout/footer.jsp"/>

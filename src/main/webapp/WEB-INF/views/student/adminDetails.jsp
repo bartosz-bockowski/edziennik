@@ -29,9 +29,11 @@
 <br/>
 <h3><spring:message code="student.user"/></h3>
 <c:if test="${student.user != null}">
-    <spring:message code="student.confirmRemoveUser" var="confirmRemoveUser"/>
-        ${student.user.username} (ID: ${student.user.id}) <a class="confirm" msg="${confirmRemoveUser}" href="/admin/student/${student.id}/removeUser">
+        ${student.user.username} (ID: ${student.user.id}) <a class="confirm" href="/admin/student/${student.id}/removeUser">
         <spring:message code="student.removeUser"/>
+    <p class="msg" hidden>
+        <spring:message code="student.confirmRemoveUser"/>
+    </p>
     </a><br/>
 </c:if>
 <c:if test="${student.user == null}">

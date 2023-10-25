@@ -16,18 +16,17 @@
 <html>
 <body>
 <jsp:include page="../layout/header.jsp"/>
-<spring:message code="login" var="loginText"/>
-<h1>${loginText}</h1>
+<h1><spring:message code="login"/></h1>
 <form:form method="post"
            modelAttribute="user"
-            action="/login">
+           action="/login">
     <table class="formTable centerBlock">
         <tr>
             <td>
                 <spring:message code="user.username"/>
             </td>
             <td>
-                <form:input type="text" path="username" />
+                <form:input type="text" path="username"/>
             </td>
         </tr>
         <tr class="formTableErrorRow"></tr>
@@ -43,7 +42,7 @@
             <c:if test="${param.error}"><spring:message code="wrongLoginCredentials"/></c:if>
         </tr>
     </table>
-    <input type="submit" value="${loginText}">
+    <button type="submit"><spring:message code="login"/></button>
     <br/>
 </form:form>
 <script src="${pageContext.request.contextPath}/js/addForm.js"></script>

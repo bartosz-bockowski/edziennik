@@ -54,7 +54,6 @@ public class SchoolClassAdminController {
                        @QuerydslPredicate(root = SchoolClass.class) Predicate predicate) {
         QSchoolClass qSchoolClass = QSchoolClass.schoolClass;
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(qSchoolClass.active.eq(true));
         builder.and(predicate);
         model.addAttribute("page", schoolClassRepository.findAll(builder, pageable));
         return "schoolclass/list";

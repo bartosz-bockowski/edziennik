@@ -1,10 +1,10 @@
 $(document).ready(() => {
     $(".confirm").click((e) => {
-        return confirm($(e.target).attr("msg"))
+        return confirm($(e.target).find(".msg").text())
     })
     $(".confirmForm").one("submit", (e) => {
         e.preventDefault()
-        if (confirm($(e.target).attr("msg"))) {
+        if (confirm($(e.target).find(".msg").text())) {
             $(e.target).submit()
         }
     })

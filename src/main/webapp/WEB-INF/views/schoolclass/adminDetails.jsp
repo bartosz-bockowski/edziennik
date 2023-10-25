@@ -24,15 +24,15 @@
 <script src="${pageContext.request.contextPath}/js/schoolClass/schoolClassDetails.js"></script>
 <!-- students -->
 <div><spring:message code="schoolClass.students"/>:</div>
-<spring:message code="schoolClass.confirmRemoveStudent" var="conRemStu"/>
 <c:if test="${schoolClass.students.size() == 0}">
     <div><spring:message code="schoolClass.noStudents"/></div>
 </c:if>
 <c:forEach items="${schoolClass.students}" var="student">
-    <div><span>${student.getFullName()}</span> <a msg="${conRemStu} (${student.getFullName()} ID: ${student.id})"
-                                                  class="confirm"
-                                                  href="/admin/schoolclass/${schoolClass.id}/removeStudent/${student.id}"><spring:message
-            code="schoolClass.removeStudent"/></a></div>
+    <div><span>${student.getFullName()}</span>
+        <a class="confirm" href="/admin/schoolclass/${schoolClass.id}/removeStudent/${student.id}">
+            <spring:message code="schoolClass.removeStudent"/>
+        <p class="msg" hidden><spring:message code="schoolClass.confirmRemoveStudent"/> (${student.getFullName()}, ID: ${student.id})</p>
+    </a></div>
 </c:forEach>
 <div>
     <h2><spring:message code="schoolClass.addStudent"/></h2>
@@ -50,15 +50,15 @@
 </div>
 <!-- subjects -->
 <div><spring:message code="schoolClass.subjects"/>:</div>
-<spring:message code="schoolClass.confirmRemoveSubject" var="conRemSub"/>
 <c:if test="${schoolClass.subjects.size() == 0}">
     <div><spring:message code="schoolClass.noSubjects"/></div>
 </c:if>
 <c:forEach items="${schoolClass.subjects}" var="subject">
     <div><span>${subject.name}</span>
-        <a class="confirm" msg="${conRemSub} (${subject.name} ID: ${subject.id})"
-           href="/admin/schoolclass/${schoolClass.id}/removeSubject/${subject.id}"><spring:message
-                code="schoolClass.removeSubject"/></a>
+        <a class="confirm" href="/admin/schoolclass/${schoolClass.id}/removeSubject/${subject.id}">
+            <spring:message code="schoolClass.removeSubject"/>
+            <p class="msg" hidden><spring:message code="schoolClass.confirmRemoveSubject"/> (${subject.name} ID: ${subject.id})</p>
+        </a>
         <a href="/schoolclass/${schoolClass.id}/marks/${subject.id}"><spring:message code="schoolClass.marks"/></a>
     </div>
 </c:forEach>
