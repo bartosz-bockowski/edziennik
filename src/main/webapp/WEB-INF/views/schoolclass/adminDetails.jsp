@@ -25,10 +25,10 @@
 <!-- students -->
 <div><spring:message code="schoolClass.students"/>:</div>
 <spring:message code="schoolClass.confirmRemoveStudent" var="conRemStu"/>
-<c:if test="${students.size() == 0}">
+<c:if test="${schoolClass.students.size() == 0}">
     <div><spring:message code="schoolClass.noStudents"/></div>
 </c:if>
-<c:forEach items="${students}" var="student">
+<c:forEach items="${schoolClass.students}" var="student">
     <div><span>${student.getFullName()}</span> <a msg="${conRemStu} (${student.getFullName()} ID: ${student.id})"
                                                   class="confirm"
                                                   href="/admin/schoolclass/${schoolClass.id}/removeStudent/${student.id}"><spring:message
@@ -39,7 +39,7 @@
     <form id="addStudentForm" action="/admin/schoolclass/${schoolClass.id}/addStudent" method="get">
         <select class="selectpicker" data-live-search="true" name="studentId">
             <c:forEach items="${allStudents}" var="allStudent">
-                <c:if test="${!students.contains(allStudent)}">
+                <c:if test="${!schoolClass.students.contains(allStudent)}">
                     <option value="${allStudent.id}">${allStudent.getFullName()} (ID: ${allStudent.id})</option>
                 </c:if>
             </c:forEach>

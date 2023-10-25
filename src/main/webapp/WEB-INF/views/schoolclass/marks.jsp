@@ -18,7 +18,6 @@
 <spring:message code="mark.deleteConfirm" var="removeMarkConfirm"/>
 <input type="hidden" id="removeMarkConfirm" value="${removeMarkConfirm}"/>
 <jsp:include page="../layout/header.jsp"/>
-<a href="/admin/schoolclass/${schoolClass.id}/adminDetails"><spring:message code="schoolClass.schoolClassDetails"/></a>
 <h1><spring:message code="schoolClass.marks"/> ${schoolClass.name}</h1>
 <h3><spring:message code="subject"/>: ${subject.name}</h3>
 <spring:message code="schoolClass.marks.addCategory"/><br/>

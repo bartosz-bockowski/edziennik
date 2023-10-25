@@ -100,6 +100,17 @@ public class SchoolClassController {
         return "schoolclass/marks";
     }
 
+    //@TODO - non-admin details of school class, accesible for example by supervisor
+    @GetMapping("/{schoolClassId}/details")
+    public String details(@PathVariable Long schoolClassId, Model model) {
+        if (!loggedUser.hasAccessToSchoolClassAdmin(schoolClassId)) {
+            return "error/403";
+        }
+        model.addAttribute("schoolClass", schoolClassRepository.getReferenceById(schoolClassId));
+        model.addAttribute("subjects", subjectRepository.findAll());
+        return "schoolclass/details";
+    }
+
     @GetMapping("/{schoolClassId}/getAverageMarkBySubjectId/{subjectId}")
     public ResponseEntity<String> getAvMark(@PathVariable Long schoolClassId, @PathVariable Long subjectId) {
         if (!loggedUser.supervisesClass(schoolClassId) && !loggedUser.teachesSubject(subjectId) && !loggedUser.hasAccessToAnyStudentOfSchoolClass(schoolClassId)) {
@@ -109,5 +120,4 @@ public class SchoolClassController {
         String result = val.setScale(2, RoundingMode.DOWN).toString();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-    //@TODO - non-admin details of school class, accesible for example by supervisor
 }

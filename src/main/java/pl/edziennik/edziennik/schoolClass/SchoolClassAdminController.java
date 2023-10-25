@@ -88,7 +88,6 @@ public class SchoolClassAdminController {
     @GetMapping("/{id}/adminDetails")
     public String details(Model model, @PathVariable Long id) {
         model.addAttribute("schoolClass", schoolClassRepository.getReferenceById(id));
-        model.addAttribute("students", studentRepository.findAllBySchoolClassId(id));
         model.addAttribute("allStudents", studentRepository.findAll());
         model.addAttribute("subjects", subjectRepository.findAll());
         return "schoolclass/adminDetails";
