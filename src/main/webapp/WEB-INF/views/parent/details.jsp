@@ -53,7 +53,7 @@
     <div><spring:message code="parent.noUser"/></div>
     <div><spring:message code="user.add"/></div>
     <form method="get" action="/admin/parent/${parent.id}/setUser">
-        <select class="selectpicker" data-live-search="true" name="user">
+        <select data-live-search="true" name="user">
             <c:forEach items="${freeUsers}" var="user">
                 <option value="${user.id}">${user.username} (ID: ${user.id})</option>
             </c:forEach>
