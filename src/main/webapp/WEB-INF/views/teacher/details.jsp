@@ -31,7 +31,7 @@
             <c:if test="${teacher.subjects.size() > 0}">
                 <c:forEach items="${subjects}" var="subject">
                     <div>${subject.name} <a executed-by-js="true" href="/admin/subject/removeTeacher?subject=${subject.id}&teacher=${teacher.id}">
-                        <spring:message code="delete"/>
+                        <spring:message code="teacher.removeSubject"/>
                         <p class="msg"><spring:message code="teacher.removeSubjectConfirmation" arguments="${subject.name},${teacher.fullNameWithId}"/></p>
                     </a></div>
                 </c:forEach>
