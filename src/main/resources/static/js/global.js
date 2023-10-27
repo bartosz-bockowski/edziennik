@@ -8,7 +8,7 @@ $(document).ready(() => {
             $(e.target).submit()
         }
     })
-    $(".selectpicker").selectpicker()
+    $(".selectpicker").trigger("click")
     $(".notificationsButton").click((e) => {
         $(e.target).parent().find(".notificationsList").toggle()
     })

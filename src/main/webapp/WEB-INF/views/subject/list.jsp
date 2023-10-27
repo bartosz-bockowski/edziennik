@@ -32,7 +32,7 @@
             <a href="/admin/subject/${subject.id}/details"><spring:message code="subject.details"/></a>
             <a class="confirm" href="/admin/subject/${subject.id}/switch"><spring:message
                     code="${subject.active ? 'disactivate' : 'activate'}"/>
-                <p class="msg" hidden><spring:message code="subject.switch.confirm"/></p></a>
+                <p class="msg"><spring:message code="subject.switch.confirm"/></p></a>
         </td>
     </tr>
     </tbody>

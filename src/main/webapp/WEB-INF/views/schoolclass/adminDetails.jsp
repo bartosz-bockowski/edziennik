@@ -31,7 +31,7 @@
     <div><span>${student.getFullName()}</span>
         <a class="confirm" href="/admin/schoolclass/${schoolClass.id}/removeStudent/${student.id}">
             <spring:message code="schoolClass.removeStudent"/>
-        <p class="msg" hidden><spring:message code="schoolClass.confirmRemoveStudent"/> (${student.getFullName()}, ID: ${student.id})</p>
+        <p class="msg"><spring:message code="schoolClass.confirmRemoveStudent"/> (${student.getFullName()}, ID: ${student.id})</p>
     </a></div>
 </c:forEach>
 <div>
@@ -45,7 +45,7 @@
             </c:forEach>
         </select>
         <br/>
-        <button type="submit" class="selectpickerButton"><spring:message code="schoolClass.setUser"/></button>
+        <button type="submit" class="btn btn-primary"><spring:message code="schoolClass.setUser"/></button>
     </form>
 </div>
 <!-- subjects -->
@@ -57,7 +57,7 @@
     <div><span>${subject.name}</span>
         <a class="confirm" href="/admin/schoolclass/${schoolClass.id}/removeSubject/${subject.id}">
             <spring:message code="schoolClass.removeSubject"/>
-            <p class="msg" hidden><spring:message code="schoolClass.confirmRemoveSubject"/> (${subject.name} ID: ${subject.id})</p>
+            <p class="msg"><spring:message code="schoolClass.confirmRemoveSubject"/> (${subject.name} ID: ${subject.id})</p>
         </a>
         <a href="/schoolclass/${schoolClass.id}/marks/${subject.id}"><spring:message code="schoolClass.marks"/></a>
     </div>
@@ -73,7 +73,7 @@
             </c:forEach>
         </select>
         <br/>
-        <button type="submit" class="selectpickerButton"><spring:message code="schoolClass.saveSubject"/></button>
+        <button type="submit" class="btn btn-primary"><spring:message code="schoolClass.saveSubject"/></button>
     </form>
 </div>
 <jsp:include page="../layout/footer.jsp"/>

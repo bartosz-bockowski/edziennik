@@ -30,14 +30,14 @@
         </c:forEach>
     </select>
     <br/>
-    <button type="submit" class="selectpickerButton"><spring:message code="student.setClass"/></button>
+    <button type="submit" class="btn btn-primary"><spring:message code="student.setClass"/></button>
 </form>
 <br/>
 <h3><spring:message code="student.user"/></h3>
 <c:if test="${student.user != null}">
         ${student.user.username} (ID: ${student.user.id}) <a class="confirm" href="/admin/student/${student.id}/removeUser">
         <spring:message code="student.removeUser"/>
-    <p class="msg" hidden>
+    <p class="msg">
         <spring:message code="student.confirmRemoveUser"/>
     </p>
     </a><br/>
@@ -52,7 +52,7 @@
             </c:forEach>
         </select>
         <br/>
-        <button type="submit" class="selectpickerButton"><spring:message code="student.setUser"/></button>
+        <button type="submit" class="btn btn-primary"><spring:message code="student.setUser"/></button>
     </form>
 </c:if>
 <jsp:include page="../layout/footer.jsp"/>

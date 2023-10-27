@@ -20,10 +20,10 @@
 </c:forEach>
 <h3><spring:message code="teacher.user"/></h3>
 <c:if test="${teacher.user != null}">
-        ${teacher.user.username}<a class="confirm" href="/admin/teacher/${teacher.id}/removeUser">
-        <spring:message code="teacher.removeUser"/>
-    <p class="msg" hidden><spring:message code="teacher.confirmRemoveUser"/></p>
-    </a>
+    ${teacher.user.username}<a class="confirm" href="/admin/teacher/${teacher.id}/removeUser">
+    <spring:message code="teacher.removeUser"/>
+    <p class="msg"><spring:message code="teacher.confirmRemoveUser"/></p>
+</a>
 </c:if>
 <c:if test="${teacher.user == null}">
     <div><spring:message code="teacher.noUser"/></div>
@@ -35,7 +35,7 @@
             </c:forEach>
         </select>
         <br/>
-        <button type="submit" class="selectpickerButton"><spring:message code="teacher.setUser"/></button>
+        <button type="submit" class="btn btn-primary"><spring:message code="teacher.setUser"/></button>
     </form>
 </c:if>
 <h3><spring:message code="teacher.supervisedClasses"/></h3>
@@ -46,13 +46,15 @@
         </c:forEach>
     </select>
     <br/>
-    <button type="submit" class="selectpickerButton"><spring:message code="teacher.setUser"/></button>
+    <button type="submit" class="btn btn-primary"><spring:message code="teacher.setUser"/></button>
 </form>
 <c:if test="${teacher.supervisedClasses.size() > 0}">
     <c:forEach items="${teacher.supervisedClasses}" var="schoolClass">
-        ${schoolClass.name} (ID: ${schoolClass.id}) <a class="confirm" href="/admin/teacher/${teacher.id}/removeSupervisedClass/${schoolClass.id}">
+        ${schoolClass.name} (ID: ${schoolClass.id}) <a class="confirm"
+                                                       href="/admin/teacher/${teacher.id}/removeSupervisedClass/${schoolClass.id}">
         <spring:message code="teacher.removeSupervisedClass"/>
-        <p class="msg" hidden><spring:message code="teacher.confirmRemoveClass"/> (${schoolClass.name} ID: ${schoolClass.id})</p>
+        <p class="msg"><spring:message code="teacher.confirmRemoveClass"/> (${schoolClass.name}
+            ID: ${schoolClass.id})</p>
     </a><br/>
     </c:forEach>
 </c:if>

@@ -30,7 +30,7 @@
             <a href="/admin/parent/${parent.id}/details"><spring:message code="parent.details"/></a>
             <a class="confirm" href="/admin/parent/${parent.id}/switch">
                 <spring:message code="${parent.active ? 'disactivate' : 'activate'}"/>
-                <p class="msg" hidden><spring:message code="parent.switch.confirm"/></p>
+                <p class="msg"><spring:message code="parent.switch.confirm"/></p>
             </a>
         </td>
     </tr>

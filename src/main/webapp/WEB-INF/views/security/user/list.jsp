@@ -34,7 +34,7 @@
             <c:if test="${user.username != 'admin'}">
                 <a class="confirm" href="/admin/user/${user.id}/switch">
                     <spring:message code="${user.active ? 'disactivate' : 'activate'}"/>
-                    <p class="msg" hidden><spring:message code="user.switch.confirm"/></p>
+                    <p class="msg"><spring:message code="user.switch.confirm"/></p>
                 </a>
             </c:if>
         </td>

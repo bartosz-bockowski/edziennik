@@ -40,7 +40,7 @@
             <a href="/student/${student.id}/marks"><spring:message code="student.marks"/></a>
             <a class="confirm" href="/admin/student/${student.id}/switch">
                 <spring:message code="${student.active ? 'disactivate' : 'activate'}"/>
-                <p class="msg" hidden><spring:message code="student.switch.confirm"/></p>
+                <p class="msg"><spring:message code="student.switch.confirm"/></p>
             </a>
         </td>
     </tr>

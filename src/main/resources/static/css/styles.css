@@ -3,6 +3,10 @@
     margin-right: auto;
 }
 
+p.msg{
+    display: none;
+}
+
 table {
     border-collapse: collapse;
 }
@@ -133,10 +137,6 @@ thead {
 
 .buttonA {
     display: block;
-}
-
-input, button {
-    color: black !important;
 }
 
 .lessonPlanTable td {

@@ -27,7 +27,7 @@
             </c:forEach>
         </select>
         <br/>
-        <button type="submit" class="selectpickerButton"><spring:message code="subject.addT"/></button>
+        <button type="submit" class="btn btn-primary"><spring:message code="subject.addT"/></button>
     </form>
     <div><spring:message code="subject.teachers"/>:</div>
     <c:if test="${subject.teachers.size() == 0}">
@@ -36,7 +36,7 @@
     <c:forEach items="${subject.teachers}" var="teacher">
         <div><span>${teacher.fullName}</span> <a class="confirm" href="/admin/subject/${subject.id}/removeTeacher/${teacher.id}">
             <spring:message code="subject.removeTeacher"/>
-            <p class="msg" hidden><spring:message code="subject.confirmRemoveTeacher"/> (${teacher.fullNameWithId})</p>
+            <p class="msg"><spring:message code="subject.confirmRemoveTeacher"/> (${teacher.fullNameWithId})</p>
         </a></div>
     </c:forEach>
 </div>

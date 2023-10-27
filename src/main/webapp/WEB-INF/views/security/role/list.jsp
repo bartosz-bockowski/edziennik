@@ -23,7 +23,7 @@
             <a href="/admin/role/${role.id}/details"><spring:message code="role.details"/></a>
             <a class="confirm" href="/admin/role/${role.id}/switch">
                 <spring:message code="${role.active ? 'disactivate' : 'activate'}"/>
-                <p class="msg" hidden><spring:message code="role.switch.confirm"/></p>
+                <p class="msg"><spring:message code="role.switch.confirm"/></p>
             </a>
         </td>
     </tr>

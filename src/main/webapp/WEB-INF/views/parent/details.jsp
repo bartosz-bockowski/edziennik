@@ -24,7 +24,7 @@
     <div><span>${student.getFullName()}</span>
         <a class="confirm" href="/admin/parent/${parent.id}/removeStudent/${student.id}">
             <spring:message code="parent.removeStudent"/>
-            <p class="msg" hidden><spring:message code="parent.confirmRemoveStudent"/> (${student.getFullName()} ID: ${student.id})</p>
+            <p class="msg"><spring:message code="parent.confirmRemoveStudent"/> (${student.getFullName()} ID: ${student.id})</p>
         </a>
     </div>
 </c:forEach>
@@ -39,14 +39,14 @@
             </c:forEach>
         </select>
         <br/>
-        <button type="submit" class="selectpickerButton"><spring:message code="parent.addUser"/></button>
+        <button type="submit" class="btn btn-primary"><spring:message code="parent.addUser"/></button>
     </form>
 </div>
 <h3><spring:message code="parent.user"/></h3>
 <c:if test="${parent.user != null}">
     ${parent.user.username} (ID: ${parent.user.id}) <a class="confirm" href="/admin/parent/${parent.id}/removeUser">
     <spring:message code="parent.removeUser"/>
-    <p class="msg" hidden><spring:message code="parent.confirmRemoveUser"/></p>
+    <p class="msg"><spring:message code="parent.confirmRemoveUser"/></p>
 </a><br/>
 </c:if>
 <c:if test="${parent.user == null}">
@@ -59,7 +59,7 @@
             </c:forEach>
         </select>
         <br/>
-        <button type="submit" class="selectpickerButton"><spring:message code="parent.setUser"/></button>
+        <button type="submit" class="btn btn-primary"><spring:message code="parent.setUser"/></button>
     </form>
 </c:if>
 <jsp:include page="../layout/footer.jsp"/>
