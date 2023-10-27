@@ -57,4 +57,7 @@ $(document).ready(() => {
             console.log(err)
         }
     })
+    $('form[executed-by-js="true"]').submit((e) => {
+        e.preventDefault()
+    })
 })

@@ -14,53 +14,79 @@
 <a href="/admin/teacher/list"><spring:message code="teacher.list"/></a>
 <h1><spring:message code="teacher.teacherDetails"/></h1>
 <h3>${teacher.getFullName()}</h3>
-<h3><spring:message code="teacher.subjects"/>:</h3>
-<c:forEach items="${subjects}" var="subject">
-    <div>${subject.name}</div>
-</c:forEach>
-<h3><spring:message code="teacher.user"/></h3>
-<c:if test="${teacher.user != null}">
-    ${teacher.user.username}<a class="confirm" href="/admin/teacher/${teacher.id}/removeUser">
-    <spring:message code="teacher.removeUser"/>
-    <p class="msg"><spring:message code="teacher.confirmRemoveUser"/></p>
-</a>
-</c:if>
-<c:if test="${teacher.user == null}">
-    <div><spring:message code="teacher.noUser"/></div>
-    <div><spring:message code="user.add"/></div>
-    <form method="get" action="/admin/teacher/${teacher.id}/setUser">
-        <select class="selectpicker" data-live-search="true" name="user">
-            <c:forEach items="${freeUsers}" var="user">
-                <option value="${user.id}">${user.username} (ID: ${user.id})</option>
-            </c:forEach>
-        </select>
-        <br/>
-        <button type="submit" class="btn btn-primary"><spring:message code="teacher.setUser"/></button>
-    </form>
-</c:if>
-<h3><spring:message code="teacher.supervisedClasses"/></h3>
-<form method="get" action="/admin/teacher/${teacher.id}/addSupervisedClass">
-    <select class="selectpicker" data-live-search="true" name="schoolClass">
-        <c:forEach items="${classes}" var="schoolClass">
-            <option value="${schoolClass.id}">${schoolClass.name} (ID: ${schoolClass.id})</option>
-        </c:forEach>
-    </select>
-    <br/>
-    <button type="submit" class="btn btn-primary"><spring:message code="teacher.setUser"/></button>
-</form>
-<c:if test="${teacher.supervisedClasses.size() > 0}">
-    <c:forEach items="${teacher.supervisedClasses}" var="schoolClass">
-        ${schoolClass.name} (ID: ${schoolClass.id}) <a class="confirm"
-                                                       href="/admin/teacher/${teacher.id}/removeSupervisedClass/${schoolClass.id}">
-        <spring:message code="teacher.removeSupervisedClass"/>
-        <p class="msg"><spring:message code="teacher.confirmRemoveClass"/> (${schoolClass.name}
-            ID: ${schoolClass.id})</p>
-    </a><br/>
-    </c:forEach>
-</c:if>
-<c:if test="${teacher.supervisedClasses.size() == 0}">
-    <spring:message code="teacher.noSupervisedClasse"/>
-</c:if>
+<table class="container-fluid table text-center table-responsive-xl">
+    <tr>
+        <td class="card-header bg-primary rounded-0">
+            <h5 class="card-title text-white mb-1"><spring:message code="teacher.subjects"/></h5>
+        </td>
+        <td class="card-header bg-primary rounded-0">
+            <h5 class="card-title text-white mb-1"><spring:message code="teacher.user"/></h5>
+        </td>
+        <td class="card-header bg-primary rounded-0">
+            <h5 class="card-title text-white mb-1"><spring:message code="teacher.supervisedClasses"/></h5>
+        </td>
+    </tr>
+    <tr>
+        <td class="card-body">
+            <h3><spring:message code="teacher.subjects"/>:</h3>
+            executed-by-js="true"
+            <c:if test="${teacher.subjects.size() > 0}">
+                <c:forEach items="${subjects}" var="subject">
+                    <div>${subject.name}</div>
+                </c:forEach>
+            </c:if>
+            <c:if test="${teacher.subjects.size() == 0}">
+                <spring:message code="teacher.noSubjects"/>
+            </c:if>
+        </td>
+        <td class="card-body">
+            <h3><spring:message code="teacher.user"/></h3>
+            <c:if test="${teacher.user != null}">
+                ${teacher.user.username}<a class="confirm" href="/admin/teacher/${teacher.id}/removeUser">
+                <spring:message code="teacher.removeUser"/>
+                <p class="msg"><spring:message code="teacher.confirmRemoveUser"/></p>
+            </a>
+            </c:if>
+            <c:if test="${teacher.user == null}">
+                <div><spring:message code="teacher.noUser"/></div>
+                <div><spring:message code="user.add"/></div>
+                <form method="get" action="/admin/teacher/${teacher.id}/setUser">
+                    <select class="selectpicker" data-live-search="true" name="user">
+                        <c:forEach items="${freeUsers}" var="user">
+                            <option value="${user.id}">${user.username} (ID: ${user.id})</option>
+                        </c:forEach>
+                    </select>
+                    <br/>
+                    <button type="submit" class="btn btn-primary"><spring:message code="teacher.setUser"/></button>
+                </form>
+            </c:if>
+        </td>
+        <td class="card-body">
+            <form method="get" action="/admin/teacher/${teacher.id}/addSupervisedClass">
+                <select class="selectpicker" data-live-search="true" name="schoolClass">
+                    <c:forEach items="${classes}" var="schoolClass">
+                        <option value="${schoolClass.id}">${schoolClass.name} (ID: ${schoolClass.id})</option>
+                    </c:forEach>
+                </select>
+                <br/>
+                <button type="submit" class="btn btn-primary"><spring:message code="teacher.setUser"/></button>
+            </form>
+            <c:if test="${teacher.supervisedClasses.size() == 0}">
+                <spring:message code="teacher.noSupervisedClasses"/>
+            </c:if>
+            <c:if test="${teacher.supervisedClasses.size() > 0}">
+                <c:forEach items="${teacher.supervisedClasses}" var="schoolClass">
+                    ${schoolClass.name} (ID: ${schoolClass.id}) <a class="confirm"
+                                                                   href="/admin/teacher/${teacher.id}/removeSupervisedClass/${schoolClass.id}">
+                    <spring:message code="teacher.removeSupervisedClass"/>
+                    <p class="msg"><spring:message code="teacher.confirmRemoveClass"/> (${schoolClass.name}
+                        ID: ${schoolClass.id})</p>
+                </a><br/>
+                </c:forEach>
+            </c:if>
+        </td>
+    </tr>
+</table>
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>

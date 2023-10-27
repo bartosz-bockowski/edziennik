@@ -57,6 +57,16 @@ public class SubjectAdminController {
         }
         return "redirect:/admin/subject/" + subjectId + "/details";
     }
+    @GetMapping("/{subjectId}/addTeacher/{teacherId}")
+    public ResponseEntity<?> addTeacherApi(@PathVariable Long subjectId, @PathVariable Long teacherId){
+        Teacher teacher = teacherRepository.getReferenceById(teacherId);
+        Subject subject = subjectRepository.getReferenceById(subjectId);
+        if(!subject.getTeachers().contains(teacher)){
+            subject.getTeachers().add(teacher);
+            subjectRepository.save(subject);
+        }
+        return ResponseEntity.ok("");
+    }
     @GetMapping("/{subjectId}/removeTeacher/{teacherId}")
     public String removeTeacher(@PathVariable Long subjectId, @PathVariable Long teacherId){
         Subject subject = subjectRepository.getReferenceById(subjectId);
