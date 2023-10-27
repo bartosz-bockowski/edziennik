@@ -28,19 +28,30 @@
     </tr>
     <tr>
         <td class="card-body">
-            <h3><spring:message code="teacher.subjects"/>:</h3>
-            executed-by-js="true"
             <c:if test="${teacher.subjects.size() > 0}">
                 <c:forEach items="${subjects}" var="subject">
-                    <div>${subject.name}</div>
+                    <div>${subject.name} <a executed-by-js="true" href="/admin/subject/removeTeacher?subject=${subject.id}&teacher=${teacher.id}">
+                        <spring:message code="delete"/>
+                        <p class="msg"><spring:message code="teacher.removeSubjectConfirmation" arguments="${subject.name},${teacher.fullNameWithId}"/></p>
+                    </a></div>
                 </c:forEach>
             </c:if>
             <c:if test="${teacher.subjects.size() == 0}">
                 <spring:message code="teacher.noSubjects"/>
             </c:if>
+            <form method="get" action="/admin/subject/addTeacher" executed-by-js="true">
+                <p class="msg"><spring:message code="teacher.addSubjectConfimation" arguments="${teacher.fullNameWithId}"/></p>
+                <input type="hidden" name="teacher" value="${teacher.id}"/>
+                <select class="selectpicker" data-live-search="true" name="subject">
+                    <c:forEach items="${freeSubjects}" var="subject">
+                        <option value="${subject.id}">${subject.name} (ID: ${subject.id})</option>
+                    </c:forEach>
+                </select>
+                <br/>
+                <button type="submit" class="btn btn-primary"><spring:message code="teacher.setUser"/></button>
+            </form>
         </td>
         <td class="card-body">
-            <h3><spring:message code="teacher.user"/></h3>
             <c:if test="${teacher.user != null}">
                 ${teacher.user.username}<a class="confirm" href="/admin/teacher/${teacher.id}/removeUser">
                 <spring:message code="teacher.removeUser"/>
@@ -62,15 +73,6 @@
             </c:if>
         </td>
         <td class="card-body">
-            <form method="get" action="/admin/teacher/${teacher.id}/addSupervisedClass">
-                <select class="selectpicker" data-live-search="true" name="schoolClass">
-                    <c:forEach items="${classes}" var="schoolClass">
-                        <option value="${schoolClass.id}">${schoolClass.name} (ID: ${schoolClass.id})</option>
-                    </c:forEach>
-                </select>
-                <br/>
-                <button type="submit" class="btn btn-primary"><spring:message code="teacher.setUser"/></button>
-            </form>
             <c:if test="${teacher.supervisedClasses.size() == 0}">
                 <spring:message code="teacher.noSupervisedClasses"/>
             </c:if>
@@ -84,6 +86,15 @@
                 </a><br/>
                 </c:forEach>
             </c:if>
+            <form method="get" action="/admin/teacher/${teacher.id}/addSupervisedClass">
+                <select class="selectpicker" data-live-search="true" name="schoolClass">
+                    <c:forEach items="${classes}" var="schoolClass">
+                        <option value="${schoolClass.id}">${schoolClass.name} (ID: ${schoolClass.id})</option>
+                    </c:forEach>
+                </select>
+                <br/>
+                <button type="submit" class="btn btn-primary"><spring:message code="teacher.setUser"/></button>
+            </form>
         </td>
     </tr>
 </table>

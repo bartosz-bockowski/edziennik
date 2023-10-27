@@ -11,4 +11,6 @@ import java.util.List;
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
     @Query("SELECT e FROM Subject e WHERE :teacher MEMBER OF e.teachers")
     List<Subject> findAllWhichHaveTeacher(Teacher teacher);
+    @Query("SELECT e FROM Subject e WHERE :teacher NOT MEMBER OF e.teachers")
+    List<Subject> findAllWhichDontHaveTeacher(Teacher teacher);
 }
