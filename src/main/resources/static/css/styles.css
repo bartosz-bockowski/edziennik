@@ -139,6 +139,11 @@ thead {
     display: block;
 }
 
+ .bootstrap-select button{
+     border: 1px solid #c7c7c7;
+     border-radius: 5px;
+ }
+
 .lessonPlanTable td {
     text-align: center;
     padding: 10px;
