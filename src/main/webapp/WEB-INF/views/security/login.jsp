@@ -44,26 +44,30 @@
 <%--    <button type="submit"><spring:message code="login"/></button>--%>
 <%--    <br/>--%>
 <%--</form:form>--%>
-    <form:form class="form-signin" method="post" action="/login" modelAttribute="user">
-        <h1 class="h1 mb-1 font-weight-bold"><spring:message code="e-dziennik"/></h1>
-        <h3 class="h3 mb-3 font-weight-normal">
-            <spring:message code="login"/>
-        </h3>
-        <label for="inputEmail" class="sr-only">
-            <spring:message code="user.username"/>
-            <spring:message code="user.username" var="username"/>
-        </label>
-        <form:input path="username" type="text" id="inputEmail" class="form-control" placeholder="${username}"
-                    autofocus=""/>
-        <label for="inputPassword" class="sr-only">
-            <spring:message code="user.password"/>
-            <spring:message code="user.password" var="password"/>
-        </label>
-        <form:input path="password" type="password" id="inputPassword" class="form-control" placeholder="${password}"/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="login"/></button>
-        <br/>
-        <form:errors path="*"/><br>
-        <jsp:include page="../layout/footer.jsp"/>
-    </form:form>
+<form:form class="form-signin" method="post" action="/login" modelAttribute="user">
+    <h1 class="h1 mb-1 font-weight-bold"><spring:message code="e-dziennik"/></h1>
+    <h3 class="h3 mb-3 font-weight-normal">
+        <spring:message code="login"/>
+    </h3>
+    <label for="inputEmail" class="sr-only">
+        <spring:message code="user.username"/>
+        <spring:message code="user.username" var="username"/>
+    </label>
+    <form:input path="username" type="text" id="inputEmail" class="form-control" placeholder="${username}"
+                autofocus=""/>
+    <label for="inputPassword" class="sr-only">
+        <spring:message code="user.password"/>
+        <spring:message code="user.password" var="password"/>
+    </label>
+    <form:input path="password" type="password" id="inputPassword" class="form-control" placeholder="${password}"/>
+    <button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="login"/></button>
+    <br/>
+    <c:if test="${param.error}">
+        <p class="text-danger">
+            <spring:message code="wrongLoginCredentials"/>
+        </p>
+    </c:if>
+    <jsp:include page="../layout/footer.jsp"/>
+</form:form>
 </body>
 </html>

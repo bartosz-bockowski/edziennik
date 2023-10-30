@@ -22,6 +22,7 @@ public class SecurityConfig {
                     auth.requestMatchers(new AntPathRequestMatcher("/resources/**")).permitAll();
                     auth.requestMatchers(new AntPathRequestMatcher("/WEB-INF/views/security/login.jsp")).permitAll();
                     auth.requestMatchers(new AntPathRequestMatcher("/login")).permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/static/ico/favicon.ico")).permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/login"))

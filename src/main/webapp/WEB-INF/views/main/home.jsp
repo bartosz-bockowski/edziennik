@@ -15,9 +15,9 @@
         <div class="card-body">
             <h1 class="card-title pricing-card-title">${loggedUser.student.fullName}</small></h1>
             <ul class="list-unstyled mt-3 mb-4">
-                <li><a href="/student/${loggedUser.student.id}/marks"><spring:message code="student.marks"/></a></li>
-                <li><a href="/schoolclass/${loggedUser.student.schoolClass.id}/lessonPlan"><spring:message code="lessonPlan"/></a></li>
-                <li><a href="/student/${loggedUser.student.id}/attendance"><spring:message code="student.attendance"/></a></li>
+                <li><a class="btn btn-primary my-1" href="/student/${loggedUser.student.id}/marks"><spring:message code="student.marks"/></a></li>
+                <li><a class="btn btn-primary my-1" href="/schoolclass/${loggedUser.student.schoolClass.id}/lessonPlan"><spring:message code="lessonPlan"/></a></li>
+                <li><a class="btn btn-primary my-1" href="/student/${loggedUser.student.id}/attendance"><spring:message code="student.attendance"/></a></li>
             </ul>
         </div>
     </div>
@@ -30,10 +30,10 @@
         <div class="card-body">
             <h1 class="card-title pricing-card-title">${loggedUser.parent.fullName}</h1>
             <ul class="list-unstyled mt-3 mb-4">
-                <li>10 users included</li>
-                <li>2 GB of storage</li>
-                <li>Email support</li>
-                <li>Help center access</li>
+                <li><a class="btn btn-primary my-1">test</a></li>
+                <li><a class="btn btn-primary my-1">test</a></li>
+                <li><a class="btn btn-primary my-1">test</a></li>
+                <li><a class="btn btn-primary my-1">test</a></li>
             </ul>
         </div>
     </div>
@@ -46,9 +46,9 @@
         <div class="card-body">
             <h1 class="card-title pricing-card-title">${loggedUser.teacher.fullName}</h1>
             <ul class="list-unstyled mt-3 mb-4">
-                <li><a href="/teacher/${loggedUser.teacher.id}/lessonPlan"><spring:message code="lessonPlan"/></a></li>
-                <li><a href="/teacher/${loggedUser.teacher.id}/subjects"><spring:message code="teacher.subjects"/></a></li>
-                <li><a href="/teacher/${loggedUser.teacher.id}/supervisedClasses"><spring:message code="teacher.supervisedClasses"/></a></li>
+                <li><a class="btn btn-primary my-1" href="/teacher/${loggedUser.teacher.id}/lessonPlan"><spring:message code="lessonPlan"/></a></li>
+                <li><a class="btn btn-primary my-1" href="/teacher/${loggedUser.teacher.id}/subjects"><spring:message code="teacher.subjects"/></a></li>
+                <li><a class="btn btn-primary my-1" href="/teacher/${loggedUser.teacher.id}/supervisedClasses"><spring:message code="teacher.supervisedClasses"/></a></li>
             </ul>
         </div>
     </div>
