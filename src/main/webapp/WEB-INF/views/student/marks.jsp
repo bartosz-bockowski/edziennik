@@ -14,7 +14,7 @@
 <h3><spring:message code="student.markList"/> ${student.fullName}</h3>
 <a href="/admin/student/list"><spring:message code="student.list"/></a>
 <br/><br/>
-<table class="centerBlock mainTable basicListTable">
+<table class="table table-striped table-bordered">
     <thead>
     <tr>
         <th><spring:message code="subject"/></th>
@@ -28,16 +28,16 @@
             <td>${subject.name}</td>
             <td>
                 <c:set var="subjectMarks" value="${student.getMarksBySubjectId(subject.id)}"/>
-                <a href="/student/${student.id}/subjectMarks/${subject.id}">
-                    <div class="subjectStudentMarksDiv">
-                        <c:forEach items="${subjectMarks}" var="mark">
-                            ${mark.getMarkString()}
-                        </c:forEach>
-                        <c:if test="${subjectMarks.size() == 0}">
-                            <spring:message code="student.noMarks"/>
-                        </c:if>
-                    </div>
-                </a>
+                <div class="subjectStudentMarksDiv">
+                    <c:forEach items="${subjectMarks}" var="mark">
+                        <a href="/mark/history/${mark.markCategory.id}/${student.id}">
+                                ${mark.getMarkString()}
+                        </a>
+                    </c:forEach>
+                    <c:if test="${subjectMarks.size() == 0}">
+                        <spring:message code="student.noMarks"/>
+                    </c:if>
+                </div>
             </td>
             <td>${markUtils.countAverageOfMarks(subjectMarks)}</td>
         </tr>

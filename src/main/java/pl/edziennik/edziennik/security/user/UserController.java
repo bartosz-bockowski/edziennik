@@ -11,6 +11,7 @@ import pl.edziennik.edziennik.teacher.TeacherRepository;
 import pl.edziennik.edziennik.security.role.RoleRepository;
 import pl.edziennik.edziennik.security.role.Role;
 
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -77,15 +78,17 @@ public class UserController {
     public String setRoles(@PathVariable Long id, @RequestParam(value = "roles", required = false) String roles) {
         User user = userRepository.getReferenceById(id);
         Set<Role> roleList = user.getRoles();
+        Set<Role> result = new HashSet<>();
         if (roles == null) {
             for (Role role : roleList) {
                 roleList.remove(role);
             }
         } else {
             for (String x : roles.split(",")) {
-                user.getRoles().add(roleRepository.getReferenceById(Long.parseLong(x)));
+                result.add(roleRepository.getReferenceById(Long.parseLong(x)));
             }
         }
+        user.setRoles(result);
         userRepository.save(user);
         return "redirect:/admin/user/" + id + "/details";
     }

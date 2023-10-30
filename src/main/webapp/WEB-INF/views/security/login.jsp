@@ -14,12 +14,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
-<head>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/small/login-form.css"/>
-    <title>E-dziennik</title>
-</head>
-<body class="text-center">
+<jsp:include page="../layout/header.jsp"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/small/login-form.css">
 <%--<form:form class="form-signin" method="post"--%>
 <%--           modelAttribute="user"--%>
 <%--           action="/login">--%>
@@ -48,24 +44,26 @@
 <%--    <button type="submit"><spring:message code="login"/></button>--%>
 <%--    <br/>--%>
 <%--</form:form>--%>
-<form:form class="form-signin" method="post" action="/login" modelAttribute="user">
-<%--    <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">--%>
-    <h1 class="h1 mb-1 font-weight-bold"><spring:message code="e-dziennik"/></h1>
-    <h3 class="h3 mb-3 font-weight-normal">
-        <spring:message code="login"/>
-    </h3>
-    <label for="inputEmail" class="sr-only">
-        <spring:message code="user.username"/>
-        <spring:message code="user.username" var="username"/>
-    </label>
-    <form:input path="username" type="text" id="inputEmail" class="form-control" placeholder="${username}" autofocus=""/>
-    <label for="inputPassword" class="sr-only">
-        <spring:message code="user.password"/>
-        <spring:message code="user.password" var="password"/>
-    </label>
-    <form:input path="password" type="password" id="inputPassword" class="form-control" placeholder="${password}"/>
-    <button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="login"/></button>
-    <p class="mt-5 mb-3 text-muted">Bartosz Boćkowski © 2023</p>
-</form:form>
+    <form:form class="form-signin" method="post" action="/login" modelAttribute="user">
+        <h1 class="h1 mb-1 font-weight-bold"><spring:message code="e-dziennik"/></h1>
+        <h3 class="h3 mb-3 font-weight-normal">
+            <spring:message code="login"/>
+        </h3>
+        <label for="inputEmail" class="sr-only">
+            <spring:message code="user.username"/>
+            <spring:message code="user.username" var="username"/>
+        </label>
+        <form:input path="username" type="text" id="inputEmail" class="form-control" placeholder="${username}"
+                    autofocus=""/>
+        <label for="inputPassword" class="sr-only">
+            <spring:message code="user.password"/>
+            <spring:message code="user.password" var="password"/>
+        </label>
+        <form:input path="password" type="password" id="inputPassword" class="form-control" placeholder="${password}"/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="login"/></button>
+        <br/>
+        <form:errors path="*"/><br>
+        <jsp:include page="../layout/footer.jsp"/>
+    </form:form>
 </body>
 </html>

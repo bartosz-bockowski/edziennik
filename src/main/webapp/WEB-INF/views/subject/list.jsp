@@ -13,7 +13,7 @@
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="subject.list"/></h1>
 <a href="/admin/subject/add"><spring:message code="subject.add"/></a>
-<table class="centerBlock mainTable basicListTable">
+<table class="table table-striped table-bordered">
     <thead>
     <tr>
         <th><spring:message code="subject.id"/></th>
@@ -24,19 +24,19 @@
     </thead>
     <tbody>
     <c:forEach items="${page.content}" var="subject">
-    <tr>
-        <td>${subject.id}</td>
-        <td>${subject.name}</td>
-        <td><spring:message code="${subject.active}"/></td>
-        <td>
-            <a href="/admin/subject/${subject.id}/details"><spring:message code="subject.details"/></a>
-            <a class="confirm" href="/admin/subject/${subject.id}/switch"><spring:message
-                    code="${subject.active ? 'disactivate' : 'activate'}"/>
-                <p class="msg"><spring:message code="subject.switch.confirm"/></p></a>
-        </td>
-    </tr>
-    </tbody>
+        <tr>
+            <td>${subject.id}</td>
+            <td>${subject.name}</td>
+            <td><spring:message code="${subject.active}"/></td>
+            <td>
+                <a href="/admin/subject/${subject.id}/details"><spring:message code="subject.details"/></a>
+                <a class="confirm" href="/admin/subject/${subject.id}/switch"><spring:message
+                        code="${subject.active ? 'disactivate' : 'activate'}"/>
+                    <p class="msg"><spring:message code="subject.switch.confirm"/></p></a>
+            </td>
+        </tr>
     </c:forEach>
+    </tbody>
 </table>
 <jsp:include page="../layout/footer.jsp"/>
 </body>

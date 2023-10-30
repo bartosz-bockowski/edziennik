@@ -13,7 +13,7 @@
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="schoolClass.list"/></h1>
 <a href="/admin/schoolclass/add"><spring:message code="schoolClass.add"/></a>
-<table class="centerBlock mainTable basicListTable">
+<table class="table table-striped table-bordered">
     <thead>
     <tr>
         <th><spring:message code="schoolClass.id"/></th>
@@ -24,21 +24,22 @@
     </thead>
     <tbody>
     <c:forEach items="${page.content}" var="schoolclass">
-    <tr>
-        <td>${schoolclass.id}</td>
-        <td>${schoolclass.name}</td>
-        <td><spring:message code="${schoolclass.active}"/></td>
-        <td>
-            <a href="/admin/schoolclass/${schoolclass.id}/adminDetails"><spring:message code="schoolClass.details"/></a>
-            <a class="confirm" href="/admin/schoolclass/${schoolclass.id}/switch">
-                <spring:message code="${schoolclass.active ? 'disactivate' : 'activate'}"/>
-                <p class="msg"><spring:message code="schoolClass.switch.confirm"/></p>
-            </a>
-            <a href="/schoolclass/${schoolclass.id}/lessonPlan"><spring:message code="lessonPlan"/></a>
-        </td>
-    </tr>
-    </tbody>
+        <tr>
+            <td>${schoolclass.id}</td>
+            <td>${schoolclass.name}</td>
+            <td><spring:message code="${schoolclass.active}"/></td>
+            <td>
+                <a href="/admin/schoolclass/${schoolclass.id}/adminDetails"><spring:message
+                        code="schoolClass.details"/></a>
+                <a class="confirm" href="/admin/schoolclass/${schoolclass.id}/switch">
+                    <spring:message code="${schoolclass.active ? 'disactivate' : 'activate'}"/>
+                    <p class="msg"><spring:message code="schoolClass.switch.confirm"/></p>
+                </a>
+                <a href="/schoolclass/${schoolclass.id}/lessonPlan"><spring:message code="lessonPlan"/></a>
+            </td>
+        </tr>
     </c:forEach>
+    </tbody>
 </table>
 <jsp:include page="../layout/footer.jsp"/>
 </body>

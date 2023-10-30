@@ -12,7 +12,7 @@
 <body>
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="teacher.subjects"/></h1>
-<table class="centerBlock mainTable basicListTable">
+<table class="table table-striped table-bordered">
     <thead>
     <tr>
         <th><spring:message code="subject.id"/></th>

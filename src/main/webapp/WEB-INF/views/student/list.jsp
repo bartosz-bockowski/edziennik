@@ -13,7 +13,7 @@
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="student.list"/></h1>
 <a href="/admin/student/add"><spring:message code="student.add"/></a>
-<table class="centerBlock mainTable basicListTable">
+<table class="table table-striped table-bordered">
     <thead>
     <th><spring:message code="student.id"/></th>
     <th><spring:message code="student.fullName"/></th>
@@ -23,29 +23,29 @@
     </thead>
     <tbody>
     <c:forEach items="${page.content}" var="student">
-    <tr>
-        <td>${student.id}</td>
-        <td>${student.getFullName()}</td>
-        <td>
-            <c:if test="${student.schoolClass != null}">
-                ${student.schoolClass.name}
-            </c:if>
-            <c:if test="${student.schoolClass == null}">
-                <spring:message code="student.nullClass"/>
-            </c:if>
-        </td>
-        <td><spring:message code="${student.active}"/></td>
-        <td>
-            <a href="/admin/student/${student.id}/adminDetails"><spring:message code="student.details"/></a>
-            <a href="/student/${student.id}/marks"><spring:message code="student.marks"/></a>
-            <a class="confirm" href="/admin/student/${student.id}/switch">
-                <spring:message code="${student.active ? 'disactivate' : 'activate'}"/>
-                <p class="msg"><spring:message code="student.switch.confirm"/></p>
-            </a>
-        </td>
-    </tr>
-    </tbody>
+        <tr>
+            <td>${student.id}</td>
+            <td>${student.getFullName()}</td>
+            <td>
+                <c:if test="${student.schoolClass != null}">
+                    ${student.schoolClass.name}
+                </c:if>
+                <c:if test="${student.schoolClass == null}">
+                    <spring:message code="student.nullClass"/>
+                </c:if>
+            </td>
+            <td><spring:message code="${student.active}"/></td>
+            <td>
+                <a href="/admin/student/${student.id}/adminDetails"><spring:message code="student.details"/></a>
+                <a href="/student/${student.id}/marks"><spring:message code="student.marks"/></a>
+                <a class="confirm" href="/admin/student/${student.id}/switch">
+                    <spring:message code="${student.active ? 'disactivate' : 'activate'}"/>
+                    <p class="msg"><spring:message code="student.switch.confirm"/></p>
+                </a>
+            </td>
+        </tr>
     </c:forEach>
+    </tbody>
 </table>
 <jsp:include page="../layout/footer.jsp"/>
 </body>

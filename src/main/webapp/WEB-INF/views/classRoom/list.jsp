@@ -13,7 +13,7 @@
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="classRoom.list"/></h1>
 <a href="/admin/classRoom/add"><spring:message code="classRoom.add"/></a>
-<table class="centerBlock mainTable basicListTable">
+<table class="table table-striped table-bordered">
     <thead>
     <th><spring:message code="classRoom.id"/></th>
     <th><spring:message code="classRoom.name"/></th>
@@ -22,14 +22,14 @@
     </thead>
     <tbody>
     <c:forEach items="${page.content}" var="classRoom">
-    <tr>
-        <td>${classRoom.id}</td>
-        <td>${classRoom.name}</td>
-        <td><spring:message code="${classRoom.active}"/></td>
-        <td></td>
-    </tr>
-    </tbody>
+        <tr>
+            <td>${classRoom.id}</td>
+            <td>${classRoom.name}</td>
+            <td><spring:message code="${classRoom.active}"/></td>
+            <td></td>
+        </tr>
     </c:forEach>
+    </tbody>
 </table>
 <jsp:include page="../layout/footer.jsp"/>
 </body>
