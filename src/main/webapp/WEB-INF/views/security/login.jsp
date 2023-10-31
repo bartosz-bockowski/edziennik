@@ -16,34 +16,6 @@
 <html>
 <jsp:include page="../layout/header.jsp"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/small/login-form.css">
-<%--<form:form class="form-signin" method="post"--%>
-<%--           modelAttribute="user"--%>
-<%--           action="/login">--%>
-<%--    <table>--%>
-<%--        <tr>--%>
-<%--            <td>--%>
-<%--                <spring:message code="user.username"/>--%>
-<%--            </td>--%>
-<%--            <td>--%>
-<%--                <form:input type="text" class="form-control" path="username"/>--%>
-<%--            </td>--%>
-<%--        </tr>--%>
-<%--&lt;%&ndash;        <tr class="formTableErrorRow"></tr>&ndash;%&gt;--%>
-<%--        <tr>--%>
-<%--            <td>--%>
-<%--                <spring:message code="user.password"/>--%>
-<%--            </td>--%>
-<%--            <td>--%>
-<%--                <form:input type="password" path="password"/>--%>
-<%--            </td>--%>
-<%--        </tr>--%>
-<%--&lt;%&ndash;        <tr class="formTableErrorRow">&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <c:if test="${param.error}"><spring:message code="wrongLoginCredentials"/></c:if>&ndash;%&gt;--%>
-<%--&lt;%&ndash;        </tr>&ndash;%&gt;--%>
-<%--    </table>--%>
-<%--    <button type="submit"><spring:message code="login"/></button>--%>
-<%--    <br/>--%>
-<%--</form:form>--%>
 <form:form class="form-signin" method="post" action="/login" modelAttribute="user">
     <h1 class="h1 mb-1 font-weight-bold"><spring:message code="e-dziennik"/></h1>
     <h3 class="h3 mb-3 font-weight-normal">
