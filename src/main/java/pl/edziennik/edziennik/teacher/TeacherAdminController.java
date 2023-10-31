@@ -78,7 +78,7 @@ public class TeacherAdminController {
         model.addAttribute("freeUsers",userRepository.findAllByStudentIsNullAndTeacherIsNullAndParentIsNull());
         model.addAttribute("freeSubjects",subjectRepository.findAllWhichDontHaveTeacher(teacher));
         model.addAttribute("subjects",subjectRepository.findAllWhichHaveTeacher(teacher));
-        return "teacher/details";
+        return "teacher/adminDetails";
     }
     @GetMapping("/{teacherId}/setUser")
     public String setUser(@PathVariable Long teacherId, @RequestParam Long user){

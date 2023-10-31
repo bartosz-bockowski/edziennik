@@ -18,6 +18,7 @@
                 <li><a class="btn btn-primary my-1" href="/student/${loggedUser.student.id}/marks"><spring:message code="student.marks"/></a></li>
                 <li><a class="btn btn-primary my-1" href="/schoolclass/${loggedUser.student.schoolClass.id}/lessonPlan"><spring:message code="lessonPlan"/></a></li>
                 <li><a class="btn btn-primary my-1" href="/student/${loggedUser.student.id}/attendance"><spring:message code="student.attendance"/></a></li>
+                <li><a class="btn btn-primary my-1" href="/student/${loggedUser.student.id}/details"><spring:message code="parent.students"/></a></li>
             </ul>
         </div>
     </div>
@@ -30,10 +31,8 @@
         <div class="card-body">
             <h1 class="card-title pricing-card-title">${loggedUser.parent.fullName}</h1>
             <ul class="list-unstyled mt-3 mb-4">
-                <li><a class="btn btn-primary my-1">test</a></li>
-                <li><a class="btn btn-primary my-1">test</a></li>
-                <li><a class="btn btn-primary my-1">test</a></li>
-                <li><a class="btn btn-primary my-1">test</a></li>
+                <li><a class="btn btn-primary my-1" href="/parent/${loggedUser.parent.id}/students"><spring:message code="parent.students"/></a></li>
+                <li><a class="btn btn-primary my-1" href="/parent/${loggedUser.parent.id}/details"><spring:message code="parent.students"/></a></li>
             </ul>
         </div>
     </div>
@@ -49,6 +48,7 @@
                 <li><a class="btn btn-primary my-1" href="/teacher/${loggedUser.teacher.id}/lessonPlan"><spring:message code="lessonPlan"/></a></li>
                 <li><a class="btn btn-primary my-1" href="/teacher/${loggedUser.teacher.id}/subjects"><spring:message code="teacher.subjects"/></a></li>
                 <li><a class="btn btn-primary my-1" href="/teacher/${loggedUser.teacher.id}/supervisedClasses"><spring:message code="teacher.supervisedClasses"/></a></li>
+                <li><a class="btn btn-primary my-1" href="/teacher/${loggedUser.teacher.id}/details"><spring:message code="parent.students"/></a></li>
             </ul>
         </div>
     </div>

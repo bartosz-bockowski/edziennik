@@ -18,8 +18,8 @@
 <!-- teachers -->
 <table class="container-fluid table text-center table-responsive-xl">
     <tr>
-        <td class="card-header bg-primary rounded-0">
-            <h5 class="card-title text-white mb-1"><spring:message code="subject.teachers"/></h5>
+        <td class="card-header">
+            <h5 class="card-title mb-1"><spring:message code="subject.teachers"/></h5>
         </td>
     </tr>
     <tr>

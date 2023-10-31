@@ -16,14 +16,14 @@
 <h3>${teacher.getFullName()}</h3>
 <table class="container-fluid table text-center table-responsive-xl">
     <tr>
-        <td class="card-header bg-primary rounded-0">
-            <h5 class="card-title text-white mb-1"><spring:message code="teacher.subjects"/></h5>
+        <td class="card-header">
+            <h5 class="card-title mb-1"><spring:message code="teacher.subjects"/></h5>
         </td>
-        <td class="card-header bg-primary rounded-0">
-            <h5 class="card-title text-white mb-1"><spring:message code="teacher.user"/></h5>
+        <td class="card-header">
+            <h5 class="card-title mb-1"><spring:message code="teacher.user"/></h5>
         </td>
-        <td class="card-header bg-primary rounded-0">
-            <h5 class="card-title text-white mb-1"><spring:message code="teacher.supervisedClasses"/></h5>
+        <td class="card-header">
+            <h5 class="card-title mb-1"><spring:message code="teacher.supervisedClasses"/></h5>
         </td>
     </tr>
     <tr>
