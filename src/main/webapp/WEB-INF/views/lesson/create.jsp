@@ -30,7 +30,7 @@
     <form:input type="hidden" path="createdBy"/>
     <div>
         <spring:message code="lesson.topic"/>
-        <form:input type="text" path="topic" required="required"/>
+        <form:input type="text" class="form-control" path="topic" required="required"/>
     </div>
     <h3><spring:message code="lesson.attendance"/></h3>
     <table class="centerBlock mainTable">

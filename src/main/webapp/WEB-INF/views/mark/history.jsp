@@ -12,10 +12,10 @@
 <body>
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="mark.history"/></h1>
-<table class="table table-striped table-bordered">
+<table class="table table-bordered">
     <tr>
         <td><spring:message code="mark.student"/></td>
-        <td class="font-weight-bold">${student.fullName} (<spring:message code="student.schoolClass"/>: ${student.schoolClass.name})</td>
+        <td class="font-weight-bold">${student.fullName} (<spring:message code="schoolClass"/> ${student.schoolClass != null ? student.schoolClass.name : ' - '})</td>
     </tr>
     <tr>
         <td><spring:message code="mark.category"/></td>

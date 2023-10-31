@@ -22,7 +22,7 @@
                 <spring:message code="exam.name"/>
             </td>
             <td>
-                <form:input type="text" path="name"/>
+                <form:input type="text" class="form-control" path="name"/>
             </td>
         </tr>
     </table>

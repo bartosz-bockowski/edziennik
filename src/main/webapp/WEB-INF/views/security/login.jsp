@@ -25,7 +25,7 @@
 <%--                <spring:message code="user.username"/>--%>
 <%--            </td>--%>
 <%--            <td>--%>
-<%--                <form:input type="text" path="username"/>--%>
+<%--                <form:input type="text" class="form-control" path="username"/>--%>
 <%--            </td>--%>
 <%--        </tr>--%>
 <%--&lt;%&ndash;        <tr class="formTableErrorRow"></tr>&ndash;%&gt;--%>
