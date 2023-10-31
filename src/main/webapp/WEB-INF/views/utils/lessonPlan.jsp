@@ -77,7 +77,7 @@
                                     <a class="confirm"
                                        href="/exam/delete/${lesson.lastExam.id}?teacherId=${teacher.id}&date=${date}"><spring:message
                                             code="delete"/>
-                                    <p class="msg" hidden><spring:message code="exam.delete.confiramtion"/></p></a>
+                                    <p class="msg"><spring:message code="exam.delete.confiramtion"/></p></a>
                                 </c:if>
                             </c:if>
                         </div>

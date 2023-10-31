@@ -1,24 +1,10 @@
-body {
-    text-align: center;
-    margin: 0;
-    padding: 0;
-}
-
-#container {
-    padding-bottom: 80px;
-}
-
-a {
-    color: black;
-}
-
-a:hover {
-    color: black;
-}
-
 .centerBlock {
     margin-left: auto;
     margin-right: auto;
+}
+
+p.msg{
+    display: none;
 }
 
 table {
@@ -153,9 +139,10 @@ thead {
     display: block;
 }
 
-input, button {
-    color: black !important;
-}
+ .bootstrap-select button{
+     border: 1px solid #c7c7c7;
+     border-radius: 5px;
+ }
 
 .lessonPlanTable td {
     text-align: center;

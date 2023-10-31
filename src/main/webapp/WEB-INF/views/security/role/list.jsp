@@ -6,7 +6,7 @@
 <jsp:include page="../../layout/header.jsp"/>
 <h1><spring:message code="role.list"/></h1>
 <a href="/admin/role/add"><spring:message code="role.add"/></a>
-<table class="centerBlock mainTable basicListTable basicListTable">
+<table class="table table-striped table-bordered basicListTable">
     <thead>
     <th><spring:message code="role.id"/></th>
     <th><spring:message code="role.name"/></th>
@@ -23,7 +23,7 @@
             <a href="/admin/role/${role.id}/details"><spring:message code="role.details"/></a>
             <a class="confirm" href="/admin/role/${role.id}/switch">
                 <spring:message code="${role.active ? 'disactivate' : 'activate'}"/>
-                <p class="msg" hidden><spring:message code="role.switch.confirm"/></p>
+                <p class="msg"><spring:message code="role.switch.confirm"/></p>
             </a>
         </td>
     </tr>

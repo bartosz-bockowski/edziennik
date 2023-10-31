@@ -89,7 +89,7 @@ public class LoggedUser {
     }
 
     public Boolean hasAccessToMarkHistory(Long markId) {
-        return isAdmin() || getUser().getStudent() != null && getUser().getStudent().getMarks().stream().map(Mark::getId).toList().contains(markId) || getUser().getTeacher() != null && getUser().getTeacher().getMarks().stream().map(Mark::getId).toList().contains(markId);
+        return isAdmin() || getUser().getStudent() != null && getUser().getStudent().getMarks().stream().map(Mark::getId).toList().contains(markId) || getUser().getParent() != null && getUser().getParent().getStudents().stream().flatMap(s -> s.getMarks().stream()).map(Mark::getId).toList().contains(markId) || getUser().getTeacher() != null && getUser().getTeacher().getMarks().stream().map(Mark::getId).toList().contains(markId);
     }
 
     public Boolean isMarkCreator(Long markId) {

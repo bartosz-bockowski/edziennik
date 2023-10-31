@@ -15,23 +15,19 @@
 <a href="/admin/role/list"><spring:message code="role.list"/></a>
 <h1><spring:message code="role.add"/></h1>
 <form:form action="/admin/role/add" method="post" modelAttribute="role">
-    <table class="formTable centerBlock">
-        <tr>
-            <td class="formTableNameCell">
-                <spring:message code="role.name"/>
-            </td>
-            <td>
-                <form:input type="text" path="name"/>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td class="${result.hasFieldErrors('name') ? 'backgroundRedError' : ''}">
-                <spring:message code="${result.getFieldError('name').defaultMessage}"/>
-            </td>
-        </tr>
-    </table>
-    <button type="submit"><spring:message code="add"/></button>
+    <div class="d-flex justify-content-center">
+        <table class="table-bordered">
+            <tr>
+                <td class="text-right">
+                    <spring:message code="role.name"/>
+                </td>
+                <td>
+                    <form:input type="text" class="form-control" path="name"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <button class="btn btn-primary" type="submit"><spring:message code="add"/></button>
 </form:form>
 <script src="${pageContext.request.contextPath}/js/addForm.js"></script>
 <jsp:include page="../../layout/footer.jsp"/>

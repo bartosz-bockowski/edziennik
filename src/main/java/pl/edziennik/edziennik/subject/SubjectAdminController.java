@@ -57,6 +57,30 @@ public class SubjectAdminController {
         }
         return "redirect:/admin/subject/" + subjectId + "/details";
     }
+    @GetMapping("/addTeacher")
+    public ResponseEntity<?> addTeacherApi(@RequestParam(required = false) Long subject, @RequestParam(required = false) Long teacher){
+        if(subject == null || teacher == null){
+            return ResponseEntity.badRequest().build();
+        }
+        Teacher teacherObj = teacherRepository.getReferenceById(teacher);
+        Subject subjectObj = subjectRepository.getReferenceById(subject);
+        if(!subjectObj.getTeachers().contains(teacherObj)){
+            subjectObj.getTeachers().add(teacherObj);
+            subjectRepository.save(subjectObj);
+        }
+        return ResponseEntity.ok("");
+    }
+    @GetMapping("/removeTeacher")
+    public ResponseEntity<?> removeTeacherApi(@RequestParam(required = false) Long subject, @RequestParam(required = false) Long teacher){
+        if(subject == null || teacher == null){
+            return ResponseEntity.badRequest().build();
+        }
+        Teacher teacherObj = teacherRepository.getReferenceById(teacher);
+        Subject subjectObj = subjectRepository.getReferenceById(subject);
+        subjectObj.getTeachers().remove(teacherObj);
+        subjectRepository.save(subjectObj);
+        return ResponseEntity.ok("");
+    }
     @GetMapping("/{subjectId}/removeTeacher/{teacherId}")
     public String removeTeacher(@PathVariable Long subjectId, @PathVariable Long teacherId){
         Subject subject = subjectRepository.getReferenceById(subjectId);

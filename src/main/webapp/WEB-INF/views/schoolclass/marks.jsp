@@ -22,7 +22,7 @@
 <form:form action="/markCategory/create" method="post" modelAttribute="markCategory">
     <form:input type="hidden" path="schoolClass" value="${schoolClass.id}"/>
     <form:input type="hidden" path="subject" value="${subjectId}"/>
-    <form:input type="text" path="name"/>
+    <form:input type="text" class="form-control" path="name"/>
     <form:input type="number" path="weight" step="1"/>
     <button type="submit"><spring:message code="add"/></button>
 </form:form>

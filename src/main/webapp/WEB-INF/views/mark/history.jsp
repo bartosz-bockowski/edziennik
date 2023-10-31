@@ -12,24 +12,27 @@
 <body>
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="mark.history"/></h1>
-<table class="centerBlock noBorderTable paddingTable">
+<table class="table table-bordered">
     <tr>
         <td><spring:message code="mark.student"/></td>
-        <td><h3>${student.fullName} (<spring:message code="student.schoolClass"/>: ${student.schoolClass.name})</h3></td>
+        <td class="font-weight-bold">${student.fullName} (<spring:message code="schoolClass"/> ${student.schoolClass != null ? student.schoolClass.name : ' - '})</td>
     </tr>
     <tr>
         <td><spring:message code="mark.category"/></td>
-        <td><h3>${markCategory.name}</h3></td>
+        <td class="font-weight-bold">${markCategory.name}</td>
     </tr>
     <tr>
         <td><spring:message code="mark.category.subject"/></td>
-        <td><h3>${markCategory.subject.name}</h3></td>
+        <td class="font-weight-bold">${markCategory.subject.name}</td>
+    </tr>
+    <tr>
+        <td><spring:message code="mark.category.weight"/></td>
+        <td class="font-weight-bold">${markCategory.weight}</td>
     </tr>
 </table>
-<span><spring:message code="mark.category.weight"/>: ${markCategory.weight}</span>
-<h3><spring:message code="mark.history"/></h3>
 <c:if test="${history.size() > 0}">
-    <table class="centerBlock mainTable">
+    <span><spring:message code="mark.history.firstRowCreationNotification"/></span>
+    <table class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th><spring:message code="mark.newMark"/></th>
@@ -45,7 +48,6 @@
             </tr>
         </c:forEach>
     </table>
-    <span><spring:message code="mark.history.firstRowCreationNotification"/></span>
 </c:if>
 <c:if test="${history.size() == 0}">
     <div><spring:message code="mark.history.empty"/></div>
