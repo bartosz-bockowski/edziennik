@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -21,6 +22,9 @@
         </td>
         <td class="card-header">
             <h5 class="card-title mb-1"><spring:message code="student.user"/></h5>
+        </td>
+        <td class="card-header">
+            <h5 class="card-title mb-1"><spring:message code="address"/></h5>
         </td>
     </tr>
     <tr>
@@ -45,11 +49,10 @@
         </td>
         <td class="card-body">
             <c:if test="${student.user != null}">
-                ${student.user.username} (ID: ${student.user.id}) <a class="confirm" href="/admin/student/${student.id}/removeUser">
+                ${student.user.username} (ID: ${student.user.id}) <a class="confirm"
+                                                                     href="/admin/student/${student.id}/removeUser">
                 <spring:message code="student.removeUser"/>
-                <p class="msg">
-                    <spring:message code="student.confirmRemoveUser"/>
-                </p>
+                <p class="msg"><spring:message code="student.confirmRemoveUser"/></p>
             </a>
             </c:if>
             <c:if test="${student.user == null}">
@@ -63,6 +66,28 @@
                     </select>
                     <button type="submit" class="btn btn-primary"><spring:message code="student.setUser"/></button>
                 </form>
+            </c:if>
+        </td>
+        <td class="card-body">
+            <c:if test="${student.address != null}">
+                <div class="float-left text-left">
+                    <div class="font-weight-bold"><spring:message code="address.street"/></div>
+                    <div class="font-weight-bold"><spring:message code="address.homeNumber"/></div>
+                    <div class="font-weight-bold"><spring:message code="address.postCode"/></div>
+                    <div class="font-weight-bold"><spring:message code="address.city"/></div>
+                </div>
+                <div class="float-left text-left mx-2">
+                    <div>${student.address.street}</div>
+                    <div>${student.address.homeNumber}<c:if test="${!student.address.apartment.equals('')}">/${student.address.apartment}</c:if></div>
+                    <div>${student.address.postCode}</div>
+                    <div>${student.address.city}</div>
+                </div>
+                <div class="float-left text-left mx-2">
+                    <div><a href="/admin/address/${student.address.id}/change/student/${student.id}" class="btn btn-primary text-white"><spring:message code="address.changeAddress"/></a></div>
+                </div>
+            </c:if>
+            <c:if test="${student.address == null}">
+                <span class="text-danger"><spring:message code="student.noAddress"/></span>
             </c:if>
         </td>
     </tr>

@@ -1,7 +1,11 @@
 package pl.edziennik.edziennik.student;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.pl.PESEL;
+import pl.edziennik.edziennik.address.Address;
 import pl.edziennik.edziennik.attendance.Attendance;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.mark.Mark;
@@ -37,9 +41,14 @@ public class Student {
     private int groupInClass;
     @OneToMany(mappedBy = "student")
     private List<Mark> marks;
-
     @OneToMany(mappedBy = "student")
     private List<Attendance> attendance;
+    private LocalDate dateOfBirth;
+    private Boolean isMale;
+    @PESEL
+    private String pesel;
+    @OneToOne
+    private Address address;
 
     public String getFullName() {
         return this.firstName + " " + this.lastName;
