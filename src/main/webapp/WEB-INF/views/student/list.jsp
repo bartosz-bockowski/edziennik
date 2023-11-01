@@ -12,7 +12,7 @@
 <body>
 <jsp:include page="../layout/header.jsp"/>
 <h1><spring:message code="student.list"/></h1>
-<a href="/admin/student/add"><spring:message code="student.add"/></a>
+<a class="btn btn-primary" href="/admin/student/add"><spring:message code="student.add"/></a>
 <table class="table table-striped table-bordered">
     <thead>
     <th><spring:message code="student.id"/></th>
@@ -36,9 +36,9 @@
             </td>
             <td><spring:message code="${student.active}"/></td>
             <td>
-                <a href="/admin/student/${student.id}/adminDetails"><spring:message code="student.details"/></a>
-                <a href="/student/${student.id}/marks"><spring:message code="student.marks"/></a>
-                <a class="confirm" href="/admin/student/${student.id}/switch">
+                <a class="btn btn-primary" href="/admin/student/${student.id}/adminDetails"><spring:message code="student.details"/></a>
+                <a class="btn btn-primary" href="/student/${student.id}/marks"><spring:message code="student.marks"/></a>
+                <a class="confirm btn btn-primary" href="/admin/student/${student.id}/switch">
                     <spring:message code="${student.active ? 'disactivate' : 'activate'}"/>
                     <p class="msg"><spring:message code="student.switch.confirm"/></p>
                 </a>
