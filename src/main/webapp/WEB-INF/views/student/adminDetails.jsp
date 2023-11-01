@@ -85,34 +85,34 @@
             <td class="font-weight-bold my-2">${student.lastName}</td>
         </tr>
         <tr>
-            <td><spring:message code="student.dateOfBirth"/></td>
+            <td><spring:message code="address.dateOfBirth"/></td>
             <td class="font-weight-bold my-2">${student.dateOfBirth}</td>
         </tr>
         <tr>
-            <td><spring:message code="student.gender"/></td>
+            <td><spring:message code="address.gender"/></td>
             <td class="font-weight-bold my-2">
                 <c:if test="${student.isMale}"><spring:message code="male"/></c:if>
                 <c:if test="${!student.isMale}"><spring:message code="female"/></c:if>
             </td>
         </tr>
         <tr>
-            <td><spring:message code="student.pesel"/></td>
+            <td><spring:message code="address.pesel"/></td>
             <td class="font-weight-bold my-2">${student.pesel}</td>
         </tr>
         <tr>
-            <td><spring:message code="student.street"/></td>
+            <td><spring:message code="address.street"/></td>
             <td class="font-weight-bold my-2">${student.street}</td>
         </tr>
         <tr>
-            <td><spring:message code="student.homeNumber"/></td>
+            <td><spring:message code="address.homeNumber"/></td>
             <td class="font-weight-bold my-2">${student.homeNumber}<c:if test="${student.apartment != ''}">/${student.apartment}</c:if></td>
         </tr>
         <tr>
-            <td><spring:message code="student.postCode"/></td>
+            <td><spring:message code="address.postCode"/></td>
             <td class="font-weight-bold my-2">${student.postCode}</td>
         </tr>
         <tr>
-            <td><spring:message code="student.city"/></td>
+            <td><spring:message code="address.city"/></td>
             <td class="font-weight-bold my-2">${student.city}</td>
         </tr>
         <tr>

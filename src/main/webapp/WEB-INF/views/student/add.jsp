@@ -40,11 +40,11 @@
                 <td><form:input required="required" type="text" class="form-control" path="lastName"/></td>
             </tr>
             <tr>
-                <td><spring:message code="student.dateOfBirth"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="address.dateOfBirth"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="text" class="form-control datepicker" path="dateOfBirth"/></td>
             </tr>
             <tr>
-                <td><spring:message code="student.gender"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="address.gender"/><span class="text-danger mx-1">*</span></td>
                 <td>
                     <div class="form-check">
                         <input <c:if test="${student.isMale}">checked="checked"</c:if> class="form-check-input" type="radio" id="male" name="isMale" value="true">
@@ -61,27 +61,27 @@
                 </td>
             </tr>
             <tr>
-                <td><spring:message code="student.pesel"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="address.pesel"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="number" class="form-control" path="pesel"/></td>
             </tr>
             <tr>
-                <td><spring:message code="student.street"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="address.street"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="text" class="form-control" path="street"/></td>
             </tr>
             <tr>
-                <td><spring:message code="student.homeNumber"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="address.homeNumber"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="number" class="form-control" path="homeNumber"/></td>
             </tr>
             <tr>
-                <td><spring:message code="student.apartment"/></td>
+                <td><spring:message code="address.apartment"/></td>
                 <td><form:input type="number" class="form-control" path="apartment"/></td>
             </tr>
             <tr>
-                <td><spring:message code="student.postCode"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="address.postCode"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="text" class="form-control" path="postCode"/></td>
             </tr>
             <tr>
-                <td><spring:message code="student.city"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="address.city"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="text" class="form-control" path="city"/></td>
             </tr>
             <tr>
