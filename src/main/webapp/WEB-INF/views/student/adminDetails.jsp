@@ -115,6 +115,14 @@
             <td><spring:message code="student.city"/></td>
             <td class="font-weight-bold my-2">${student.city}</td>
         </tr>
+        <tr>
+            <td><spring:message code="address.email"/></td>
+            <td class="font-weight-bold my-2">${student.email}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="address.phoneNumber"/></td>
+            <td class="font-weight-bold my-2">${student.phoneNumber}</td>
+        </tr>
     </table>
     <div class="my-3">
         <a href="/admin/student/${student.id}/edit" class="btn btn-primary"><spring:message code="student.edit"/></a>

@@ -1,5 +1,6 @@
 package pl.edziennik.edziennik.student;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -48,12 +49,15 @@ public class Student {
     private Boolean isMale;
     @PESEL
     private String pesel;
-    @Pattern(regexp = "^[0-9]{2}-[0-9]{3}$", message = "validation.error.regex.wrongFormat")
+    @Pattern(regexp = "^[0-9]{2}-[0-9]{3}$", message = "{validation.error.regex.wrongFormat}")
     private String postCode;
     private String city;
     private String street;
     private String homeNumber;
     private String apartment = "";
+    @Email
+    private String email;
+    private Long phoneNumber;
 
     public String getFullName() {
         return this.firstName + " " + this.lastName;

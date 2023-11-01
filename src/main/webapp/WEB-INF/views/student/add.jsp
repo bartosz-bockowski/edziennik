@@ -22,8 +22,10 @@
     </c:if>
 </h1>
 <form:form action="/admin/student/add" method="post" modelAttribute="student">
+    <form:input path="schoolClass" type="hidden"/>
+    <form:input path="user" type="hidden"/>
+    <form:input path="id" type="hidden"/>
     <div class="d-flex justify-content-center">
-        <form:input path="id" type="hidden"/>
         <table class="table-bordered">
             <tr>
                 <td><spring:message code="student.firstName"/><span class="text-danger mx-1">*</span></td>
@@ -82,9 +84,22 @@
                 <td><spring:message code="student.city"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="text" class="form-control" path="city"/></td>
             </tr>
+            <tr>
+                <td><spring:message code="address.email"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="email" class="form-control" path="email"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="address.phoneNumber"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="number" class="form-control" path="phoneNumber"/></td>
+            </tr>
         </table>
     </div>
-    <button class="btn btn-primary" type="submit"><spring:message code="save"/></button>
+    <div class="text-danger">
+        <form:errors path="*"/>
+    </div>
+    <div>
+        <button class="btn btn-primary" type="submit"><spring:message code="save"/></button>
+    </div>
 </form:form>
 <script src="${pageContext.request.contextPath}/js/addForm.js"></script>
 <jsp:include page="../layout/footer.jsp"/>
