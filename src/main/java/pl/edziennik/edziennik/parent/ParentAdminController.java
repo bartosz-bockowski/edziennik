@@ -42,12 +42,19 @@ public class ParentAdminController {
     @PostMapping("/add")
     public String add(Model model, @Valid Parent parent, BindingResult result){
         if(result.hasErrors()){
-            model.addAttribute("result",result);
             model.addAttribute("parent",parent);
             return "parent/add";
         }
-        parentRepository.save(parent);
-        return "redirect:/admin/parent/list";
+        Long parentId = parent.getId();
+        if(parentId != null){
+            parent.setStudents(parentRepository.getReferenceById(parentId).getStudents());
+        }
+        return "redirect:/admin/parent/" + parentRepository.save(parent).getId() + "/details";
+    }
+    @GetMapping("/{parentId}/edit")
+    public String edit(@PathVariable Long parentId, Model model){
+        model.addAttribute("parent",parentRepository.getReferenceById(parentId));
+        return "parent/add";
     }
     @GetMapping("/{id}/switch")
     public String switch_(@PathVariable Long id){

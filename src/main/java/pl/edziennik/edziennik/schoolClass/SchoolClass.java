@@ -26,7 +26,7 @@ public class SchoolClass {
     private Long id;
     @NotEmpty
     private String name;
-    @ManyToMany(mappedBy = "supervisedClasses")
+    @ManyToMany
     private List<Teacher> supervisingTeachers = new ArrayList<>();
     @ManyToMany
     private List<Subject> subjects;

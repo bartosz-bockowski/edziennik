@@ -30,12 +30,10 @@ public class Teacher {
     @OneToOne
     private User user;
     @NotNull
-    @NotEmpty(message = "validation.error.cannotBeEmpty")
     private String firstName;
     @NotNull
-    @NotEmpty(message = "validation.error.cannotBeEmpty")
     private String lastName;
-    @ManyToMany
+    @ManyToMany(mappedBy = "supervisingTeachers")
     private List<SchoolClass> supervisedClasses = new ArrayList<>();
     @OneToMany(mappedBy = "teacher")
     private List<Lesson> lessons;
@@ -58,6 +56,7 @@ public class Teacher {
     private String apartment = "";
     @Email
     private String email;
+    private Long phoneNumber;
 
     public String getFullName() {
         return firstName + " " + lastName;

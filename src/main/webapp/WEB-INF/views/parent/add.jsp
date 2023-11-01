@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -12,29 +13,88 @@
 <body>
 <jsp:include page="../layout/header.jsp"/>
 <a href="/admin/parent/list"><spring:message code="parent.list"/></a>
-<h1><spring:message code="parent.add"/></h1>
+<h1>
+    <c:if test="${parent.id == null}">
+        <spring:message code="parent.add"/>
+    </c:if>
+    <c:if test="${parent.id != null}">
+        <spring:message code="parent.edit"/>
+    </c:if>
+</h1>
 <form:form action="/admin/parent/add" method="post" modelAttribute="parent">
-    <div class="table-bordered">
+    <form:input path="user" type="hidden"/>
+    <form:input path="id" type="hidden"/>
+    <div class="d-flex justify-content-center">
         <table class="table-bordered">
             <tr>
+                <td><spring:message code="student.firstName"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="text" class="form-control" path="firstName"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="student.lastName"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="text" class="form-control" path="lastName"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="userData.dateOfBirth"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="text" class="form-control datepicker" path="dateOfBirth"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="userData.gender"/><span class="text-danger mx-1">*</span></td>
                 <td>
-                    <spring:message code="parent.firstName"/>
-                </td>
-                <td>
-                    <form:input type="text" class="form-control" path="firstName"/>
+                    <div class="form-check">
+                        <input <c:if test="${parent.isMale}">checked="checked"</c:if> class="form-check-input" type="radio" id="male" name="isMale" value="true">
+                        <label class="form-check-label" for="male">
+                            <spring:message code="male"/>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input <c:if test="${!parent.isMale}">checked="checked"</c:if> class="form-check-input" type="radio" id="female" name="isMale" value="false">
+                        <label class="form-check-label" for="female">
+                            <spring:message code="female"/>
+                        </label>
+                    </div>
                 </td>
             </tr>
             <tr>
-                <td>
-                    <spring:message code="parent.lastName"/>
-                </td>
-                <td>
-                    <form:input type="text" class="form-control" path="lastName"/>
-                </td>
+                <td><spring:message code="userData.pesel"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="number" class="form-control" path="pesel"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="address.street"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="text" class="form-control" path="street"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="address.homeNumber"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="number" class="form-control" path="homeNumber"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="address.apartment"/></td>
+                <td><form:input type="number" class="form-control" path="apartment"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="address.postCode"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="text" class="form-control" path="postCode"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="address.city"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="text" class="form-control" path="city"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="userData.email"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="email" class="form-control" path="email"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="userData.phoneNumber"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="number" class="form-control" path="phoneNumber"/></td>
             </tr>
         </table>
     </div>
-    <button class="btn btn-primary" type="submit"><spring:message code="add"/></button>
+    <div class="text-danger">
+        <form:errors path="*"/>
+    </div>
+    <div>
+        <button class="btn btn-primary" type="submit"><spring:message code="save"/></button>
+    </div>
 </form:form>
 <script src="${pageContext.request.contextPath}/js/addForm.js"></script>
 <jsp:include page="../layout/footer.jsp"/>

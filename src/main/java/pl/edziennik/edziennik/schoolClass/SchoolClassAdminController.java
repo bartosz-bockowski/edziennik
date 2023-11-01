@@ -84,7 +84,7 @@ public class SchoolClassAdminController {
         return "redirect:/admin/schoolclass/list";
     }
 
-    @GetMapping("/{id}/adminDetails")
+    @GetMapping("/{id}/details")
     public String details(Model model, @PathVariable Long id) {
         model.addAttribute("schoolClass", schoolClassRepository.getReferenceById(id));
         model.addAttribute("allStudents", studentRepository.findAll());
@@ -97,7 +97,7 @@ public class SchoolClassAdminController {
         Student student = studentRepository.getReferenceById(studentId);
         student.setSchoolClass(schoolClassRepository.getReferenceById(id));
         studentRepository.save(student);
-        return "redirect:/admin/schoolclass/" + id + "/adminDetails";
+        return "redirect:/admin/schoolclass/" + id + "/details";
     }
 
     @GetMapping("/{id}/removeStudent/{studentId}")
@@ -105,7 +105,7 @@ public class SchoolClassAdminController {
         Student student = studentRepository.getReferenceById(studentId);
         student.setSchoolClass(null);
         studentRepository.save(student);
-        return "redirect:/admin/schoolclass/" + id + "/adminDetails";
+        return "redirect:/admin/schoolclass/" + id + "/details";
     }
 
     @GetMapping("/{id}/addSubject")
@@ -116,7 +116,7 @@ public class SchoolClassAdminController {
             schoolClass.getSubjects().add(subject);
         }
         schoolClassRepository.save(schoolClass);
-        return "redirect:/admin/schoolclass/" + id + "/adminDetails";
+        return "redirect:/admin/schoolclass/" + id + "/details";
     }
 
     @GetMapping("{id}/removeSubject/{subjectId}")
@@ -125,7 +125,7 @@ public class SchoolClassAdminController {
         Subject subject = subjectRepository.getReferenceById(subjectId);
         schoolClass.getSubjects().remove(subject);
         schoolClassRepository.save(schoolClass);
-        return "redirect:/admin/schoolclass/" + id + "/adminDetails";
+        return "redirect:/admin/schoolclass/" + id + "/details";
     }
 
     @GetMapping("/updateLesson")
@@ -158,6 +158,6 @@ public class SchoolClassAdminController {
         SchoolClass schoolClass = schoolClassRepository.getReferenceById(classId);
         schoolClass.getSupervisingTeachers().add(teacherRepository.getReferenceById(teacherId));
         schoolClassRepository.save(schoolClass);
-        return "redirect:/admin/schoolclass/" + schoolClass.getId() + "/adminDetails";
+        return "redirect:/admin/schoolclass/" + schoolClass.getId() + "/details";
     }
 }

@@ -57,7 +57,8 @@
         </td>
         <td class="card-body">
             <c:if test="${parent.user != null}">
-                ${parent.user.username} (ID: ${parent.user.id}) <a class="confirm" href="/admin/parent/${parent.id}/removeUser">
+                ${parent.user.username} (ID: ${parent.user.id}) <a class="confirm"
+                                                                   href="/admin/parent/${parent.id}/removeUser">
                 <spring:message code="parent.removeUser"/>
                 <p class="msg"><spring:message code="parent.confirmRemoveUser"/></p>
             </a><br/>
@@ -77,6 +78,62 @@
             </c:if>
         </td>
     </tr>
-    <jsp:include page="../layout/footer.jsp"/>
+</table>
+<h3 class="card-title mb-1 my-2"><spring:message code="parent.parentData"/></h3>
+<div>
+    <table class="ml-auto mr-auto table-borderless my-2">
+        <tr>
+            <td><spring:message code="student.firstName"/></td>
+            <td class="font-weight-bold my-2">${parent.firstName}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="student.lastName"/></td>
+            <td class="font-weight-bold my-2">${parent.lastName}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="userData.dateOfBirth"/></td>
+            <td class="font-weight-bold my-2">${parent.dateOfBirth}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="userData.gender"/></td>
+            <td class="font-weight-bold my-2">
+                <c:if test="${parent.isMale}"><spring:message code="male"/></c:if>
+                <c:if test="${!parent.isMale}"><spring:message code="female"/></c:if>
+            </td>
+        </tr>
+        <tr>
+            <td><spring:message code="userData.pesel"/></td>
+            <td class="font-weight-bold my-2">${parent.pesel}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="address.street"/></td>
+            <td class="font-weight-bold my-2">${parent.street}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="address.homeNumber"/></td>
+            <td class="font-weight-bold my-2">${parent.homeNumber}<c:if test="${parent.apartment != ''}">/${parent.apartment}</c:if></td>
+        </tr>
+        <tr>
+            <td><spring:message code="address.postCode"/></td>
+            <td class="font-weight-bold my-2">${parent.postCode}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="address.city"/></td>
+            <td class="font-weight-bold my-2">${parent.city}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="userData.email"/></td>
+            <td class="font-weight-bold my-2">${parent.email}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="userData.phoneNumber"/></td>
+            <td class="font-weight-bold my-2">${parent.phoneNumber}</td>
+        </tr>
+    </table>
+    <div class="my-3">
+        <a href="/admin/parent/${parent.id}/edit" class="btn btn-primary"><spring:message code="parent.edit"/></a>
+    </div>
+</div>
+<jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>

@@ -41,6 +41,7 @@ public class Parent {
     private String apartment = "";
     @Email
     private String email;
+    private Long phoneNumber;
     public String getFullName(){
         return this.firstName.concat(" ").concat(this.lastName);
     }

@@ -41,13 +41,10 @@ public class StudentAdminController {
     @PostMapping("/add")
     public String add(Model model, @Valid Student student, BindingResult result) {
         if (result.hasErrors()) {
-            model.addAttribute("result", result);
             model.addAttribute("student", student);
-            System.out.println(result.getAllErrors());
             return "student/add";
         }
-        Long id = studentRepository.save(student).getId();
-        return "redirect:/admin/student/" + id + "/adminDetails";
+        return "redirect:/admin/student/" + studentRepository.save(student).getId() + "/details";
     }
 
     @GetMapping("/{studentId}/edit")
@@ -64,7 +61,7 @@ public class StudentAdminController {
         return "redirect:/admin/student/list";
     }
 
-    @GetMapping("/{id}/adminDetails")
+    @GetMapping("/{id}/details")
     public String details(@PathVariable Long id, Model model) {
         Student student = studentRepository.getReferenceById(id);
         model.addAttribute("student", student);
@@ -82,7 +79,7 @@ public class StudentAdminController {
             student.setUser(userObj);
             studentRepository.save(student);
         }
-        return "redirect:/admin/student/" + studentId + "/adminDetails";
+        return "redirect:/admin/student/" + studentId + "/details";
     }
 
     @GetMapping("/{studentId}/removeUser")
@@ -90,7 +87,7 @@ public class StudentAdminController {
         Student student = studentRepository.getReferenceById(studentId);
         student.setUser(null);
         studentRepository.save(student);
-        return "redirect:/admin/student/" + studentId + "/adminDetails";
+        return "redirect:/admin/student/" + studentId + "/details";
     }
 
     @GetMapping("/{studentId}/setClass")
@@ -98,6 +95,6 @@ public class StudentAdminController {
         Student student = studentRepository.getReferenceById(studentId);
         student.setSchoolClass(schoolClassRepository.getReferenceById(classId));
         studentRepository.save(student);
-        return "redirect:/admin/student/" + student.getId() + "/adminDetails";
+        return "redirect:/admin/student/" + student.getId() + "/details";
     }
 }

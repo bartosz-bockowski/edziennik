@@ -29,7 +29,7 @@
             <td>${schoolclass.name}</td>
             <td><spring:message code="${schoolclass.active}"/></td>
             <td>
-                <a href="/admin/schoolclass/${schoolclass.id}/adminDetails"><spring:message
+                <a href="/admin/schoolclass/${schoolclass.id}/details"><spring:message
                         code="schoolClass.details"/></a>
                 <a class="confirm" href="/admin/schoolclass/${schoolclass.id}/switch">
                     <spring:message code="${schoolclass.active ? 'disactivate' : 'activate'}"/>

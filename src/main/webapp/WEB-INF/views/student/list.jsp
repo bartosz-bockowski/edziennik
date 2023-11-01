@@ -36,7 +36,7 @@
             </td>
             <td><spring:message code="${student.active}"/></td>
             <td>
-                <a class="btn btn-primary" href="/admin/student/${student.id}/adminDetails"><spring:message code="student.details"/></a>
+                <a class="btn btn-primary" href="/admin/student/${student.id}/details"><spring:message code="student.details"/></a>
                 <a class="btn btn-primary" href="/student/${student.id}/marks"><spring:message code="student.marks"/></a>
                 <a class="confirm btn btn-primary" href="/admin/student/${student.id}/switch">
                     <spring:message code="${student.active ? 'disactivate' : 'activate'}"/>

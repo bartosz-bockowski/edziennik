@@ -51,12 +51,14 @@ public class TeacherAdminController {
     public String add(Model model, @Valid Teacher teacher, BindingResult result){
         if(result.hasErrors()){
             model.addAttribute("teacher",teacher);
-            model.addAttribute("result",result);
             return "teacher/add";
         }
-        teacher.setActive(true);
-        teacherRepository.save(teacher);
-        return "redirect:/admin/teacher/list";
+        return "redirect:/admin/teacher/" + teacherRepository.save(teacher).getId() + "/details";
+    }
+    @GetMapping("/{teacherId}/edit")
+    public String edit(@PathVariable Long teacherId, Model model){
+        model.addAttribute("teacher",teacherRepository.getReferenceById(teacherId));
+        return "teacher/add";
     }
     @GetMapping("/{id}/switch")
     public String switch_(@PathVariable Long id){
