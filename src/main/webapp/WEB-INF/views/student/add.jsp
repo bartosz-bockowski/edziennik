@@ -15,21 +15,38 @@
 <h1><spring:message code="student.add"/></h1>
 <form:form action="/admin/student/add" method="post" modelAttribute="student">
     <div class="d-flex justify-content-center">
-        <table class="formTable centerBlock">
-            <tr>
-                <td>
-                    <spring:message code="student.firstName"/>
-                </td>
-                <td>
-                    <form:input type="text" class="form-control" path="firstName"/>
-                </td>
+        <table class="table-bordered table-striped">
+            <tr class="border-0">
+                <td><spring:message code="student.firstName"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="text" class="form-control" path="firstName"/></td>
             </tr>
             <tr>
+                <td><spring:message code="student.secondName"/></td>
+                <td><form:input type="text" class="form-control" path="secondName"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="student.lastName"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="text" class="form-control" path="lastName"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="student.dateOfBirth"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="date" class="form-control" path="dateOfBirth"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="student.gender"/><span class="text-danger mx-1">*</span></td>
                 <td>
-                    <spring:message code="student.lastName"/>
-                </td>
-                <td>
-                    <form:input type="text" class="form-control" path="lastName"/>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="male" name="isMale">
+                        <label class="form-check-label" for="male">
+                            <spring:message code="male"/>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="female" name="isMale">
+                        <label class="form-check-label" for="female">
+                            <spring:message code="female"/>
+                        </label>
+                    </div>
                 </td>
             </tr>
         </table>

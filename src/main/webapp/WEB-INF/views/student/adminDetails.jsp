@@ -24,7 +24,7 @@
             <h5 class="card-title mb-1"><spring:message code="student.user"/></h5>
         </td>
         <td class="card-header">
-            <h5 class="card-title mb-1"><spring:message code="address"/></h5>
+            <h5 class="card-title mb-1"><spring:message code="student.studentData"/></h5>
         </td>
     </tr>
     <tr>
@@ -69,26 +69,32 @@
             </c:if>
         </td>
         <td class="card-body">
-            <c:if test="${student.address != null}">
-                <div class="float-left text-left">
-                    <div class="font-weight-bold"><spring:message code="address.street"/></div>
-                    <div class="font-weight-bold"><spring:message code="address.homeNumber"/></div>
-                    <div class="font-weight-bold"><spring:message code="address.postCode"/></div>
-                    <div class="font-weight-bold"><spring:message code="address.city"/></div>
-                </div>
-                <div class="float-left text-left mx-2">
-                    <div>${student.address.street}</div>
-                    <div>${student.address.homeNumber}<c:if test="${!student.address.apartment.equals('')}">/${student.address.apartment}</c:if></div>
-                    <div>${student.address.postCode}</div>
-                    <div>${student.address.city}</div>
-                </div>
-                <div class="float-left text-left mx-2">
-                    <div><a href="/admin/address/${student.address.id}/change/student/${student.id}" class="btn btn-primary text-white"><spring:message code="address.changeAddress"/></a></div>
-                </div>
-            </c:if>
-            <c:if test="${student.address == null}">
-                <span class="text-danger"><spring:message code="student.noAddress"/></span>
-            </c:if>
+            <table class="table-borderless w-100">
+                <tr>
+                    <td class="align-middle"><spring:message code="student.firstName"/></td>
+                    <td><input type="text" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td class="align-middle"><spring:message code="student.secondName"/></td>
+                    <td><form:input type="text" path="secondName"</td>
+                </tr>
+            </table>
+<%--            <div class="float-left text-right">--%>
+<%--                <div><spring:message code="student.firstName"/></div>--%>
+<%--                <div><spring:message code="student.lastName"/></div>--%>
+<%--                <div><spring:message code="student.dateOfBirth"/></div>--%>
+<%--                <div><spring:message code="student.gender"/></div>--%>
+<%--                <div><spring:message code="student.pesel"/></div>--%>
+<%--                <div class="font-weight-bold my-2"><spring:message code="student.studentsAddress"/></div>--%>
+<%--                <div><spring:message code="student.postCode"/></div>--%>
+<%--                <div><spring:message code="student.city"/></div>--%>
+<%--                <div><spring:message code="student.street"/></div>--%>
+<%--                <div><spring:message code="student.homeNumber"/></div>--%>
+<%--                <div><spring:message code="student.apartment"/></div>--%>
+<%--            </div>--%>
+<%--            <div class="float-left w-50">--%>
+<%--                <div><input type="text" class="form-control"/></div>--%>
+<%--            </div>--%>
         </td>
     </tr>
 </table>

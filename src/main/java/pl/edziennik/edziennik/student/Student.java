@@ -1,11 +1,11 @@
 package pl.edziennik.edziennik.student;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.pl.PESEL;
-import pl.edziennik.edziennik.address.Address;
 import pl.edziennik.edziennik.attendance.Attendance;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.mark.Mark;
@@ -32,6 +32,7 @@ public class Student {
     @OneToOne
     private User user;
     private String firstName;
+    private String secondName;
     private String lastName;
     @ManyToMany(mappedBy = "students")
     private List<Parent> parents = new ArrayList<>();
@@ -47,8 +48,12 @@ public class Student {
     private Boolean isMale;
     @PESEL
     private String pesel;
-    @OneToOne
-    private Address address;
+    @Pattern(regexp = "^[0-9]{2}-[0-9]{3}$", message = "validation.error.regex.wrongFormat")
+    private String postCode;
+    private String city;
+    private String street;
+    private String homeNumber;
+    private String apartment;
 
     public String getFullName() {
         return this.firstName + " " + this.lastName;

@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.edziennik.edziennik.address.Address;
-import pl.edziennik.edziennik.address.AddressRepository;
 import pl.edziennik.edziennik.schoolClass.SchoolClassRepository;
 import pl.edziennik.edziennik.security.user.User;
 import pl.edziennik.edziennik.security.user.UserRepository;
@@ -19,16 +17,13 @@ public class StudentAdminController {
     private final StudentRepository studentRepository;
     private final UserRepository userRepository;
     private final SchoolClassRepository schoolClassRepository;
-    private final AddressRepository addressRepository;
 
     public StudentAdminController(StudentRepository studentRepository,
                                   UserRepository userRepository,
-                                  SchoolClassRepository schoolClassRepository,
-                                  AddressRepository addressRepository) {
+                                  SchoolClassRepository schoolClassRepository) {
         this.studentRepository = studentRepository;
         this.userRepository = userRepository;
         this.schoolClassRepository = schoolClassRepository;
-        this.addressRepository = addressRepository;
     }
 
     @GetMapping("/list")
@@ -48,11 +43,9 @@ public class StudentAdminController {
         if (result.hasErrors()) {
             model.addAttribute("result", result);
             model.addAttribute("student", student);
+            System.out.println(result.getAllErrors());
             return "student/add";
         }
-        Address address = new Address();
-        addressRepository.save(address);
-        student.setAddress(address);
         studentRepository.save(student);
         return "redirect:/admin/student/list";
     }
@@ -69,7 +62,6 @@ public class StudentAdminController {
     public String details(@PathVariable Long id, Model model) {
         Student student = studentRepository.getReferenceById(id);
         model.addAttribute("student", student);
-        model.addAttribute("address",student.getAddress() == null ? new Address() : student.getAddress());
         model.addAttribute("users", userRepository.findAll());
         model.addAttribute("freeUsers", userRepository.findAllByStudentIsNullAndTeacherIsNullAndParentIsNull());
         model.addAttribute("schoolClasses", schoolClassRepository.findAll());
