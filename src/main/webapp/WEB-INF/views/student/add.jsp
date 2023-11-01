@@ -15,8 +15,8 @@
 <h1><spring:message code="student.add"/></h1>
 <form:form action="/admin/student/add" method="post" modelAttribute="student">
     <div class="d-flex justify-content-center">
-        <table class="table-bordered table-striped">
-            <tr class="border-0">
+        <table class="table-bordered">
+            <tr>
                 <td><spring:message code="student.firstName"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="text" class="form-control" path="firstName"/></td>
             </tr>
@@ -48,6 +48,26 @@
                         </label>
                     </div>
                 </td>
+            </tr>
+            <tr>
+                <td><spring:message code="student.pesel"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="number" class="form-control" path="pesel"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="student.street"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="number" class="form-control" path="street"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="student.homeNumber"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="number" class="form-control" path="homeNumber"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="student.postCode"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="text" class="form-control" path="postCode"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="student.city"/><span class="text-danger mx-1">*</span></td>
+                <td><form:input required="required" type="text" class="form-control" path="city"/></td>
             </tr>
         </table>
     </div>

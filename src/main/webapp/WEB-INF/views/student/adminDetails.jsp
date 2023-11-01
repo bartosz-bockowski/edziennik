@@ -68,33 +68,52 @@
                 </form>
             </c:if>
         </td>
-        <td class="card-body">
-            <table class="table-borderless w-100">
+        <td class="card-body justify-content-center d-flex">
+            <table class="table-borderless">
                 <tr>
-                    <td class="align-middle"><spring:message code="student.firstName"/></td>
-                    <td><input type="text" class="form-control"/></td>
+                    <td><spring:message code="student.firstName"/></td>
+                    <td>${student.firstName}</td>
                 </tr>
                 <tr>
-                    <td class="align-middle"><spring:message code="student.secondName"/></td>
-                    <td><form:input type="text" path="secondName"</td>
+                    <td><spring:message code="student.secondName"/></td>
+                    <td>${student.secondName}</td>
+                </tr>
+                <tr>
+                    <td><spring:message code="student.lastName"/></td>
+                    <td>${student.lastName}</td>
+                </tr>
+                <tr>
+                    <td><spring:message code="student.dateOfBirth"/></td>
+                    <td>${student.dateOfBirth}</td>
+                </tr>
+                <tr>
+                    <td><spring:message code="student.gender"/></td>
+                    <td>
+                        <c:if test="${student.isMale}"><spring:message code="male"/></c:if>
+                        <c:if test="${!student.isMale}"><spring:message code="female"/></c:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td><spring:message code="student.pesel"/></td>
+                    <td>${student.pesel}</td>
+                </tr>
+                <tr>
+                    <td><spring:message code="student.street"/></td>
+                    <td>${student.street}</td>
+                </tr>
+                <tr>
+                    <td><spring:message code="student.homeNumber"/></td>
+                    <td>${student.homeNumber}</td>
+                </tr>
+                <tr>
+                    <td><spring:message code="student.postCode"/></td>
+                    <td>${student.postCode}</td>
+                </tr>
+                <tr>
+                    <td><spring:message code="student.city"/></td>
+                    <td>${student.city}</td>
                 </tr>
             </table>
-<%--            <div class="float-left text-right">--%>
-<%--                <div><spring:message code="student.firstName"/></div>--%>
-<%--                <div><spring:message code="student.lastName"/></div>--%>
-<%--                <div><spring:message code="student.dateOfBirth"/></div>--%>
-<%--                <div><spring:message code="student.gender"/></div>--%>
-<%--                <div><spring:message code="student.pesel"/></div>--%>
-<%--                <div class="font-weight-bold my-2"><spring:message code="student.studentsAddress"/></div>--%>
-<%--                <div><spring:message code="student.postCode"/></div>--%>
-<%--                <div><spring:message code="student.city"/></div>--%>
-<%--                <div><spring:message code="student.street"/></div>--%>
-<%--                <div><spring:message code="student.homeNumber"/></div>--%>
-<%--                <div><spring:message code="student.apartment"/></div>--%>
-<%--            </div>--%>
-<%--            <div class="float-left w-50">--%>
-<%--                <div><input type="text" class="form-control"/></div>--%>
-<%--            </div>--%>
         </td>
     </tr>
 </table>
