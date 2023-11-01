@@ -40,11 +40,11 @@
                 <td><form:input required="required" type="text" class="form-control" path="lastName"/></td>
             </tr>
             <tr>
-                <td><spring:message code="address.dateOfBirth"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="userData.dateOfBirth"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="text" class="form-control datepicker" path="dateOfBirth"/></td>
             </tr>
             <tr>
-                <td><spring:message code="address.gender"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="userData.gender"/><span class="text-danger mx-1">*</span></td>
                 <td>
                     <div class="form-check">
                         <input <c:if test="${student.isMale}">checked="checked"</c:if> class="form-check-input" type="radio" id="male" name="isMale" value="true">
@@ -61,7 +61,7 @@
                 </td>
             </tr>
             <tr>
-                <td><spring:message code="address.pesel"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="userData.pesel"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="number" class="form-control" path="pesel"/></td>
             </tr>
             <tr>
@@ -85,11 +85,11 @@
                 <td><form:input required="required" type="text" class="form-control" path="city"/></td>
             </tr>
             <tr>
-                <td><spring:message code="address.email"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="userData.email"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="email" class="form-control" path="email"/></td>
             </tr>
             <tr>
-                <td><spring:message code="address.phoneNumber"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="userData.phoneNumber"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="number" class="form-control" path="phoneNumber"/></td>
             </tr>
         </table>

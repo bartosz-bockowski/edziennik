@@ -85,18 +85,18 @@
             <td class="font-weight-bold my-2">${student.lastName}</td>
         </tr>
         <tr>
-            <td><spring:message code="address.dateOfBirth"/></td>
+            <td><spring:message code="userData.dateOfBirth"/></td>
             <td class="font-weight-bold my-2">${student.dateOfBirth}</td>
         </tr>
         <tr>
-            <td><spring:message code="address.gender"/></td>
+            <td><spring:message code="userData.gender"/></td>
             <td class="font-weight-bold my-2">
                 <c:if test="${student.isMale}"><spring:message code="male"/></c:if>
                 <c:if test="${!student.isMale}"><spring:message code="female"/></c:if>
             </td>
         </tr>
         <tr>
-            <td><spring:message code="address.pesel"/></td>
+            <td><spring:message code="userData.pesel"/></td>
             <td class="font-weight-bold my-2">${student.pesel}</td>
         </tr>
         <tr>
@@ -116,11 +116,11 @@
             <td class="font-weight-bold my-2">${student.city}</td>
         </tr>
         <tr>
-            <td><spring:message code="address.email"/></td>
+            <td><spring:message code="userData.email"/></td>
             <td class="font-weight-bold my-2">${student.email}</td>
         </tr>
         <tr>
-            <td><spring:message code="address.phoneNumber"/></td>
+            <td><spring:message code="userData.phoneNumber"/></td>
             <td class="font-weight-bold my-2">${student.phoneNumber}</td>
         </tr>
     </table>

@@ -45,6 +45,8 @@ public class Student {
     private List<Mark> marks;
     @OneToMany(mappedBy = "student")
     private List<Attendance> attendance;
+
+    //data
     private LocalDate dateOfBirth;
     private Boolean isMale;
     @PESEL
