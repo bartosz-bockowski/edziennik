@@ -1,4 +1,7 @@
 $(document).ready(() => {
+    $(".datepicker").datepicker({
+        format: "dd.mm.yyyy"
+    })
     $(".confirm").click((e) => {
         return confirm($(e.target).find(".msg").text())
     })

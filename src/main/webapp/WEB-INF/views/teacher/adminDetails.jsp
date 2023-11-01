@@ -14,7 +14,7 @@
 <a href="/admin/teacher/list"><spring:message code="teacher.list"/></a>
 <h1><spring:message code="teacher.teacherDetails"/></h1>
 <h3>${teacher.getFullName()}</h3>
-<table class="container-fluid table text-center table-responsive-xl">
+<table class="container-fluid table-bordered text-center table-responsive-xl">
     <tr>
         <td class="card-header">
             <h5 class="card-title mb-1"><spring:message code="teacher.subjects"/></h5>

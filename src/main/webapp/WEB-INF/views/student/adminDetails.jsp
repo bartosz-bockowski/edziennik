@@ -15,7 +15,7 @@
 <a href="/admin/student/list"><spring:message code="student.list"/></a>
 <h1><spring:message code="student.studentDetails"/></h1>
 <h3>${student.fullName}</h3>
-<table class="container-fluid table text-center table-responsive-xl">
+<table class="container-fluid table-bordered text-center table-responsive-xl">
     <tr>
         <td class="card-header">
             <h5 class="card-title mb-1"><spring:message code="student.schoolClass"/></h5>
@@ -23,12 +23,9 @@
         <td class="card-header">
             <h5 class="card-title mb-1"><spring:message code="student.user"/></h5>
         </td>
-        <td class="card-header">
-            <h5 class="card-title mb-1"><spring:message code="student.studentData"/></h5>
-        </td>
     </tr>
     <tr>
-        <td class="card-body">
+        <td class="card-body align-text-top">
             <c:if test="${student.schoolClass != null}">
                 <h5>${student.schoolClass.name}</h5>
             </c:if>
@@ -47,13 +44,13 @@
                 <button type="submit" class="btn btn-primary"><spring:message code="student.setClass"/></button>
             </form>
         </td>
-        <td class="card-body">
+        <td class="card-body align-text-top">
             <c:if test="${student.user != null}">
-                ${student.user.username} (ID: ${student.user.id}) <a class="confirm"
-                                                                     href="/admin/student/${student.id}/removeUser">
-                <spring:message code="student.removeUser"/>
-                <p class="msg"><spring:message code="student.confirmRemoveUser"/></p>
-            </a>
+                ${student.user.username} (ID: ${student.user.id})
+                <div><a class="confirm btn btn-primary" href="/admin/student/${student.id}/removeUser">
+                    <spring:message code="student.removeUser"/>
+                    <p class="msg"><spring:message code="student.confirmRemoveUser"/></p>
+                </a></div>
             </c:if>
             <c:if test="${student.user == null}">
                 <div><spring:message code="student.noUser"/></div>
@@ -64,59 +61,65 @@
                             <option value="${user.id}">${user.username} (ID: ${user.id})</option>
                         </c:forEach>
                     </select>
-                    <button type="submit" class="btn btn-primary"><spring:message code="student.setUser"/></button>
+                    <div>
+                        <button type="submit" class="btn btn-primary"><spring:message code="student.setUser"/></button>
+                    </div>
                 </form>
             </c:if>
         </td>
-        <td class="card-body justify-content-center d-flex">
-            <table class="table-borderless">
-                <tr>
-                    <td><spring:message code="student.firstName"/></td>
-                    <td>${student.firstName}</td>
-                </tr>
-                <tr>
-                    <td><spring:message code="student.secondName"/></td>
-                    <td>${student.secondName}</td>
-                </tr>
-                <tr>
-                    <td><spring:message code="student.lastName"/></td>
-                    <td>${student.lastName}</td>
-                </tr>
-                <tr>
-                    <td><spring:message code="student.dateOfBirth"/></td>
-                    <td>${student.dateOfBirth}</td>
-                </tr>
-                <tr>
-                    <td><spring:message code="student.gender"/></td>
-                    <td>
-                        <c:if test="${student.isMale}"><spring:message code="male"/></c:if>
-                        <c:if test="${!student.isMale}"><spring:message code="female"/></c:if>
-                    </td>
-                </tr>
-                <tr>
-                    <td><spring:message code="student.pesel"/></td>
-                    <td>${student.pesel}</td>
-                </tr>
-                <tr>
-                    <td><spring:message code="student.street"/></td>
-                    <td>${student.street}</td>
-                </tr>
-                <tr>
-                    <td><spring:message code="student.homeNumber"/></td>
-                    <td>${student.homeNumber}</td>
-                </tr>
-                <tr>
-                    <td><spring:message code="student.postCode"/></td>
-                    <td>${student.postCode}</td>
-                </tr>
-                <tr>
-                    <td><spring:message code="student.city"/></td>
-                    <td>${student.city}</td>
-                </tr>
-            </table>
-        </td>
     </tr>
 </table>
+<h3 class="card-title mb-1 my-2"><spring:message code="student.studentData"/></h3>
+<div>
+    <table class="ml-auto mr-auto table-borderless my-2">
+        <tr>
+            <td><spring:message code="student.firstName"/></td>
+            <td class="font-weight-bold my-2">${student.firstName}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="student.secondName"/></td>
+            <td class="font-weight-bold my-2">${student.secondName}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="student.lastName"/></td>
+            <td class="font-weight-bold my-2">${student.lastName}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="student.dateOfBirth"/></td>
+            <td class="font-weight-bold my-2">${student.dateOfBirth}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="student.gender"/></td>
+            <td class="font-weight-bold my-2">
+                <c:if test="${student.isMale}"><spring:message code="male"/></c:if>
+                <c:if test="${!student.isMale}"><spring:message code="female"/></c:if>
+            </td>
+        </tr>
+        <tr>
+            <td><spring:message code="student.pesel"/></td>
+            <td class="font-weight-bold my-2">${student.pesel}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="student.street"/></td>
+            <td class="font-weight-bold my-2">${student.street}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="student.homeNumber"/></td>
+            <td class="font-weight-bold my-2">${student.homeNumber}<c:if test="${student.apartment != ''}">/${student.apartment}</c:if></td>
+        </tr>
+        <tr>
+            <td><spring:message code="student.postCode"/></td>
+            <td class="font-weight-bold my-2">${student.postCode}</td>
+        </tr>
+        <tr>
+            <td><spring:message code="student.city"/></td>
+            <td class="font-weight-bold my-2">${student.city}</td>
+        </tr>
+    </table>
+    <div class="my-3">
+        <a href="/admin/student/${student.id}/edit" class="btn btn-primary"><spring:message code="student.edit"/></a>
+    </div>
+</div>
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>

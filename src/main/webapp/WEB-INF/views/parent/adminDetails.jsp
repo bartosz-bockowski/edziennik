@@ -15,7 +15,7 @@
 <a href="/admin/parent/list"><spring:message code="parent.list"/></a>
 <h1><spring:message code="parent.parentDetails"/></h1>
 <div><spring:message code="parent.fullName"/>: <b>${parent.getFullName()}</b></div>
-<table class="container-fluid table text-center table-responsive-xl">
+<table class="container-fluid table-bordered text-center table-responsive-xl">
     <tr>
         <td class="card-header">
             <h5 class="card-title mb-1"><spring:message code="parent.students"/></h5>

@@ -53,7 +53,7 @@ public class Student {
     private String city;
     private String street;
     private String homeNumber;
-    private String apartment;
+    private String apartment = "";
 
     public String getFullName() {
         return this.firstName + " " + this.lastName;

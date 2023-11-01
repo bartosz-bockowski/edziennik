@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -12,9 +13,17 @@
 <body>
 <jsp:include page="../layout/header.jsp"/>
 <a href="/admin/student/list"><spring:message code="student.list"/></a>
-<h1><spring:message code="student.add"/></h1>
+<h1>
+    <c:if test="${student.id == null}">
+        <spring:message code="student.add"/>
+    </c:if>
+    <c:if test="${student.id != null}">
+        <spring:message code="student.edit"/>
+    </c:if>
+</h1>
 <form:form action="/admin/student/add" method="post" modelAttribute="student">
     <div class="d-flex justify-content-center">
+        <form:input path="id" type="hidden"/>
         <table class="table-bordered">
             <tr>
                 <td><spring:message code="student.firstName"/><span class="text-danger mx-1">*</span></td>
@@ -30,19 +39,19 @@
             </tr>
             <tr>
                 <td><spring:message code="student.dateOfBirth"/><span class="text-danger mx-1">*</span></td>
-                <td><form:input required="required" type="date" class="form-control" path="dateOfBirth"/></td>
+                <td><form:input required="required" type="text" class="form-control datepicker" path="dateOfBirth"/></td>
             </tr>
             <tr>
                 <td><spring:message code="student.gender"/><span class="text-danger mx-1">*</span></td>
                 <td>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" id="male" name="isMale">
+                        <input <c:if test="${student.isMale}">checked="checked"</c:if> class="form-check-input" type="radio" id="male" name="isMale" value="true">
                         <label class="form-check-label" for="male">
                             <spring:message code="male"/>
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" id="female" name="isMale">
+                        <input <c:if test="${!student.isMale}">checked="checked"</c:if> class="form-check-input" type="radio" id="female" name="isMale" value="false">
                         <label class="form-check-label" for="female">
                             <spring:message code="female"/>
                         </label>
@@ -55,11 +64,15 @@
             </tr>
             <tr>
                 <td><spring:message code="student.street"/><span class="text-danger mx-1">*</span></td>
-                <td><form:input required="required" type="number" class="form-control" path="street"/></td>
+                <td><form:input required="required" type="text" class="form-control" path="street"/></td>
             </tr>
             <tr>
                 <td><spring:message code="student.homeNumber"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="number" class="form-control" path="homeNumber"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="student.apartment"/></td>
+                <td><form:input type="number" class="form-control" path="apartment"/></td>
             </tr>
             <tr>
                 <td><spring:message code="student.postCode"/><span class="text-danger mx-1">*</span></td>
@@ -71,7 +84,7 @@
             </tr>
         </table>
     </div>
-    <button class="btn btn-primary" type="submit"><spring:message code="add"/></button>
+    <button class="btn btn-primary" type="submit"><spring:message code="save"/></button>
 </form:form>
 <script src="${pageContext.request.contextPath}/js/addForm.js"></script>
 <jsp:include page="../layout/footer.jsp"/>

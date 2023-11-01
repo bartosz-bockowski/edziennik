@@ -15,7 +15,7 @@
 <a href="/admin/user/list"><spring:message code="user.list"/></a>
 <h1><spring:message code="user.userDetails"/></h1>
 <div><spring:message code="user.username"/>: <b>${user.username}</b></div>
-<table class="container-fluid table text-center table-responsive-xl">
+<table class="container-fluid table-bordered text-center table-responsive-xl">
     <tr>
         <td class="card-header">
             <h5 class="card-title mb-1"><spring:message code="user.roles"/></h5>

@@ -16,7 +16,7 @@
 <a href="/admin/schoolclass/list"><spring:message code="schoolClass.list"/></a>
 <h1><spring:message code="schoolClass.schoolClassDetails"/></h1>
 <div><spring:message code="schoolClass.name"/>: <b>${schoolClass.name}</b></div>
-<table class="container-fluid table text-center table-responsive-xl">
+<table class="container-fluid table-bordered text-center table-responsive-xl">
     <tr>
         <td class="card-header">
             <h5 class="card-title mb-1"><spring:message code="schoolClass.supervisingTeachers"/></h5>
