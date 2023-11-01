@@ -1,9 +1,12 @@
 package pl.edziennik.edziennik.teacher;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.pl.PESEL;
 import pl.edziennik.edziennik.lesson.Lesson;
 import pl.edziennik.edziennik.lessonHour.LessonHour;
 import pl.edziennik.edziennik.mark.Mark;
@@ -41,6 +44,20 @@ public class Teacher {
     List<Subject> subjects;
     @OneToMany(mappedBy = "teacher")
     private List<Mark> marks;
+
+    //data
+    private LocalDate dateOfBirth;
+    private Boolean isMale;
+    @PESEL
+    private String pesel;
+    @Pattern(regexp = "^[0-9]{2}-[0-9]{3}$", message = "{validation.error.regex.wrongFormat}")
+    private String postCode;
+    private String city;
+    private String street;
+    private String homeNumber;
+    private String apartment = "";
+    @Email
+    private String email;
 
     public String getFullName() {
         return firstName + " " + lastName;
