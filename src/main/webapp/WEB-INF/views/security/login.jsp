@@ -34,11 +34,14 @@
     <form:input path="password" type="password" id="inputPassword" class="form-control" placeholder="${password}"/>
     <button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="login"/></button>
     <br/>
-    <c:if test="${param.error}">
-        <p class="text-danger">
+    <p class="text-danger">
+        <c:if test="${param.error && blockedUser == null}">
             <spring:message code="wrongLoginCredentials"/>
-        </p>
-    </c:if>
+        </c:if>
+        <c:if test="${blockedUser != null}">
+            <spring:message code="security.antiBruteForce.blockedUser"/>
+        </c:if>
+    </p>
     <jsp:include page="../layout/footer.jsp"/>
 </form:form>
 </body>
