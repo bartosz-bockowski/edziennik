@@ -13,6 +13,8 @@ public class Notification {
     private String title;
     private String message;
     private String href;
+    private NotificationType type;
+    private String bootstrapColor;
 
     @Override
     public String toString() {

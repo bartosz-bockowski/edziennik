@@ -8,6 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.edziennik.edziennik.exam.Exam;
 import pl.edziennik.edziennik.exam.ExamRepository;
@@ -52,11 +53,31 @@ public class NotificationController {
 
     @ResponseBody
     @GetMapping("/getNotifications")
-    public List getNotifications() {
-        List<Notification> notifications = new ArrayList<>();
+    public List getNotifications(@RequestParam int count) {
         User user = loggedUser.getUser();
         Student student = user.getStudent();
+        List<Notification> notifications = getStudentNotifications(student);
+        if(user.getParent() != null){
+            for (Student st : user.getParent().getStudents()){
+                notifications.addAll(getStudentNotifications(st));
+            }
+        }
+        int start = (count - 1) * 5;
+        int end = count * 5;
+        notifications = notifications.stream().sorted(Comparator.comparing(Notification::getSent).reversed()).toList();
+        List<Notification> result = new ArrayList<>();
+        for(int i = start; i < end; i++){
+            try{
+                result.add(notifications.get(i));
+            } catch(ArrayIndexOutOfBoundsException e){
+                break;
+            }
+        }
+        return result;
+    }
 
+    public List<Notification> getStudentNotifications(Student student){
+        List<Notification> notifications = new ArrayList<>();
         List<Mark> marks = new ArrayList<>();
         if (student != null) {
             marks = student.getMarks();
@@ -70,6 +91,8 @@ public class NotificationController {
             for (int i = 0; i < markHistory.size(); i++) {
                 Mark target = markHistory.get(i);
                 Notification notification = new Notification();
+                notification.setType(NotificationType.MARK);
+                notification.setBootstrapColor("success");
                 if (i == 0) {
                     notification.setTitle(messageSource.getMessage("notification.newMark.title", null, LocaleContextHolder.getLocale()));
                     notification.setMessage(messageSource.getMessage("notification.newMark.message", new Object[]{
@@ -109,6 +132,8 @@ public class NotificationController {
             for (int i = 0; i < examHistory.size(); i++) {
                 Exam target = examHistory.get(i);
                 Notification notification = new Notification();
+                notification.setType(NotificationType.EXAM);
+                notification.setBootstrapColor("warning");
                 String part = "newExam";
                 if (target.getActive().equals(false)) {
                     part = "cancelledExam";
@@ -140,6 +165,8 @@ public class NotificationController {
             for (int i = 0; i < lessonHistory.size(); i++) {
                 Lesson target = lessonHistory.get(i);
                 Notification notification = new Notification();
+                notification.setType(NotificationType.LESSON);
+                notification.setBootstrapColor("primary");
                 String part = "updatedLesson";
                 if (target.getActive().equals(false)) {
                     part = "cancelledLesson";
@@ -161,7 +188,7 @@ public class NotificationController {
             }
         }
 
-        return notifications.stream().sorted(Comparator.comparing(Notification::getSent).reversed()).toList();
+        return notifications;
     }
 
     public LinkedHashMap<Object, LocalDateTime> getHistory(Class<?> cls, Long id) {
