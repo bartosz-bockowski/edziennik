@@ -7,6 +7,10 @@ p.msg{
      border-radius: 5px;
  }
 
+ .notification b{
+     white-space: nowrap;
+ }
+
 .lessonPlanTable td {
     text-align: center;
     padding: 10px;

@@ -18,7 +18,7 @@ function loadMoreNotifications(){
             for (let i = 0; i < len; i++) {
                 console.log(data[i])
                 let element = document.createElement("div")
-                element.classList.add("text-dark", "text-left", "alert", "alert-" + data[i].bootstrapColor)
+                element.classList.add("notification", "text-dark", "text-left", "alert", "alert-" + data[i].bootstrapColor)
 
                 let title = document.createElement("h5")
                 title.innerText = data[i].title

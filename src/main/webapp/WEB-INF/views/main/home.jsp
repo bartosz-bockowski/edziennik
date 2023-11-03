@@ -75,7 +75,7 @@
 <p id="moreVal" hidden><spring:message code="notifications.more"/></p>
 <div id="notificationsCount" hidden>0</div>
 <div class="notificationsList w-50 ml-auto mr-auto">
-    <h5><spring:message code="notifications"/></h5>
+    <h3><spring:message code="notifications"/></h3>
 </div>
 <button id="loadMoreNotificationsButton" class="btn btn-primary"><spring:message code="notifications.older"/></button>
 <jsp:include page="../layout/footer.jsp"/>
