@@ -71,17 +71,11 @@
     </c:if>
 </div>
 <p id="noNotificationsVal" hidden><spring:message code="notifications.noNotifications"/></p>
+<p id="noMoreNotificationsVal" hidden><spring:message code="notifications.noMoreNotifications"/></p>
 <p id="moreVal" hidden><spring:message code="notifications.more"/></p>
 <div id="notificationsCount" hidden>0</div>
 <div class="notificationsList w-50 ml-auto mr-auto">
-    <div class="notificationListHeader"><spring:message code="notifications"/></div>
-    <div class="text-left alert alert-primary">
-        <h5>Nowa ocena</h5>
-        <p>data</p>
-        <div>
-            Nauczyciel <b>Jarosław Gruca</b> wpisał uczniowi <b>Bartek Pawlik</b> ocenę <b>3</b> z przedmiotu <b>Informatyka</b>z tematu <b>kartkówka</b>.
-        </div>
-        <a href="/mark/14/history">Więcej</a></div>
+    <h5><spring:message code="notifications"/></h5>
 </div>
 <button id="loadMoreNotificationsButton" class="btn btn-primary"><spring:message code="notifications.older"/></button>
 <jsp:include page="../layout/footer.jsp"/>

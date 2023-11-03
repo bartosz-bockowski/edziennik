@@ -10,10 +10,10 @@ function loadMoreNotifications(){
             let list = document.querySelector(".notificationsList")
             let len = data.length
             if (len === 0) {
-                let title = document.createElement("div")
-                title.classList.add("noNotificationsDiv")
-                title.innerText = $("#noNotificationsVal").text()
+                let title = document.createElement("h5")
+                title.innerText = count > 1 ? $("#noMoreNotificationsVal").text() : $("#noNotificationsVal").text()
                 list.appendChild(title)
+                $("#loadMoreNotificationsButton").hide()
             }
             for (let i = 0; i < len; i++) {
                 console.log(data[i])
