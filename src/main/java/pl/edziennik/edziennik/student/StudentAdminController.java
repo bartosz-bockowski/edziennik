@@ -68,7 +68,7 @@ public class StudentAdminController {
         model.addAttribute("users", userRepository.findAll());
         model.addAttribute("freeUsers", userRepository.findAllByStudentIsNullAndTeacherIsNullAndParentIsNull());
         model.addAttribute("schoolClasses", schoolClassRepository.findAll());
-        return "student/adminDetails";
+        return "student/admin/details";
     }
 
     @GetMapping("/{studentId}/setUser")

@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
-<jsp:include page="../layout/header.jsp"/>
+<jsp:include page="../../layout/header.jsp"/>
 <a href="/admin/student/list"><spring:message code="student.list"/></a>
 <h1><spring:message code="student.studentDetails"/></h1>
 <h3>${student.fullName}</h3>
@@ -128,6 +128,6 @@
         <a href="/admin/student/${student.id}/edit" class="btn btn-primary"><spring:message code="student.edit"/></a>
     </div>
 </div>
-<jsp:include page="../layout/footer.jsp"/>
+<jsp:include page="../../layout/footer.jsp"/>
 </body>
 </html>

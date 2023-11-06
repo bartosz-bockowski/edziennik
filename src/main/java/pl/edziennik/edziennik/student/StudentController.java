@@ -76,4 +76,16 @@ public class StudentController {
         model.addAttribute("dates", new DateUtils().lastFifteenDays(LocalDate.now().plusDays(period * 15L)));
         return "student/attendance";
     }
+    @GetMapping("{studentId}/details")
+    public String details(@PathVariable Long studentId, Model model){
+        if(!loggedUser.hasAccessToStudent(studentId)){
+            return "error/403";
+        }
+        if(loggedUser.teacherSupervisesStudentsClass(studentId)){
+            model.addAttribute("supervisor",true);
+        }
+        Student student = studentRepository.getReferenceById(studentId);
+        model.addAttribute("student",student);
+        return "student/details";
+    }
 }

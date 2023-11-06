@@ -40,4 +40,7 @@ public class SchoolClass {
         List<Mark> marks = this.students.stream().flatMap(student -> student.getMarks().stream()).filter(f -> f.getMarkCategory().getSubject().getId().equals(subjectId) && f.getActive()).toList();
         return new MarkUtils().countAverageOfMarks(marks);
     }
+    public String getNameWithId(){
+        return this.name + " (ID: " + this.id + ")";
+    }
 }

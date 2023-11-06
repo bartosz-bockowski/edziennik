@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.SortDefault;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.schoolClass.QSchoolClass;
 import pl.edziennik.edziennik.schoolClass.SchoolClass;
 import pl.edziennik.edziennik.schoolClass.SchoolClassRepository;
+import pl.edziennik.edziennik.subject.Subject;
 import pl.edziennik.edziennik.subject.SubjectRepository;
 import pl.edziennik.edziennik.security.user.User;
 import pl.edziennik.edziennik.security.user.UserRepository;
@@ -80,7 +82,7 @@ public class TeacherAdminController {
         model.addAttribute("freeUsers",userRepository.findAllByStudentIsNullAndTeacherIsNullAndParentIsNull());
         model.addAttribute("freeSubjects",subjectRepository.findAllWhichDontHaveTeacher(teacher));
         model.addAttribute("subjects",subjectRepository.findAllWhichHaveTeacher(teacher));
-        return "teacher/adminDetails";
+        return "teacher/admin/details";
     }
     @GetMapping("/{teacherId}/setUser")
     public String setUser(@PathVariable Long teacherId, @RequestParam Long user){
@@ -100,17 +102,33 @@ public class TeacherAdminController {
         return "redirect:/admin/teacher/" + teacherId +"/details";
     }
     @GetMapping("/{teacherId}/addSupervisedClass")
-    public String addSupervisedClass(@PathVariable Long teacherId, @RequestParam Long schoolClass){
-        Teacher teacher = teacherRepository.getReferenceById(teacherId);
-        teacher.getSupervisedClasses().add(schoolClassRepository.getReferenceById(schoolClass));
-        teacherRepository.save(teacher);
+    public String addSupervisedClass(@PathVariable Long teacherId, @RequestParam Long schoolClassId){
+        SchoolClass schoolClass = schoolClassRepository.getReferenceById(schoolClassId);
+        schoolClass.getSupervisingTeachers().add(teacherRepository.getReferenceById(teacherId));
+        schoolClassRepository.save(schoolClass);
         return "redirect:/admin/teacher/" + teacherId + "/details";
     }
-    @GetMapping("/{teacherId}/removeSupervisedClass/{classId}")
-    public String removeSupervisedClass(@PathVariable Long teacherId, @PathVariable Long classId){
-        Teacher teacher = teacherRepository.getReferenceById(teacherId);
-        teacher.removeSupervisedSchoolClass(schoolClassRepository.getReferenceById(classId));
-        teacherRepository.save(teacher);
+    @GetMapping("/{teacherId}/removeSupervisedClass")
+    public String removeSupervisedClass(@PathVariable Long teacherId, @RequestParam Long schoolClassId){
+        SchoolClass schoolClass = schoolClassRepository.getReferenceById(schoolClassId);
+        schoolClass.getSupervisingTeachers().remove(teacherRepository.getReferenceById(teacherId));
+        schoolClassRepository.save(schoolClass);
+        return "redirect:/admin/teacher/" + teacherId + "/details";
+    }
+
+    @GetMapping("{teacherId}/addSubject")
+    public String addSubject(@PathVariable Long teacherId, @RequestParam Long subjectId){
+        Subject subject = subjectRepository.getReferenceById(subjectId);
+        subject.getTeachers().add(teacherRepository.getReferenceById(teacherId));
+        subjectRepository.save(subject);
+        return "redirect:/admin/teacher/" + teacherId + "/details";
+    }
+
+    @GetMapping("{teacherId}/removeSubject")
+    public String removeSubject(@PathVariable Long teacherId, @RequestParam Long subjectId){
+        Subject subject = subjectRepository.getReferenceById(subjectId);
+        subject.getTeachers().remove(teacherRepository.getReferenceById(teacherId));
+        subjectRepository.save(subject);
         return "redirect:/admin/teacher/" + teacherId + "/details";
     }
 }

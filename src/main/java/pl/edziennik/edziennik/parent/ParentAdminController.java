@@ -69,7 +69,7 @@ public class ParentAdminController {
         model.addAttribute("students",studentRepository.findAll());
         model.addAttribute("users",userRepository.findAll());
         model.addAttribute("freeUsers",userRepository.findAllByStudentIsNullAndTeacherIsNullAndParentIsNull());
-        return "parent/adminDetails";
+        return "parent/admin/details";
     }
     @GetMapping("/{parentId}/addStudent")
     public String addStudent(@RequestParam Long studentId, @PathVariable Long parentId){

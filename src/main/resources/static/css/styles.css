@@ -7,6 +7,10 @@ p.msg{
      border-radius: 5px;
  }
 
+ .card-body{
+     vertical-align: text-top !important;
+ }
+
  .notification b{
      white-space: nowrap;
  }

@@ -51,7 +51,7 @@ public class LoggedUser {
     public Boolean hasAccessToStudent(Long id) {
         boolean studentCondition = getUser().getStudent() != null && getUser().getStudent().getId().equals(id);
         boolean parentCondition = getUser().getParent() != null && getUser().getParent().getStudents().stream().map(Student::getId).toList().contains(id);
-        boolean teacherCondition = getUser().getTeacher() != null && getUser().getTeacher().getSupervisedClasses().stream().flatMap(schoolClass -> schoolClass.getStudents().stream()).map(Student::getId).toList().contains(id);
+        boolean teacherCondition = teacherSupervisesStudentsClass(id);
         return studentCondition || parentCondition || teacherCondition || isAdmin();
     }
 
@@ -100,4 +100,7 @@ public class LoggedUser {
         return isAdmin() || getUser().getTeacher() != null && getUser().getTeacher().getSupervisedClasses().stream().map(SchoolClass::getId).toList().contains(schoolClassId);
     }
 
+    public Boolean teacherSupervisesStudentsClass(Long studentId){
+        return isAdmin() || getUser().getTeacher() != null && getUser().getTeacher().getSupervisedClasses().stream().flatMap(schoolClass -> schoolClass.getStudents().stream()).map(Student::getId).toList().contains(studentId);
+    }
 }

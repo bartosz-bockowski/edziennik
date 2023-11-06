@@ -14,7 +14,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
-<jsp:include page="../layout/header.jsp"/>
+<jsp:include page="../layout/linksHeader.jsp"/>
+<body class="text-center">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/small/login-form.css">
 <form:form class="form-signin" method="post" action="/login" modelAttribute="user">
     <h1 class="h1 mb-1 font-weight-bold"><spring:message code="e-dziennik"/></h1>

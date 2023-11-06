@@ -21,23 +21,26 @@
         <td class="card-header">
             <h5 class="card-title mb-1"><spring:message code="subject.teachers"/></h5>
         </td>
+        <td class="card-header">
+            <h5 class="card-title mb-1"><spring:message code="subject.addTeacher"/></h5>
+        </td>
     </tr>
     <tr>
         <td class="card-body">
             <c:if test="${subject.teachers.size() == 0}">
-                <div><spring:message code="subject.noTeachers"/></div>
+                <div><spring:message code="none"/></div>
             </c:if>
             <c:forEach items="${subject.teachers}" var="teacher">
-                <div>${teacher.fullNameWithId} <a executed-by-js="true" href="/admin/subject/removeTeacher?subject=${subject.id}&teacher=${teacher.id}">
+                <div>${teacher.fullNameWithId} <a class="confirm" href="/admin/subject/${subject.id}/removeTeacher?teacherId=${teacher.id}">
                     <spring:message code="subject.removeTeacher"/>
-                    <p class="msg"><spring:message code="subject.confirmRemoveTeacher"/> (${teacher.fullNameWithId})</p>
+                    <p class="msg"><spring:message code="subject.confirmRemoveTeacher" arguments="${teacher.fullNameWithId},${subject.nameWithId}"/></p>
                 </a></div>
             </c:forEach>
-            <div><spring:message code="subject.addTeacher"/></div>
-            <form id="addTeacherForm" action="/admin/subject/addTeacher" executed-by-js="true" method="get">
-                <p class="msg"><spring:message code="subject.confirmAddTeacher"/></p>
-                <input type="hidden" name="subject" value="${subject.id}"/>
-                <select class="selectpicker" data-live-search="true" name="teacher">
+        </td>
+        <td class="card-body">
+            <form class="confirm" action="/admin/subject/${subject.id}/addTeacher" method="get">
+                <p class="msg"><spring:message code="subject.confirmAddTeacher" arguments="${subject.nameWithId}"/></p>
+                <select class="selectpicker" data-live-search="true" name="teacherId">
                     <c:forEach items="${teachers}" var="teacher">
                         <c:if test="${!subject.teachers.contains(teacher)}">
                             <option value="${teacher.id}">${teacher.getFullName()} (ID: ${teacher.id})</option>

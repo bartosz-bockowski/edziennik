@@ -39,7 +39,7 @@ public class Teacher {
     private List<Lesson> lessons;
     private boolean active = true;
     @ManyToMany(mappedBy = "teachers")
-    List<Subject> subjects;
+    private List<Subject> subjects = new ArrayList<>();
     @OneToMany(mappedBy = "teacher")
     private List<Mark> marks;
 

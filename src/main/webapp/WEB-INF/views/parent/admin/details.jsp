@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
-<jsp:include page="../layout/header.jsp"/>
+<jsp:include page="../../layout/header.jsp"/>
 <a href="/admin/parent/list"><spring:message code="parent.list"/></a>
 <h1><spring:message code="parent.parentDetails"/></h1>
 <div><spring:message code="parent.fullName"/>: <b>${parent.getFullName()}</b></div>
@@ -43,7 +43,7 @@
             </c:forEach>
         </td>
         <td class="card-body">
-            <form id="addStudentForm" action="/admin/parent/${parent.id}/addStudent" method="get">
+            <form action="/admin/parent/${parent.id}/addStudent" method="get">
                 <select class="selectpicker" data-live-search="true" name="studentId">
                     <c:forEach items="${students}" var="student">
                         <c:if test="${!parent.students.contains(student)}">
@@ -134,6 +134,6 @@
         <a href="/admin/parent/${parent.id}/edit" class="btn btn-primary"><spring:message code="parent.edit"/></a>
     </div>
 </div>
-<jsp:include page="../layout/footer.jsp"/>
+<jsp:include page="../../layout/footer.jsp"/>
 </body>
 </html>
