@@ -5,39 +5,37 @@ function subjectAddTeacherForm(form){
     form.find('.selectpicker option[value="' + selectpicker.val() + '"]').remove()
     selectpicker.first('option').prop('selected',true)
     selectpicker.selectpicker('refresh')
-    $("#subjectTeacherListNone").hidden = true
-    let liTeacher = document.createElement("li")
-    console.log(val)
-    console.log(text)
-    liTeacher.append(text)
+    let liTeacher = $('<li>',{
+        text: text
+    })
 
-    let aRemoveTeacher = document.createElement("a")
-    $(aRemoveTeacher).attr("ajax","subjectRemoveTeacherA")
-    aRemoveTeacher.href = "/admin/subject/" + $("#subjectId").val() + "/removeTeacher?teacherId=" + val
-    aRemoveTeacher.classList.add("confirm")
-    aRemoveTeacher.text = " " + $("#removeTeacherText").text()
-
-    let confirmText = $("#removeTeacherConfirmText").text()
-    confirmText = confirmText.replace("{0}",text)
-    confirmText = confirmText.replace("{1}", $("#subjectName").val())
-    let pConfirm = document.createElement("p")
-    pConfirm.innerText = confirmText
-    pConfirm.hidden = true
-    pConfirm.classList.add("msg")
-    aRemoveTeacher.append(pConfirm)
-
+    let aRemoveTeacher = $('<a>',{
+        ajax: "subjectRemoveTeacherA",
+        href: "/admin/subject/" + $("#subjectId").val() + "/removeTeacher?teacherId=" + val,
+        class: "confirm",
+        text: " " + $("#removeTeacherText").text()
+    })
     $(aRemoveTeacher).click((e) => {
         clickOnAConfirmAjax(e)
     })
+    $(aRemoveTeacher).appendTo(liTeacher)
 
-    liTeacher.append(aRemoveTeacher)
+    let confirmText = $("#removeTeacherConfirmText").text().replace("{0}",text)
+    confirmText = confirmText.replace("{1}", $("#subjectName").val())
 
-    $("#subjectTeacherList").append(liTeacher)
+    $('<p>',{
+        text: confirmText,
+        hidden: true,
+        class: 'msg'
+    }).appendTo(aRemoveTeacher)
+
+    $(liTeacher).appendTo($("#subjectTeacherList"))
     $("#subjectTeacherListNone").css("display","none")
 }
 
 function subjectRemoveTeacherA(a){
-    let select = $("#subjectAddTeacherForm").find("select.selectpicker")
+    let form = $("#subjectAddTeacherForm")
+    let select = form.find("select.selectpicker")
     let href = $(a).attr("href")
     let val = href.split("?")[1].split("=")[1]
     let text = $(a).parent().html().split("<a")[0]
@@ -47,7 +45,10 @@ function subjectRemoveTeacherA(a){
     }))
     $(select).selectpicker('refresh')
     $(a).parent().remove()
-    if($("#subjectTeacherList").find("li").length == 0){
+    if($("#subjectTeacherList").find("li").length === 0){
         $("#subjectTeacherListNone").css("display","block")
+    }
+    if(form.find('#bs-select-1 li').length === 1){
+        $("#subjectAddTeacherForm").find('button .filter-option-inner-inner').text(text)
     }
 }
