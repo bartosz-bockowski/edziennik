@@ -15,7 +15,6 @@
 <a href="/admin/subject/list"><spring:message code="subject.list"/></a>
 <input type="hidden" value="${subject.id}" id="subjectId"/>
 <input type="hidden" value="${subject.nameWithId}" id="subjectName"/>
-<p id="removeTeacherConfirmText" hidden><spring:message code="subject.confirmRemoveTeacher"/></p>
 <h1><spring:message code="subject.subjectDetails"/></h1>
 <div><spring:message code="subject.name"/>: <b>${subject.name}</b></div>
 <!-- teachers -->
@@ -32,6 +31,7 @@
         <td class="card-body">
             <div id="subjectTeacherListNone" <c:if test="${subject.teachers.size() > 0}">hidden</c:if>><spring:message code="none"/></div>
             <div class="d-inline-block text-left">
+                <p id="removeTeacherConfirmText" hidden><spring:message code="subject.confirmRemoveTeacher"/></p>
                 <div id="removeTeacherText" hidden><spring:message code="subject.removeTeacher"/></div>
                 <ul id="subjectTeacherList">
                 <c:forEach items="${subject.teachers}" var="teacher">
@@ -68,6 +68,7 @@
         <td class="card-body">
             <div id="subjectSchoolClassListNone" <c:if test="${subject.schoolClasses.size() > 0}">hidden</c:if>><spring:message code="none"/></div>
             <div class="d-inline-block text-left">
+                <p id="removeSchoolClassConfirmText" hidden><spring:message code="subject.confirmRemoveSchoolClass"/></p>
                 <div id="removeSchoolClassText" hidden><spring:message code="subject.removeSchoolClass"/></div>
                 <ul id="subjectSchoolClassList">
                 <c:forEach items="${subject.schoolClasses}" var="schoolClass">
