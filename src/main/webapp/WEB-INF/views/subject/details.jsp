@@ -48,13 +48,47 @@
                 <p class="msg"><spring:message code="subject.confirmAddTeacher" arguments="${subject.nameWithId}"/></p>
                 <select class="selectpicker" data-live-search="true" name="teacherId" required="required">
                     <c:forEach items="${teachers}" var="teacher">
-                        <c:if test="${!subject.teachers.contains(teacher)}">
-                            <option value="${teacher.id}">${teacher.getFullName()} (ID: ${teacher.id})</option>
-                        </c:if>
+                        <option value="${teacher.id}">${teacher.fullNameWithId}</option>
                     </c:forEach>
                 </select>
                 <br/>
                 <button type="submit" class="btn btn-primary"><spring:message code="subject.addT"/></button>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td class="card-header">
+            <h5 class="card-title mb-1"><spring:message code="subject.schoolClassList"/></h5>
+        </td>
+        <td class="card-header">
+            <h5 class="card-title mb-1"><spring:message code="subject.addSchoolClass"/></h5>
+        </td>
+    </tr>
+    <tr>
+        <td class="card-body">
+            <div id="subjectSchoolClassListNone" <c:if test="${subject.schoolClasses.size() > 0}">hidden</c:if>><spring:message code="none"/></div>
+            <div class="d-inline-block text-left">
+                <div id="removeSchoolClassText" hidden><spring:message code="subject.removeSchoolClass"/></div>
+                <ul id="subjectSchoolClassList">
+                <c:forEach items="${subject.schoolClasses}" var="schoolClass">
+                    <li>${schoolClass.nameWithId} <a class="confirm" href="/admin/subject/${subject.id}/removeSchoolClass?schoolClassId=${schoolClass.id}" ajax="subjectRemoveSchoolClassA">
+                        <spring:message code="subject.removeSchoolClass"/>
+                        <p class="msg"><spring:message code="subject.confirmRemoveSchoolClass" arguments="${schoolClass.nameWithId},${subject.nameWithId}"/></p>
+                    </a></li>
+                </c:forEach>
+                </ul>
+            </div>
+        </td>
+        <td class="card-body">
+            <form id="subjectAddSchoolClassForm" class="confirm d-inline-block" action="/admin/subject/${subject.id}/addSchoolClass" method="get" ajax="subjectAddSchoolClassForm">
+                <p class="msg"><spring:message code="subject.confirmAddSchoolClass" arguments="${subject.nameWithId}"/></p>
+                <select class="selectpicker" data-live-search="true" name="schoolClassId" required="required">
+                    <c:forEach items="${schoolClasses}" var="schoolClass">
+                        <option value="${schoolClass.id}">${schoolClass.nameWithId}</option>
+                    </c:forEach>
+                </select>
+                <br/>
+                <button type="submit" class="btn btn-primary"><spring:message code="subject.addSC"/></button>
             </form>
         </td>
     </tr>

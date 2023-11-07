@@ -111,24 +111,24 @@ public class SchoolClassAdminController {
         return "redirect:/admin/schoolclass/" + id + "/details";
     }
 
-    @GetMapping("/{id}/addSubject")
-    public String addSubject(@PathVariable Long id, @RequestParam Long subjectId) {
-        SchoolClass schoolClass = schoolClassRepository.getReferenceById(id);
+    @GetMapping("/{schoolClassId}/addSubject")
+    public String addSubject(@PathVariable Long schoolClassId, @RequestParam Long subjectId) {
+        SchoolClass schoolClass = schoolClassRepository.getReferenceById(schoolClassId);
         Subject subject = subjectRepository.getReferenceById(subjectId);
         if (!schoolClass.getSubjects().contains(subject)) {
             schoolClass.getSubjects().add(subject);
         }
         schoolClassRepository.save(schoolClass);
-        return "redirect:/admin/schoolclass/" + id + "/details";
+        return "redirect:/admin/schoolclass/" + schoolClassId + "/details";
     }
 
-    @GetMapping("{id}/removeSubject/{subjectId}")
-    public String removeSubject(@PathVariable Long id, @PathVariable Long subjectId) {
-        SchoolClass schoolClass = schoolClassRepository.getReferenceById(id);
+    @GetMapping("{schoolClassId}/removeSubject")
+    public String removeSubject(@PathVariable Long schoolClassId, @RequestParam Long subjectId) {
+        SchoolClass schoolClass = schoolClassRepository.getReferenceById(schoolClassId);
         Subject subject = subjectRepository.getReferenceById(subjectId);
         schoolClass.getSubjects().remove(subject);
         schoolClassRepository.save(schoolClass);
-        return "redirect:/admin/schoolclass/" + id + "/details";
+        return "redirect:/admin/schoolclass/" + schoolClassId + "/details";
     }
 
     @GetMapping("/updateLesson")

@@ -8,7 +8,7 @@ p.msg{
  }
 
  .card-body{
-     vertical-align: text-top !important;
+     vertical-align: top !important;
  }
 
  .notification b{

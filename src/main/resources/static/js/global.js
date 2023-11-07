@@ -31,7 +31,7 @@ $(document).ready(() => {
         e.preventDefault()
         let form = $(e.target)
         let msg = form.find(".msg").text()
-        msg = msg.replace(".select.val.",form.find('a[role="option"].dropdown-item.active.selected span').text())
+        msg = msg.replace(".select.val.",form.find('button.btn.dropdown-toggle.btn-light div.filter-option-inner-inner').text())
         if (confirm(msg)) {
             let link = form.attr("action") + "?" + form.serialize()
             fetch(link).then(() => {
