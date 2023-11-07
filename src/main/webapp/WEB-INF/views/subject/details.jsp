@@ -13,6 +13,9 @@
 <body>
 <jsp:include page="../layout/header.jsp"/>
 <a href="/admin/subject/list"><spring:message code="subject.list"/></a>
+<input type="hidden" value="${subject.id}" id="subjectId"/>
+<input type="hidden" value="${subject.nameWithId}" id="subjectName"/>
+<p id="removeTeacherConfirmText" hidden><spring:message code="subject.confirmRemoveTeacher"/></p>
 <h1><spring:message code="subject.subjectDetails"/></h1>
 <div><spring:message code="subject.name"/>: <b>${subject.name}</b></div>
 <!-- teachers -->
@@ -27,20 +30,23 @@
     </tr>
     <tr>
         <td class="card-body">
-            <c:if test="${subject.teachers.size() == 0}">
-                <div><spring:message code="none"/></div>
-            </c:if>
-            <c:forEach items="${subject.teachers}" var="teacher">
-                <div>${teacher.fullNameWithId} <a class="confirm" href="/admin/subject/${subject.id}/removeTeacher?teacherId=${teacher.id}">
-                    <spring:message code="subject.removeTeacher"/>
-                    <p class="msg"><spring:message code="subject.confirmRemoveTeacher" arguments="${teacher.fullNameWithId},${subject.nameWithId}"/></p>
-                </a></div>
-            </c:forEach>
+            <div id="subjectTeacherListNone" <c:if test="${subject.teachers.size() > 0}">hidden</c:if>><spring:message code="none"/></div>
+            <div class="d-inline-block text-left">
+                <div id="removeTeacherText" hidden><spring:message code="subject.removeTeacher"/></div>
+                <ul id="subjectTeacherList">
+                <c:forEach items="${subject.teachers}" var="teacher">
+                    <li>${teacher.fullNameWithId} <a class="confirm" href="/admin/subject/${subject.id}/removeTeacher?teacherId=${teacher.id}" ajax="subjectRemoveTeacherA">
+                        <spring:message code="subject.removeTeacher"/>
+                        <p class="msg"><spring:message code="subject.confirmRemoveTeacher" arguments="${teacher.fullNameWithId},${subject.nameWithId}"/></p>
+                    </a></li>
+                </c:forEach>
+                </ul>
+            </div>
         </td>
         <td class="card-body">
-            <form class="confirm" action="/admin/subject/${subject.id}/addTeacher" method="get">
+            <form id="subjectAddTeacherForm" class="confirm d-inline-block" action="/admin/subject/${subject.id}/addTeacher" method="get" ajax="subjectAddTeacherForm">
                 <p class="msg"><spring:message code="subject.confirmAddTeacher" arguments="${subject.nameWithId}"/></p>
-                <select class="selectpicker" data-live-search="true" name="teacherId">
+                <select class="selectpicker" data-live-search="true" name="teacherId" required="required">
                     <c:forEach items="${teachers}" var="teacher">
                         <c:if test="${!subject.teachers.contains(teacher)}">
                             <option value="${teacher.id}">${teacher.getFullName()} (ID: ${teacher.id})</option>
@@ -53,6 +59,7 @@
         </td>
     </tr>
 </table>
+<script src="${pageContext.request.contextPath}/js/ajax/subject/details.js"></script>
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>
