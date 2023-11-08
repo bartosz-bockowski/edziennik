@@ -12,6 +12,7 @@
 <html>
 <body>
 <jsp:include page="../layout/header.jsp"/>
+<p id="emptyVal" hidden><spring:message code="lesson.lessonPlanAdmin.emptyVal"/></p>
 <p id="teacherNotFree" hidden><spring:message code="lesson.teacherNotFree"/></p>
 <p id="classRoomNotFree" hidden><spring:message code="lesson.classRoomNotFree"/></p>
 <p id="noChanges" hidden><spring:message code="lesson.noChanges"/></p>

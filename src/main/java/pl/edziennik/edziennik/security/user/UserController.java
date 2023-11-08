@@ -21,12 +21,11 @@ import pl.edziennik.edziennik.utils.SecurityUtils;
 
 import jakarta.persistence.EntityManager;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 @Controller
 @RequestMapping("/user")
@@ -90,5 +89,30 @@ public class UserController {
             }
         }
         return true;
+    }
+
+    @GetMapping("/{username}/sendRestorePasswordEmail")
+    public void sendRestorePasswordEmail(@PathVariable String username){
+        User user = userService.findByUserName(username);
+        if(user.getRestorePasswordCodeExp().isBefore(LocalDateTime.now())){
+            user.setRestorePasswordCode(UUID.randomUUID().toString());
+            user.setRestorePasswordCodeExp(LocalDateTime.now().plusMinutes(5));
+            userService.saveUser(user);
+        }
+        String email = user.getEmail();
+        String href = user.getUsername() + "/restorePassword/" + user.getRestorePasswordCode();
+        //send email
+    }
+
+    @GetMapping("/{username}/restorePassword/{code}")
+    public String restorePassword(@PathVariable String username, @PathVariable String code){
+        User user = userService.findByUserName(username);
+        if(user == null){
+            return "redirect:/login";
+        }
+        if(user.getRestorePasswordCodeExp().isBefore(LocalDateTime.now()) || !user.getRestorePasswordCode().equals(code)){
+            return "redirect:/login?badPasswordCode=1";
+        }
+        return "security/restorePassword";
     }
 }

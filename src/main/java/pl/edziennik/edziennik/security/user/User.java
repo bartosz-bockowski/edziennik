@@ -14,6 +14,7 @@ import pl.edziennik.edziennik.security.role.Role;
 import pl.edziennik.edziennik.student.Student;
 import pl.edziennik.edziennik.teacher.Teacher;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -47,4 +48,6 @@ public class User {
     @Email
     private String email;
     private String phoneNumber;
+    private String restorePasswordCode;
+    private LocalDateTime restorePasswordCodeExp;
 }
