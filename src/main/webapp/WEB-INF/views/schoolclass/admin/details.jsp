@@ -18,10 +18,10 @@
 <div><spring:message code="schoolClass.name"/>: <b>${schoolClass.name}</b></div>
 <table class="container-fluid table-bordered text-center align-top table-responsive-xl">
     <tr>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="schoolClass.supervisingTeachers"/></h5>
         </td>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="schoolClass.students"/></h5>
         </td>
     </tr>
@@ -53,10 +53,10 @@
         </td>
     </tr>
     <tr>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="schoolClass.addSupervisingTeacher"/></h5>
         </td>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="schoolClass.addStudent"/></h5>
         </td>
     </tr>

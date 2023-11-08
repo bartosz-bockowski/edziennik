@@ -17,7 +17,7 @@
 <div><spring:message code="user.username"/>: <b>${user.username}</b></div>
 <table class="container-fluid table-bordered text-center table-responsive-xl">
     <tr>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="user.roles"/></h5>
         </td>
     </tr>
@@ -35,17 +35,17 @@
     </tr>
     <tr>
         <c:if test="${user.teacher != null}">
-            <td class="card-header">
+            <td class="card-header bg-secondary text-white">
                 <h5 class="card-title text-white mb-1"><spring:message code="user.teacher"/></h5>
             </td>
         </c:if>
         <c:if test="${user.parent != null}">
-            <td class="card-header">
+            <td class="card-header bg-secondary text-white">
                 <h5 class="card-title text-white mb-1"><spring:message code="user.parent"/></h5>
             </td>
         </c:if>
         <c:if test="${user.student != null}">
-            <td class="card-header">
+            <td class="card-header bg-secondary text-white">
                 <h5 class="card-title text-white mb-1"><spring:message code="user.student"/></h5>
             </td>
         </c:if>

@@ -20,10 +20,10 @@
 <!-- teachers -->
 <table class="container-fluid table-bordered text-center table-responsive-xl">
     <tr>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="subject.teachers"/></h5>
         </td>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="subject.addTeacher"/></h5>
         </td>
     </tr>
@@ -57,10 +57,10 @@
         </td>
     </tr>
     <tr>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="subject.schoolClassList"/></h5>
         </td>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="subject.addSchoolClass"/></h5>
         </td>
     </tr>

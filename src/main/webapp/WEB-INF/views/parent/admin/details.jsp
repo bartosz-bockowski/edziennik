@@ -17,13 +17,13 @@
 <div><spring:message code="parent.fullName"/>: <b>${parent.getFullName()}</b></div>
 <table class="container-fluid table-bordered text-center table-responsive-xl">
     <tr>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="parent.students"/></h5>
         </td>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="parent.addStudent"/></h5>
         </td>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="parent.user"/></h5>
         </td>
     </tr>

@@ -50,4 +50,8 @@ $(document).ready(() => {
             $(this).parent().find(".filter-option-inner-inner").text("-")
         }
     })
+    //header
+    $("#headerUserButton").click((e) => {
+        $(e.target).parent().find("div:first").toggle()
+    })
 })

@@ -22,6 +22,18 @@
                 <a class="p-2 text-white" href="/admin/classRoom/list"><spring:message code="classRoom.list"/></a>
             </sec:authorize>
         </nav>
-        <a class="btn btn-danger" href="/logout"><spring:message code="logout"/></a>
+        <div class="position-relative">
+            <button id="headerUserButton" class="btn btn-primary"><%= request.getUserPrincipal().getName() %>
+                <span class="small">&#9660;</span>
+            </button>
+            <div class="border border-light position-absolute bg-white text-dark text-left" style="top:100%; right:0; display: none;">
+                <a class="d-block m-3" href="/user/<%= request.getUserPrincipal().getName() %>/account">
+                    <div><spring:message code="user.myAccount"/></div>
+                </a>
+                <div class="m-3">
+                    <a class="btn btn-danger" href="/logout"><spring:message code="logout"/></a>
+                </div>
+            </div>
+        </div>
     </div>
 </sec:authorize>

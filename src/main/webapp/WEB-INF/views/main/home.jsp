@@ -10,7 +10,7 @@
 <div class="container">
     <c:if test="${loggedUser.student != null}">
         <div class="card mb-4 box-shadow">
-            <div class="card-header">
+            <div class="card-header bg-secondary text-white">
                 <h4 class="my-0 font-weight-normal"><spring:message code="user.student"/></h4>
             </div>
             <div class="card-body">
@@ -32,7 +32,7 @@
     </c:if>
     <c:if test="${loggedUser.parent != null}">
         <div class="card mb-4 box-shadow">
-            <div class="card-header">
+            <div class="card-header bg-secondary text-white">
                 <h4 class="my-0 font-weight-normal"><spring:message code="user.parent"/></h4>
             </div>
             <div class="card-body">
@@ -48,7 +48,7 @@
     </c:if>
     <c:if test="${loggedUser.teacher != null}">
         <div class="card mb-4 box-shadow">
-            <div class="card-header">
+            <div class="card-header bg-secondary text-white">
                 <h4 class="my-0 font-weight-normal"><spring:message code="user.teacher"/></h4>
             </div>
             <div class="card-body">

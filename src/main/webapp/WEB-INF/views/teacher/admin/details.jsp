@@ -16,13 +16,13 @@
 <h3>${teacher.fullName}</h3>
 <table class="container-fluid table-bordered text-center table-responsive-xl">
     <tr>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="teacher.subjects"/></h5>
         </td>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="teacher.user"/></h5>
         </td>
-        <td class="card-header">
+        <td class="card-header bg-secondary text-white">
             <h5 class="card-title mb-1"><spring:message code="teacher.supervisedClasses"/></h5>
         </td>
     </tr>
