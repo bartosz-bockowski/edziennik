@@ -34,9 +34,23 @@ $(document).ready(() => {
         msg = msg.replace(".select.val.",form.find('button.btn.dropdown-toggle.btn-light div.filter-option-inner-inner').text())
         if (confirm(msg)) {
             let link = form.attr("action") + "?" + form.serialize()
-            fetch(link).then(() => {
-                eval(form.attr("ajax") + "(form)")
-            })
+            let ajaxRes = form.attr("ajaxRes")
+            if(typeof ajaxRes !== "undefined" && ajaxRes !== false){
+                fetch(link).then(res => {
+                    if(!res.ok){
+                        throw new Error("error")
+                    }
+                    return res.json()
+                }).then(data => {
+                    eval(form.attr("ajax") + "(data)")
+                }).catch(error => {
+                    console.error(error)
+                })
+            } else {
+                fetch(link).then(() => {
+                    eval(form.attr("ajax") + "(form)")
+                })
+            }
         }
     })
     $('a.confirm[ajax]').click((e) => {
