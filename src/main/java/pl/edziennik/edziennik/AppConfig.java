@@ -11,7 +11,7 @@ import pl.edziennik.edziennik.utils.PasswordCriteria;
 
 @Configuration
 @WebListener
-public class AppConfig implements ServletContextListener {
+public class AppConfig {
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
@@ -19,14 +19,5 @@ public class AppConfig implements ServletContextListener {
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
-    }
-    @Override
-    public void contextInitialized(ServletContextEvent event) {
-        event.getServletContext().setAttribute("passwordCriterias", PasswordCriteria.values());
-    }
-
-    @Override
-    public void contextDestroyed(ServletContextEvent event) {
-        // NOOP
     }
 }

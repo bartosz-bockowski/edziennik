@@ -23,7 +23,7 @@
                     </div>
                     <ul class="d-inline-block text-left">
                         <c:forEach items="${passwordCriterias}" var="passwordCritera">
-                            <li><spring:message code="security.password.criteria.${passwordCritera}"/></li>
+                            <li><spring:message code="security.password.criteria.${passwordCritera.name()}"/></li>
                         </c:forEach>
                     </ul>
                     <div class="text-success" id="passSuccessDiv" style="display:none;">

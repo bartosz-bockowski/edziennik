@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.edziennik.edziennik.utils.PasswordCriteria;
 import pl.edziennik.edziennik.utils.SecurityUtils;
 
 import jakarta.persistence.EntityManager;
@@ -45,6 +46,7 @@ public class UserController {
     @GetMapping("/{username}/account")
     public String account(@PathVariable String username, Model model){
         model.addAttribute("user",userService.findByUserName(username));
+        model.addAttribute("passwordCriterias", PasswordCriteria.values());
         return "security/user/account";
     }
     @GetMapping("/{username}/changePassword")

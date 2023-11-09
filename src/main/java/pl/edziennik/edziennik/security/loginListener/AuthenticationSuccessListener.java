@@ -27,6 +27,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Authen
             session.setAttribute("blockedUser",true);
             throw new BadCredentialsException("");
         } else {
+            session.removeAttribute("blockedUser");
             failedLoginAttemptService.clearHistory(username);
         }
     }
