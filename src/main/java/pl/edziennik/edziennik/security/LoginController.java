@@ -17,7 +17,6 @@ public class LoginController {
         model.addAttribute("blockedUser",session.getAttribute("blockedUser"));
         User user = new User();
         model.addAttribute("user",user);
-        model.addAttribute("testval","test");
         return "security/login";
     }
     @GetMapping("/logout")

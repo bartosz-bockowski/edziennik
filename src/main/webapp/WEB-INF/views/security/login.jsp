@@ -52,6 +52,17 @@
                 </div>
             </c:if>
     </div>
+    <button type="button" id="iForgotPasswordButton" class="btn btn-danger mb-4"><spring:message code="security.login.iForgotPassword"/></button>
+    <div id="forgottenPasswordDiv" style="display: none;">
+        <div id="sent" hidden><spring:message code="security.password.recover.sent"/></div>
+        <div id="cantBeEmpty" hidden><spring:message code="security.password.recover.fieldCantBeEmpty"/></div>
+        <input type="text" id="inputUsernameForgottenPassword" class="form-control" placeholder="${username}"/>
+        <label for="inputUsernameForgottenPassword" class="sr-only">
+            <spring:message code="user.username"/>
+        </label>
+        <button id="recoverPasswordButton" type="button" class="btn btn-lg btn-primary btn-block mt-2"><spring:message code="security.password.recoverPassword"/></button>
+    </div>
+    <script src="${pageContext.request.contextPath}/js/ajax/security/login.js"></script>
     <jsp:include page="../layout/footer.jsp"/>
 </form:form>
 </body>

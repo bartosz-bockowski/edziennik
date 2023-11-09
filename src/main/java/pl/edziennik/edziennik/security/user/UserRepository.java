@@ -14,6 +14,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByUsername(String username);
     Optional<User> findByUsernameAndIdNot(String username, Long id);
     Long countAllByUsername(String username);
+    Optional<User> findByRestorePasswordCode(String code);
     @Query("SELECT max(id) FROM User")
     Long getMaxId();
     List<User> findAllByStudentIsNullAndTeacherIsNullAndParentIsNull();
