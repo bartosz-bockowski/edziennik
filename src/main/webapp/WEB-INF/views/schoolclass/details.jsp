@@ -28,7 +28,7 @@
     <div><spring:message code="schoolClass.noStudents"/></div>
 </c:if>
 <c:forEach items="${schoolClass.students}" var="student">
-    <div>${student.getFullName()}</div>
+    <div>${student.fullName} <a href="/student/${student.id}/details"><spring:message code="student.studentData"/></a></div>
 </c:forEach>
 <!-- subjects -->
 <br/>

@@ -89,7 +89,13 @@ public class LoggedUser {
     }
 
     public Boolean hasAccessToMarkHistory(Long markId) {
-        return isAdmin() || getUser().getStudent() != null && getUser().getStudent().getMarks().stream().map(Mark::getId).toList().contains(markId) || getUser().getParent() != null && getUser().getParent().getStudents().stream().flatMap(s -> s.getMarks().stream()).map(Mark::getId).toList().contains(markId) || getUser().getTeacher() != null && getUser().getTeacher().getMarks().stream().map(Mark::getId).toList().contains(markId);
+        return isAdmin()
+                ||
+                getUser().getStudent() != null && getUser().getStudent().getMarks().stream().map(Mark::getId).toList().contains(markId)
+                ||
+                getUser().getParent() != null && getUser().getParent().getStudents().stream().flatMap(s -> s.getMarks().stream()).map(Mark::getId).toList().contains(markId)
+                ||
+                getUser().getTeacher() != null && getUser().getTeacher().getMarks().stream().map(Mark::getId).toList().contains(markId);
     }
 
     public Boolean isMarkCreator(Long markId) {
@@ -102,5 +108,15 @@ public class LoggedUser {
 
     public Boolean teacherSupervisesStudentsClass(Long studentId){
         return isAdmin() || getUser().getTeacher() != null && getUser().getTeacher().getSupervisedClasses().stream().flatMap(schoolClass -> schoolClass.getStudents().stream()).map(Student::getId).toList().contains(studentId);
+    }
+
+    public Boolean hasAccessToStudentsPersonalInfo(Long studentId){
+        return isAdmin()
+                ||
+                getUser().getStudent() != null && getUser().getStudent().getId().equals(studentId)
+                ||
+                getUser().getParent() != null && getUser().getParent().getStudents().stream().map(Student::getId).toList().contains(studentId)
+                ||
+                getUser().getTeacher() != null && getUser().getTeacher().getSupervisedClasses().stream().flatMap(s -> s.getStudents().stream()).map(Student::getId).toList().contains(studentId);
     }
 }

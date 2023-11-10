@@ -21,7 +21,7 @@
         <spring:message code="student.edit"/>
     </c:if>
 </h1>
-<form:form action="/admin/student/add" method="post" modelAttribute="student">
+<form:form action="/student/add" method="post" modelAttribute="student">
     <form:input path="schoolClass" type="hidden"/>
     <form:input path="user" type="hidden"/>
     <form:input path="id" type="hidden"/>

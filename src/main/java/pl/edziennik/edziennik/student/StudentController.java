@@ -1,11 +1,11 @@
 package pl.edziennik.edziennik.student;
 
+import com.mysql.cj.log.Log;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.attendance.AttendanceRepository;
 import pl.edziennik.edziennik.lessonHour.LessonHourRepository;
 import pl.edziennik.edziennik.mark.MarkUtils;
@@ -76,7 +76,7 @@ public class StudentController {
         model.addAttribute("dates", new DateUtils().lastFifteenDays(LocalDate.now().plusDays(period * 15L)));
         return "student/attendance";
     }
-    @GetMapping("{studentId}/details")
+    @GetMapping("/{studentId}/details")
     public String details(@PathVariable Long studentId, Model model){
         if(!loggedUser.hasAccessToStudent(studentId)){
             return "error/403";
@@ -84,8 +84,35 @@ public class StudentController {
         if(loggedUser.teacherSupervisesStudentsClass(studentId)){
             model.addAttribute("supervisor",true);
         }
+        model.addAttribute("admin", LoggedUser.isAdmin());
         Student student = studentRepository.getReferenceById(studentId);
         model.addAttribute("student",student);
         return "student/details";
+    }
+
+    @PostMapping("/add")
+    public String add(Model model, @Valid Student student, BindingResult result) {
+        if(student.getId() == null && !LoggedUser.isAdmin()
+           ||
+           student.getId() != null && !LoggedUser.isAdmin() && (student.getSchoolClass() == null || !loggedUser.supervisesClass(student.getSchoolClass().getId()))){
+                return "error/403";
+        }
+        if (result.hasErrors()) {
+            model.addAttribute("student", student);
+            return "student/add";
+        }
+        return "redirect:/student/" + studentRepository.save(student).getId() + "/details";
+    }
+
+    @GetMapping("/{studentId}/edit")
+    public String edit(@PathVariable Long studentId, Model model){
+        Student student = studentRepository.getReferenceById(studentId);
+        if(student.getId() == null && !LoggedUser.isAdmin()
+                ||
+                student.getId() != null && !LoggedUser.isAdmin() && (student.getSchoolClass() == null || !loggedUser.supervisesClass(student.getSchoolClass().getId()))){
+            return "error/403";
+        }
+        model.addAttribute("student",student);
+        return "student/add";
     }
 }

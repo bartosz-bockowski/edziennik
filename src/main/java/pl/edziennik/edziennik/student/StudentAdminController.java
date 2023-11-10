@@ -38,21 +38,6 @@ public class StudentAdminController {
         return "student/add";
     }
 
-    @PostMapping("/add")
-    public String add(Model model, @Valid Student student, BindingResult result) {
-        if (result.hasErrors()) {
-            model.addAttribute("student", student);
-            return "student/add";
-        }
-        return "redirect:/admin/student/" + studentRepository.save(student).getId() + "/details";
-    }
-
-    @GetMapping("/{studentId}/edit")
-    public String edit(@PathVariable Long studentId, Model model){
-        model.addAttribute("student",studentRepository.getReferenceById(studentId));
-        return "student/add";
-    }
-
     @GetMapping("/{id}/switch")
     public String switch_(@PathVariable Long id) {
         Student student = studentRepository.getReferenceById(id);
