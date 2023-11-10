@@ -1,5 +1,7 @@
 package pl.edziennik.edziennik.security.user;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
@@ -8,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,7 +61,7 @@ public class UserController {
         result.addAll(checkPassword(newPassword,confirmNewPassword, user.getId()));
         if(result.isEmpty()){
             user.setPassword(newPassword);
-            userService.saveUser(user);
+            userService.updateUser(user);
         }
         result.replaceAll(s -> messageSource.getMessage("security.password.criteria." + s, null, LocaleContextHolder.getLocale()));
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -97,16 +100,18 @@ public class UserController {
     }
 
     @GetMapping("/{username}/sendRestorePasswordEmail")
-    public void sendRestorePasswordEmail(@PathVariable String username){
+    public ResponseEntity<Boolean> sendRestorePasswordEmail(@PathVariable String username){
         User user = userService.findByUserName(username);
         if(user.getRestorePasswordCodeExp().isBefore(LocalDateTime.now())){
             user.setRestorePasswordCode(UUID.randomUUID().toString());
             user.setRestorePasswordCodeExp(LocalDateTime.now().plusMinutes(5));
-            userService.saveUser(user);
+            userService.updateUser(user);
             String email = user.getEmail();
             String href = "restorePassword/" + user.getRestorePasswordCode();
             //send email
+            return new ResponseEntity<>(true,HttpStatus.OK);
         }
+        return new ResponseEntity<>(false,HttpStatus.OK);
     }
 
     @GetMapping("/restorePassword/{code}")
@@ -134,7 +139,7 @@ public class UserController {
         }
         if(result.isEmpty()){
             user.setPassword(newPassword);
-            userService.saveUser(user);
+            userService.updateUser(user);
         }
         result.replaceAll(s -> messageSource.getMessage("security.password.criteria." + s, null, LocaleContextHolder.getLocale()));
         return new ResponseEntity<>(result, responseStatus);

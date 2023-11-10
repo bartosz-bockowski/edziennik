@@ -5,5 +5,6 @@ public interface UserService {
     User findByRestorePasswordCode(String code);
 
     void saveUser(User user);
+    void updateUser(User user);
 
 }
