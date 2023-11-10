@@ -25,7 +25,7 @@
                            href="/student/${loggedUser.student.id}/attendance"><spring:message
                             code="student.attendance"/></a></li>
                     <li><a class="btn btn-primary my-1" href="/student/${loggedUser.student.id}/details"><spring:message
-                            code="student.details "/></a></li>
+                            code="student.details"/></a></li>
                 </ul>
             </div>
         </div>
