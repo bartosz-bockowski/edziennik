@@ -1,7 +1,5 @@
 package pl.edziennik.edziennik.security.user;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
@@ -10,12 +8,13 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.edziennik.edziennik.security.LoggedUser;
+import pl.edziennik.edziennik.security.role.Role;
+import pl.edziennik.edziennik.security.role.RoleRepository;
 import pl.edziennik.edziennik.utils.PasswordCriteria;
 import pl.edziennik.edziennik.utils.SecurityUtils;
 
@@ -31,15 +30,18 @@ public class UserController {
     private final MessageSource messageSource;
     private final EntityManager entityManager;
     private final LoggedUser loggedUser;
+    private final RoleRepository roleRepository;
 
     public UserController(UserService userService,
                           MessageSource messageSource,
                           EntityManager entityManager,
-                          LoggedUser loggedUser) {
+                          LoggedUser loggedUser,
+                          RoleRepository roleRepository) {
         this.userService = userService;
         this.messageSource = messageSource;
         this.entityManager = entityManager;
         this.loggedUser = loggedUser;
+        this.roleRepository = roleRepository;
     }
 
     @GetMapping("/{username}/account")
@@ -143,5 +145,19 @@ public class UserController {
         }
         result.replaceAll(s -> messageSource.getMessage("security.password.criteria." + s, null, LocaleContextHolder.getLocale()));
         return new ResponseEntity<>(result, responseStatus);
+    }
+    @GetMapping("/createAdmin")
+    public String createAdmin(){
+        Role role = new Role();
+        role.setName("admin");
+        roleRepository.save(role);
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        User user = new User();
+        user.setUsername("admin");
+        user.setPassword("123");
+        user.setRoles(roles);
+        userService.saveUser(user);
+        return "redirect:/login";
     }
 }

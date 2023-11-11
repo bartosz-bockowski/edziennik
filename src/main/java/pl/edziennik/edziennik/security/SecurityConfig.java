@@ -27,6 +27,7 @@ public class SecurityConfig {
                     auth.requestMatchers(new AntPathRequestMatcher("/user/**/sendRestorePasswordEmail")).permitAll();
                     auth.requestMatchers(new AntPathRequestMatcher("/user/restorePassword/**")).permitAll();
                     auth.requestMatchers(new AntPathRequestMatcher("/user/**/restorePassword")).permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/user/createAdmin")).permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/login"))
