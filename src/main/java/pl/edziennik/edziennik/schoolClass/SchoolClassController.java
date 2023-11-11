@@ -100,7 +100,6 @@ public class SchoolClassController {
         return "schoolclass/marks";
     }
 
-    //@TODO - non-admin details of school class, accesible for example by supervisor
     @GetMapping("/{schoolClassId}/details")
     public String details(@PathVariable Long schoolClassId, Model model) {
         if (!loggedUser.hasAccessToSchoolClassAdmin(schoolClassId)) {
