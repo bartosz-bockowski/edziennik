@@ -1,6 +1,9 @@
 package pl.edziennik.edziennik.security.user;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,8 +42,11 @@ public class UserAdminController {
     }
 
     @GetMapping("/list")
-    public String list(Model model, @SortDefault("id") Pageable pageable) {
-        model.addAttribute("page", userRepository.findAll(pageable));
+    public String list(Model model, @SortDefault("id") Pageable pageable, @QuerydslPredicate(root = User.class)Predicate predicate) {
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(predicate);
+        model.addAttribute("pageNumber",pageable.getPageNumber());
+        model.addAttribute("page", userRepository.findAll(builder, pageable));
         return "security/user/list";
     }
 

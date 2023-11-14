@@ -1,3 +1,12 @@
+.disabled:hover{
+    cursor: not-allowed !important;
+    background: #b6b6b6;
+}
+
+.disabled a{
+    pointer-events: none !important;
+}
+
 p.msg{
     display: none;
 }

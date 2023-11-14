@@ -1,17 +1,16 @@
 package pl.edziennik.edziennik;
 
-import jakarta.servlet.ServletContextEvent;
-import jakarta.servlet.ServletContextListener;
-import jakarta.servlet.annotation.WebListener;
+import com.querydsl.core.types.dsl.EntityPathBase;
+import com.querydsl.core.types.dsl.StringPath;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import pl.edziennik.edziennik.utils.PasswordCriteria;
+import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
+import org.springframework.data.querydsl.binding.QuerydslBindings;
 
 @Configuration
-@WebListener
-public class AppConfig {
+public class AppConfig implements QuerydslBinderCustomizer<EntityPathBase<?>> {
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
@@ -19,5 +18,10 @@ public class AppConfig {
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
+    }
+
+    @Override
+    public void customize(QuerydslBindings bindings, EntityPathBase<?> root) {
+        bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
     }
 }

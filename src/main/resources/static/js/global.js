@@ -10,6 +10,11 @@ function clickOnAConfirmAjax(e){
     }
 }
 $(document).ready(() => {
+    $(".clearFilterButton").click((e) => {
+        let form = $(e.target).parent().parent()
+        form.find("input").val("")
+        form.submit()
+    })
     $(".datepicker").datepicker({
         format: "dd.mm.yyyy"
     })
