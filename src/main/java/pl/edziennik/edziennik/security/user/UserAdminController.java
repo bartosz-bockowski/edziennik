@@ -3,6 +3,7 @@ package pl.edziennik.edziennik.security.user;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
@@ -23,29 +24,19 @@ public class UserAdminController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final StudentRepository studentRepository;
-    private final TeacherRepository teacherRepository;
-    private final ParentRepository parentRepository;
 
     public UserAdminController(UserService userService,
                                UserRepository userRepository,
-                               RoleRepository roleRepository,
-                               StudentRepository studentRepository,
-                               TeacherRepository teacherRepository,
-                               ParentRepository parentRepository) {
+                               RoleRepository roleRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.studentRepository = studentRepository;
-        this.teacherRepository = teacherRepository;
-        this.parentRepository = parentRepository;
     }
 
     @GetMapping("/list")
-    public String list(Model model, @SortDefault("id") Pageable pageable, @QuerydslPredicate(root = User.class)Predicate predicate) {
+    public String list(Model model, @SortDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, @QuerydslPredicate(root = User.class)Predicate predicate) {
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(predicate);
-        model.addAttribute("pageNumber",pageable.getPageNumber());
         model.addAttribute("page", userRepository.findAll(builder, pageable));
         return "security/user/list";
     }

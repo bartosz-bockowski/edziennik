@@ -1,3 +1,22 @@
+[sort]{
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 10px;
+}
+
+thead.list-head th{
+    padding: 0 !important;
+}
+thead.list-head th *{
+    padding: 10px;
+}
+
+.user-select-none, .user-select-none *{
+    user-select: none;
+}
+
 .disabled:hover{
     cursor: not-allowed !important;
     background: #b6b6b6;

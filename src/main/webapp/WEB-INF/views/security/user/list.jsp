@@ -18,6 +18,8 @@
         <p class="msg"><spring:message code="user.add.confirm"/></p>
     </a>
 </div>
+<input type="hidden" id="sorted" value="${page.pageable.sort.get().toList().get(0).property}"/>
+<input type="hidden" id="direction" value="${page.pageable.sort.get().toList().get(0).direction}"/>
 <div class="mr-auto ml-auto w-auto d-inline-block text-left mt-2">
     <form method="get" action="?">
         <div>
@@ -43,12 +45,12 @@
     </form>
 </div>
 <table class="table table-striped table-bordered" id="datatable">
-    <thead>
+    <thead class="list-head">
     <tr>
-        <th><spring:message code="user.id"/></th>
-        <th><spring:message code="user.username"/></th>
-        <th><spring:message code="user.status"/></th>
-        <th><spring:message code="actions"/></th>
+        <th><a sort="id" href="?sort=id"><spring:message code="user.id"/></a></th>
+        <th><a sort="username" href="?sort=username"><spring:message code="user.username"/></a></th>
+        <th><a sort="active" href="?sort=active"><spring:message code="user.status"/></a></th>
+        <th><span sort><spring:message code="actions"/></span></th>
     </tr>
     </thead>
     <tbody>
@@ -70,7 +72,7 @@
     </c:forEach>
     </tbody>
 </table>
-<div class="w-100">
+<div class="w-100 user-select-none p-4 mb-3">
     <div class="float-right">
         <div class="border border-secondary float-left rounded-left <c:if test="${page.pageable.pageNumber == 0}">disabled</c:if>">
             <a href="?page=${page.pageable.pageNumber - 1}">
@@ -91,6 +93,7 @@
         </div>
     </div>
 </div>
+<script src="${pageContext.request.contextPath}/js/list.js"></script>
 <jsp:include page="../../layout/footer.jsp"/>
 </body>
 </html>
