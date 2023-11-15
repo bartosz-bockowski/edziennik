@@ -1,6 +1,5 @@
 package pl.edziennik.edziennik.subject;
 
-import com.oracle.wls.shaded.org.apache.xpath.operations.Bool;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import jakarta.validation.Valid;

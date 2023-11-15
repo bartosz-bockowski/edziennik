@@ -1,14 +1,6 @@
-To use any function of the project, you first need to access /user/createAdmin link which
-creates user of username 'admin' and password '123' and gives this user a role of name 'admin'
-which has absolute access to everything in the project.
-Then, for security reasons, you should change the password of the admin account.
-
----
-
-Almost only subject details are fully made with ajax.
-Implementing ajax into other functions is an idea for the future.
-
----
-
-Pagination and filtering is made only in user list.
-Adding it to other parts of the application is an idea for the future.
+pod linkiem "/" jest akcja kontrolera HomeController ktora przenosi do widoku thymeleaf src/main/resources/templates/home.html
+w tym widoku używam tagów sec:authorize, które nie działają, strona działa tak jakby ich nie było
+konkretniej pokazują się dwa divy, jeden z nich ma warunek isAnonymous a drugi isAuthenticated więc nie powinny się pokazywać dwa na raz w żadnej sytuacji
+a w przypadku braku logowania pokazują się oba
+inne tagi na przyklad 'hasRole' tez pokazuja diva ktory jest przez nie oznaczony nawet kiedy uzytkownik nie jest zalogowany
+albo jest hasRole z parametrem z losowa nazwa roli na przyklad hasRole('asdjasfghaweiosgsdv')

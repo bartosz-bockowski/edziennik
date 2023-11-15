@@ -1,16 +1,25 @@
 package pl.edziennik.edziennik;
 
-import com.querydsl.core.types.dsl.EntityPathBase;
-import com.querydsl.core.types.dsl.StringPath;
-import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
-import org.springframework.data.querydsl.binding.QuerydslBindings;
+        import com.querydsl.core.types.dsl.EntityPathBase;
+        import com.querydsl.core.types.dsl.StringPath;
+        import org.springframework.context.MessageSource;
+        import org.springframework.context.annotation.Bean;
+        import org.springframework.context.annotation.Configuration;
+        import org.springframework.context.annotation.Description;
+        import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+        import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
+        import org.springframework.data.querydsl.binding.QuerydslBindings;
+        import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
+        import org.thymeleaf.spring6.SpringTemplateEngine;
+        import org.thymeleaf.spring6.view.ThymeleafViewResolver;
+        import org.thymeleaf.templatemode.TemplateMode;
+        import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
+        import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
+        import jakarta.servlet.ServletContext.*;
+        import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Configuration
-public class AppConfig implements QuerydslBinderCustomizer<EntityPathBase<?>> {
+public class AppConfig {
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
@@ -20,8 +29,4 @@ public class AppConfig implements QuerydslBinderCustomizer<EntityPathBase<?>> {
         return messageSource;
     }
 
-    @Override
-    public void customize(QuerydslBindings bindings, EntityPathBase<?> root) {
-        bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
-    }
 }
