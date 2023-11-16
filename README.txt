@@ -5,10 +5,10 @@ Then, for security reasons, you should change the password of the admin account.
 
 ---
 
-Almost only subject details are fully made with ajax.
-Implementing ajax into other functions is an idea for the future.
+Almost only subject details are fully made with fetch.
+Implementing fetch into other functions is an idea for the future.
 
 ---
 
-Pagination and filtering is made only in user list.
+Pagination, filtering and sorting is made only in user list.
 Adding it to other parts of the application is an idea for the future.
