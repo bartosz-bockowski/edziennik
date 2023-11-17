@@ -52,12 +52,14 @@
         </td>
         <td class="card-body">
             <c:if test="${teacher.user != null}">
-                ${teacher.user.username}
+                ${teacher.user.username} <a class="confirm" href="/admin/teacher/${teacher.id}/removeUser"><spring:message code="teacher.removeUser"/>
+            <p class="msg"><spring:message code="teacher.confirmRemoveUser"/></p></a>
             </c:if>
             <c:if test="${teacher.user == null}">
                 <div><spring:message code="teacher.noUser"/></div>
                 <div><spring:message code="user.add"/></div>
-                <form method="get" action="/admin/teacher/${teacher.id}/setUser">
+                <form class="confirm" method="get" action="/admin/teacher/${teacher.id}/setUser">
+                    <p class="msg"><spring:message code="teacher.confirmAddUser"/></p>
                     <select class="selectpicker" data-live-search="true" name="user">
                         <c:forEach items="${freeUsers}" var="user">
                             <option value="${user.id}">${user.username} (ID: ${user.id})</option>
@@ -99,11 +101,11 @@
 <div>
     <table class="ml-auto mr-auto table-borderless my-2">
         <tr>
-            <td><spring:message code="student.firstName"/></td>
+            <td><spring:message code="userData.firstName"/></td>
             <td class="font-weight-bold my-2">${teacher.firstName}</td>
         </tr>
         <tr>
-            <td><spring:message code="student.lastName"/></td>
+            <td><spring:message code="userData.lastName"/></td>
             <td class="font-weight-bold my-2">${teacher.lastName}</td>
         </tr>
         <tr>

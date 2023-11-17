@@ -73,15 +73,15 @@
 <div>
     <table class="ml-auto mr-auto table-borderless my-2">
         <tr>
-            <td><spring:message code="student.firstName"/></td>
+            <td><spring:message code="userData.firstName"/></td>
             <td class="font-weight-bold my-2">${student.firstName}</td>
         </tr>
         <tr>
-            <td><spring:message code="student.secondName"/></td>
+            <td><spring:message code="userData.secondName"/></td>
             <td class="font-weight-bold my-2">${student.secondName}</td>
         </tr>
         <tr>
-            <td><spring:message code="student.lastName"/></td>
+            <td><spring:message code="userData.lastName"/></td>
             <td class="font-weight-bold my-2">${student.lastName}</td>
         </tr>
         <tr>

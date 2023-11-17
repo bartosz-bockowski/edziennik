@@ -27,11 +27,11 @@
     <div class="d-flex justify-content-center">
         <table class="table-bordered">
             <tr>
-                <td><spring:message code="student.firstName"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="userData.firstName"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="text" class="form-control" path="firstName"/></td>
             </tr>
             <tr>
-                <td><spring:message code="student.lastName"/><span class="text-danger mx-1">*</span></td>
+                <td><spring:message code="userData.lastName"/><span class="text-danger mx-1">*</span></td>
                 <td><form:input required="required" type="text" class="form-control" path="lastName"/></td>
             </tr>
             <tr>
