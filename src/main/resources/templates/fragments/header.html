@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head"></head>
 <body>
 <header>
-    <form method="post" action="/logout" sec:authorize="isAuthenticated()">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-        <button type="submit">Wyloguj się</button>
+    <form method="post" th:action="@{/logout}" sec:authorize="isAuthenticated()">
+        <button type="submit" th:text="#{logout}"></button>
     </form>
 </header>
 </body>

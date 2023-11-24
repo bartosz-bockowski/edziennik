@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="mainLayout" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/small/login-form.css}">
-</head>
 <body>
 <div layout:fragment="content">
-    <form class="form-signin text-center" method="post" action="/login">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <form class="form-signin text-center" method="post" th:action="@{/login}">
         <h1 class="h1 mb-1 font-weight-bold" th:text="#{e-dziennik}"></h1>
         <h3 class="h3 mb-3 font-weight-normal" th:text="#{login}"></h3>
         <label for="inputEmail" class="sr-only" th:text="#{user.username}"></label>
