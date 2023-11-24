@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:replace="fragments/head :: head"></head>
-<body>
+<head>
+    <mainHead th:replace="fragments/head :: mainHead"></mainHead>
+</head>
+<body class="text-center">
     <div th:replace="fragments/header :: header"></div>
     <div layout:fragment="content"></div>
 </body>

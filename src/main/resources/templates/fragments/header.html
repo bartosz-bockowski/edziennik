@@ -2,9 +2,36 @@
 <html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:th="http://www.thymeleaf.org">
 <body>
 <header>
-    <form method="post" th:action="@{/logout}" sec:authorize="isAuthenticated()">
-        <button type="submit" th:text="#{logout}"></button>
-    </form>
+    <div sec:authorize="isAuthenticated()" class="text-center d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-dark border-bottom box-shadow">
+        <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/" th:text="#{e-dziennik}"></a></h5>
+        <nav class="my-2 my-md-0 mr-md-3" sec:authorize="hasAuthority('admin')">
+                <a class="p-2 text-white" href="/admin/user/list" th:text="#{user.list}"></a>
+                <a class="p-2 text-white" href="/admin/role/list" th:text="#{role.list}"></a>
+                <a class="p-2 text-white" href="/admin/teacher/list" th:text="#{teacher.list}"></a>
+                <a class="p-2 text-white" href="/admin/schoolclass/list" th:text="#{schoolClass.list}"></a>
+                <a class="p-2 text-white" href="/admin/student/list" th:text="#{student.list}"></a>
+                <a class="p-2 text-white" href="/admin/parent/list" th:text="#{parent.list}"></a>
+                <a class="p-2 text-white" href="/admin/subject/list" th:text="#{subject.list}"></a>
+                <a class="p-2 text-white" href="/admin/lessonHour/list" th:text="#{lessonHour.list}"></a>
+                <a class="p-2 text-white" href="/admin/classRoom/list" th:text="#{classRoom.list}"></a>
+        </nav>
+        <div class="position-relative">
+            <button id="headerUserButton" class="btn btn-primary">
+                <span th:text="${#authentication.getName()}"></span>
+                <span class="small">&#9660;</span>
+            </button>
+            <div class="border border-light position-absolute bg-white text-dark text-left" style="top:100%; right:0; display: none;">
+                <a class="d-block m-3" href="/user/<%= request.getUserPrincipal().getName() %>/account">
+                    <div th:text="#{user.myAccount}"></div>
+                </a>
+                <div class="m-3">
+                    <form method="post" th:action="@{/logout}">
+                        <button type="submit" th:text="#{logout}"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </header>
 </body>
 </html>

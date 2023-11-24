@@ -7,7 +7,66 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h1>Strona główna</h1>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4" th:text="#{homePage}"></h1>
+    </div>
+    <div class="container">
+        <div th:if="${loggedUser.student != null}" class="card mb-4 box-shadow">
+            <div class="card-header bg-secondary text-white">
+                <h4 class="my-0 font-weight-normal" th:text="#{user.student}"></h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title" th:text="${loggedUser.student.fullName}"></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li><a class="btn btn-primary my-1" href="/student/${loggedUser.student.id}/marks" th:text="#{student.marks}"></a></li>
+                    <li><a class="btn btn-primary my-1"
+                           href="/schoolclass/${loggedUser.student.schoolClass.id}/lessonPlan" th:text="#{lessonPlan}"></a></li>
+                    <li><a class="btn btn-primary my-1"
+                           href="/student/${loggedUser.student.id}/attendance" th:text="#{student.attendance}"></a></li>
+                    <li><a class="btn btn-primary my-1" href="/student/${loggedUser.student.id}/details" th:text="#{student.details}"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div th:if="${loggedUser.parent != null}" class="card mb-4 box-shadow">
+            <div class="card-header bg-secondary text-white">
+                <h4 class="my-0 font-weight-normal" th:text="#{user.parent}"></h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title" th:text="${loggedUser.parent.fullName}"></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li><a class="btn btn-primary my-1" href="/parent/${loggedUser.parent.id}/students" th:text="#{parent.students}"></a></li>
+                    <li><a class="btn btn-primary my-1" href="/parent/${loggedUser.parent.id}/details" th:text="#{parent.details}"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div th:if="${loggedUser.teacher != null}" class="card mb-4 box-shadow">
+            <div class="card-header bg-secondary text-white">
+                <h4 class="my-0 font-weight-normal" th:text="#{user.teacher}"></h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title" th:text="${loggedUser.teacher.fullName}"></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li><a class="btn btn-primary my-1"
+                           href="/teacher/${loggedUser.teacher.id}/lessonPlan" th:text="#{lessonPlan}"></a>
+                    </li>
+                    <li><a class="btn btn-primary my-1"
+                           href="/teacher/${loggedUser.teacher.id}/subjects" th:text="#{teacher.subjects}"></a></li>
+                    <li><a class="btn btn-primary my-1"
+                           href="/teacher/${loggedUser.teacher.id}/supervisedClasses" th:text="#{teacher.supervisedClasses}"></a></li>
+                    <li><a class="btn btn-primary my-1" href="/teacher/${loggedUser.teacher.id}/details" th:text="#{teacher.details}"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <p id="noNotificationsVal" th:text="#{notifications.noNotifications}" hidden></p>
+    <p id="noMoreNotificationsVal" th:text="#{notifications.noMoreNotifications}" hidden></p>
+    <p id="moreVal" th:text="#{notifications.more}" hidden></p>
+    <div id="notificationsCount" hidden>0</div>
+    <div class="notificationsList w-50 ml-auto mr-auto">
+        <h3 th:text="#{notifications}"></h3>
+    </div>
+    <button id="loadMoreNotificationsButton" class="btn btn-primary" th:text="#{notifications.older}"></button>
+    <script th:src="@{/js/notifications.js}"></script>
 </div>
 </body>
 </html>

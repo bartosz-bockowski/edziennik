@@ -5,9 +5,9 @@
 
 <html>
 <jsp:include page="linksHeader.jsp"/>
-<body class="text-center">
+<body>
 <sec:authorize access="isAuthenticated()">
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-dark border-bottom box-shadow">
+    <div class="text-center d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-dark border-bottom box-shadow">
         <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/"><spring:message code="e-dziennik"/></a></h5>
         <nav class="my-2 my-md-0 mr-md-3">
             <sec:authorize access="hasAuthority('admin')">

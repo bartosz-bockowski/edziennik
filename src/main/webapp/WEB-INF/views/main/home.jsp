@@ -14,7 +14,7 @@
                 <h4 class="my-0 font-weight-normal"><spring:message code="user.student"/></h4>
             </div>
             <div class="card-body">
-                <h1 class="card-title pricing-card-title">${loggedUser.student.fullName}</small></h1>
+                <h1 class="card-title pricing-card-title">${loggedUser.student.fullName}</h1>
                 <ul class="list-unstyled mt-3 mb-4">
                     <li><a class="btn btn-primary my-1" href="/student/${loggedUser.student.id}/marks"><spring:message
                             code="student.marks"/></a></li>

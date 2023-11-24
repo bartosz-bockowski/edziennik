@@ -1,4 +1,4 @@
-package pl.edziennik.edziennik.home;
+package pl.edziennik.edziennik;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +16,6 @@ public class HomeController {
     @GetMapping("/")
     public String hello(Model model) {
         model.addAttribute("loggedUser", loggedUser.getUser());
-        System.out.println("home");
         return "home";
     }
 }
