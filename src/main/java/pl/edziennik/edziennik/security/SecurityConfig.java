@@ -19,20 +19,19 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((auth) -> {
-//                    auth.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAnyAuthority("admin");
-//                    auth.requestMatchers(new AntPathRequestMatcher("/img/**")).permitAll();
-//                    auth.requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll();
-//                    auth.requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll();
-//                    auth.requestMatchers(new AntPathRequestMatcher("/resources/**")).permitAll();
-//                    auth.requestMatchers(new AntPathRequestMatcher("/WEB-INF/views/**")).permitAll();
-//                    auth.requestMatchers(new AntPathRequestMatcher("/login")).permitAll();
-//                    auth.requestMatchers(new AntPathRequestMatcher("/static/ico/favicon.ico")).permitAll();
-//                    auth.requestMatchers(new AntPathRequestMatcher("/user/**/sendRestorePasswordEmail")).permitAll();
-//                    auth.requestMatchers(new AntPathRequestMatcher("/user/restorePassword/**")).permitAll();
-//                    auth.requestMatchers(new AntPathRequestMatcher("/user/**/restorePassword")).permitAll();
-//                    auth.requestMatchers(new AntPathRequestMatcher("/user/createAdmin")).permitAll();
-//                    auth.anyRequest().authenticated();
-                    auth.anyRequest().permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAnyAuthority("admin");
+                    auth.requestMatchers(new AntPathRequestMatcher("/img/**")).permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/resources/**")).permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/WEB-INF/views/**")).permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/login")).permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/static/ico/favicon.ico")).permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/user/**/sendRestorePasswordEmail")).permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/user/restorePassword/**")).permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/user/**/restorePassword")).permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/user/createAdmin")).permitAll();
+                    auth.anyRequest().authenticated();
                 })
                 .logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/login"))
                 .formLogin((form) -> form.loginPage("/login").failureUrl("/login?error=true").permitAll());

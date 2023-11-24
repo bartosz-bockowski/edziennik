@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainLayout" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/small/login-form.css}">
+</head>
+<body>
+<div layout:fragment="content">
+    <form class="form-signin text-center" method="post" action="/login">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <h1 class="h1 mb-1 font-weight-bold" th:text="#{e-dziennik}"></h1>
+        <h3 class="h3 mb-3 font-weight-normal" th:text="#{login}"></h3>
+        <label for="inputEmail" class="sr-only" th:text="#{user.username}"></label>
+        <input name="username" type="text" id="inputEmail" class="form-control" th:placeholder="#{user.username}"
+               autofocus=""/>
+        <label for="inputPassword" class="sr-only" th:text="#{user.password}"></label>
+        <input type="password" id="inputPassword" name="password" class="form-control" th:placeholder="#{user.password}"/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login}"></button>
+        <br/>
+        <div class="text-danger">
+            <div th:if="${param.error != null && param.error && blockedUser == null}" class="mb-2" th:text="#{wrongLoginCredentials}"></div>
+            <div th:if="${blockedUser != null}" class="mb-2" th:text="#{security.antiBruteForce.blockedUser}"></div>
+            <div th:if="${badPasswordCode == 1}" class="mb-2" th:text="#{security.password.badPasswordCode}"></div>
+        </div>
+        <button type="button" id="iForgotPasswordButton" class="btn btn-danger mb-4" th:text="#{security.login.iForgotPassword}"></button>
+        <div id="forgottenPasswordDiv" style="display: none;">
+            <div id="sent" hidden th:text="#{security.password.recover.sent}"></div>
+            <div id="cantBeEmpty" hidden th:text="#{security.password.recover.fieldCantBeEmpty}"></div>
+            <input type="text" id="inputUsernameForgottenPassword" class="form-control" th:laceholder="#{user.username}"/>
+            <label for="inputUsernameForgottenPassword" class="sr-only" th:text="#{user.username}"></label>
+            <button id="recoverPasswordButton" type="button" class="btn btn-lg btn-primary btn-block mt-2" th:text="#{security.password.recoverPassword}"></button>
+        </div>
+        <script th:src="@{/js/ajax/security/login.js}"></script>
+    </form>
+</div>
+</body>
+</html>
